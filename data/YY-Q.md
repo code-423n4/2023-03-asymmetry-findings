@@ -1,6 +1,6 @@
 # The calculation of derivativeAmount in unstake function which could potentially lead to an integer overflow, which can cause unexpected behavior and loss of funds.
 
-## Code
+##  Affected Code
 https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L108-L129
 
 ```
