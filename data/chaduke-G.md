@@ -17,3 +17,22 @@ G1. adjustWeight() can save gas by eliminating the for loop:
         emit WeightChange(_derivativeIndex, _weight);
     }
 ```
+
+G2. We can save gas for addDerivative() by eliminating the for loop.
+```diff
+function addDerivative(
+        address _contractAddress,
+        uint256 _weight
+    ) external onlyOwner {
+        derivatives[derivativeCount] = IDerivative(_contractAddress);
+        weights[derivativeCount] = _weight;
+        derivativeCount++;
+
+-        uint256 localTotalWeight = 0;
+-        for (uint256 i = 0; i < derivativeCount; i++)
+-            localTotalWeight += weights[i];
+-        totalWeight = localTotalWeight;
++        totalWeight = totalWeight+_weight;
+        emit DerivativeAdded(_contractAddress, _weight, derivativeCount);
+    }
+```
