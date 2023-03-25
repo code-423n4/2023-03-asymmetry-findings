@@ -18,3 +18,6 @@ For example `totalWeight = totalWeight + _weight`
 
 ## Emitting event with functions arguments is cheaper
 SafEth.sol - [216](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L216), [225](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L225), [234](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L234), [243](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L243)
+
+## `(poolPrice() * 10 ** 18) / (10 ** 18)` will always return `poolPrice()`, no need to multiply and divide
+Reth.sol - [212](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/derivatives/Reth.sol#L215)
