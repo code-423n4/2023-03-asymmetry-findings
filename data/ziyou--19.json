@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "ziyou-",
+  "risk": "3",
+  "title": "Possibly reentrancy attacks in withdraw function",
+  "issueId": 19,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/19"
+}
