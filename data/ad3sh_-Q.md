@@ -1,6 +1,5 @@
 Defining initial values for variables when declaring them in a contract like in the code below does not work for upgradeable contracts.
-
-https://github.com/code-423n4/2022-05-rubicon/blob/8c312a63a91193c6a192a9aab44ff980fbfd7741/contracts/RubiconMarket.sol#L526-L527
+https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L38
 
 Refer to explanation below:
 
