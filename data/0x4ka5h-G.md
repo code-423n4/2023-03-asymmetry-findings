@@ -22,7 +22,7 @@ The code above shows a function called `adjustWeight` that allows the owner to a
 
 This new code adds a variable `oldWeight` to store the original weight of the derivative before updating it. Then, the function updates the derivative's weight with the new weight provided by the owner and recalculates the total weight by subtracting the old weight and adding the new weight. This eliminates the need for a loop that calculates the total weight of all derivatives.
 
-G[1] Use arithmetic operating instead using loop for new totalWeight calculating
+## G[2] Use arithmetic operating instead using loop for new totalWeight calculating
 ```
 function addDerivative(
         address _contractAddress,
