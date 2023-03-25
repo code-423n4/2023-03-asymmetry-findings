@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "chalex",
+  "risk": "3",
+  "title": "Reth derivative is vulnerable to oracle manipulation with flashloan",
+  "issueId": 43,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/43"
+}
