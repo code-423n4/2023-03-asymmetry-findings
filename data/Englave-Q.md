@@ -1,0 +1,3 @@
+L01. Ether receive without sender restriction
+The current contract implementation presents a potential risk for users due to its unrestricted nature, allowing anyone to send Ether to the contracts. It will result in the permanent loss of funds without providing any benefits to the affected users.
+To mitigate this risk and enhance the security of the contract implementation, it is recommended to incorporate the receive function along with a `msg.sender` check. This approach will allow only designated contracts to send native tokens, effectively protecting users from unintended loss of funds.
