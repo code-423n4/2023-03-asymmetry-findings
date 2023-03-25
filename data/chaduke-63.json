@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "chaduke",
+  "risk": "2",
+  "title": "addDerivative() might add duplicate derivatives into the protocol, resulting faulty stake() and unstake().",
+  "issueId": 63,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/63"
+}
