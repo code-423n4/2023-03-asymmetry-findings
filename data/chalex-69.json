@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "chalex",
+  "risk": "3",
+  "title": "Unstake can drain all the ETH on derivatives contract",
+  "issueId": 69,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/69"
+}
