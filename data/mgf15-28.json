@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "mgf15",
+  "risk": "3",
+  "title": "set of sqrtPriceLimitX96 is 0 disables the slippage protection.",
+  "issueId": 28,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/28"
+}
