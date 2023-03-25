@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "ToonVH",
+  "risk": "3",
+  "title": "Attacker can manipulate rETH-derivative's ethPerDerivative() to mint discounted safETH and drain funds.",
+  "issueId": 45,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/45"
+}
