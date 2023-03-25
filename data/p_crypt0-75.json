@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "p_crypt0",
+  "risk": "3",
+  "title": "SafeEth is non-upgradeable due to inheritance chain and upgradeable __gap not being declared in base contract.",
+  "issueId": 75,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/75"
+}
