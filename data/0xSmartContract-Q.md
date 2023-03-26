@@ -1,3 +1,16 @@
+In terms of Quality Assurance;
+
+Strengths of the Project;
+-- The code has a structure written in a modern way, within the framework of generally accepted Soliditiy principles.
+-- Details such as the fact that the `initialize()` function is declared externally, it has quality and short NatSpec comments, and there are almost no typos, show us the importance given to the code.
+
+Development Areas of the Project;
+-- The project uses the standard one-step owner model. 2-step ownership transfer is used in the most important projects in the new period, so 2-step ownership should be transferred [L-01]
+-- The use of 'emit' in general terms, specifying new and old values in emit parameters is missing, there is a development area here, also sending 'emit' after ether transmission should be re-evaluated in terms of security, [L-03] [L-08]
+-- `OnlyOwner` strength is not looked after as it is out of scope, but this is the weakest context of the project, here if timelock - multisign architectures are used together it will be the most robust structure and will increase trust in the project
+-- How is the proxy architecture of the project, which pattern is used, how to upgrade parts are missing, adding these strengthens the control and security structure [N-26]
+
+
 ## Summary
 ### Low Risk Issues List
 | Number |Issues Details|Context|
