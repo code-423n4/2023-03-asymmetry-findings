@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "totomanov",
+  "risk": "2",
+  "title": "Reth.sol: Hardcoded Uniswap V3 pool fee reduces future-proofing and exposes the protocol to MEV",
+  "issueId": 123,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/123"
+}
