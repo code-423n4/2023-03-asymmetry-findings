@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "Dug",
+  "risk": "3",
+  "title": "First depositor can manipulate underlying value to steal funds from later depositors",
+  "issueId": 116,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/116"
+}
