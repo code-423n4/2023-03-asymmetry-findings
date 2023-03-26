@@ -155,3 +155,39 @@ Manual Analysis
 
 We recommend using headers for Solidity code layout and readability.
 
+
+# 6: USE bytes.concat() INSTEAD OF abi.encodePacked()
+
+Vulnerability details
+
+## Context:
+
+Use bytes.concat() instead of abi.encodePacked()
+
+## Proof of Concept
+
+Rather than using abi.encodePacked for appending bytes, since version 0.8.4, bytes.concat() is enabled
+
+#### 1 Result - 6 Instances
+
+> ***File: Reth.sol***
+
+https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L70
+
+https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L125
+
+https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L136
+
+https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L162
+
+https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L191
+
+https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L233
+
+## Tools Used
+
+Manual Analysis
+
+### Recommended Mitigation Steps
+
+Since version 0.8.4 for appending bytes, bytes.concat() can be used instead of abi.encodePacked().
