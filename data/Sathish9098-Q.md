@@ -28,7 +28,7 @@ FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/Reth.sol
 
 ##
 
-### [L-2] MISSING CHECKS FOR ADDRESS(0X0) WHEN ASSIGNING VALUES TO ADDRESS STATE VARIABLES
+### [L-2] MISSING CHECKS FOR ADDRESS(0X0) WHEN TRANSFER OWNERSHIP 
 
 Owner address is not checked before calling _transferOwnership function 
 
@@ -50,6 +50,17 @@ FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/SfrxEth.sol
 
 [SfrxEth.sol#L36-L39](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/SfrxEth.sol#L36-L39)
 
+FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/Reth.sol
+
+   function initialize(address _owner) external initializer {
+        _transferOwnership(_owner);
+        maxSlippage = (1 * 10 ** 16); // 1%
+    }
+
+[Reth.sol#L42-L45](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L42-L45)
+
+
+
 ##
 
 ### [L-3] Sanity/Threshold/Limit Checks
@@ -60,6 +71,7 @@ FILE : FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/WstEth.sol
 
    function setMaxSlippage(uint256 _slippage) external onlyOwner {
         maxSlippage = _slippage;
+
     }
 
 [WstEth.sol#L48-L50](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/WstEth.sol#L48-L50)
@@ -73,6 +85,32 @@ FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/SfrxEth.sol
     }
 
 [SfrxEth.sol#L51-L53](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/SfrxEth.sol#L51-L53)
+
+FILE : 2023-03-asymmetry/contracts/SafEth/SafEth.sol
+ 
+   function setMaxAmount(uint256 _maxAmount) external onlyOwner {
+        maxAmount = _maxAmount;
+        emit ChangeMaxAmount(maxAmount);
+    }
+
+[SafEth.sol#L223-L226](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L223-L226)
+
+   function setMinAmount(uint256 _minAmount) external onlyOwner {
+        minAmount = _minAmount;
+        emit ChangeMinAmount(minAmount);
+    }
+
+[SafEth.sol#L214-L217](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L214-L217)
+
+     function setMaxSlippage(
+        uint _derivativeIndex,
+        uint _slippage
+     ) external onlyOwner {
+        derivatives[_derivativeIndex].setMaxSlippage(_slippage);
+        emit SetMaxSlippage(_derivativeIndex, _slippage);
+     }
+
+[SafEth.sol#L202-L208](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L202-L208)
 
 ##
 
@@ -172,6 +210,213 @@ File: contracts/SafEth/derivatives/WstEth.sol
 56:     function withdraw(uint256 _amount) external onlyOwner {
 
 73:     function deposit() external payable onlyOwner returns (uint256) {
+
+##
+
+### [L-6] Use safe variant of _mint() function
+
+.mint won’t check if the recipient is able to receive the tokens. If an incorrect address is passed, it will result in a silent failure and loss of asset.
+
+OpenZeppelin recommendation is to use the safe variant of _mint
+
+FILE : 2023-03-asymmetry/contracts/SafEth/SafEth.sol
+
+   99:  _mint(msg.sender, mintAmount);
+
+[SafEth.sol#L99](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L99)
+
+Recommendation
+Replace _mint() with _safeMint()
+
+##
+
+### [L-7] No Storage Gap for SafEth contract
+
+Impact
+For upgradeable contracts, inheriting contracts may introduce new variables. In order to be able to add new variables to the upgradeable contract without causing storage collisions, a storage gap should be added to the upgradeable contract.
+
+If no storage gap is added, when the upgradable contract introduces new variables, it may override the variables in the inheriting contract.
+
+Storage gaps are a convention for reserving storage slots in a base contract, allowing future versions of that contract to use up those slots without affecting the storage layout of child contracts.
+To create a storage gap, declare a fixed-size array in the base contract with an initial number of slots.
+This can be an array of uint256 so that each element reserves a 32 byte slot. Use the naming convention __gap so that OpenZeppelin Upgrades will recognize the gap:
+
+
+Storage Gaps
+This makes the storage layouts incompatible, as explained in Writing Upgradeable Contracts. 
+The size of the __gap array is calculated so that the amount of storage used by a contract 
+always adds up to the same number (in this case 50 storage slots).
+
+[SafEth.sol#L15-L20](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L15-L20)
+
+[WstEth.sol#L12](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/WstEth.sol#L12)
+
+[SfrxEth.sol#L13](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/SfrxEth.sol#L13)
+
+[Reth.sol#L19](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L19)
+
+Recommended Mitigation Steps
+Consider adding a storage gap at the end of the upgradeable abstract contract
+
+uint256[50] private __gap;
+
+## [L-8] Prevent division by 0
+
+On several locations in the code precautions are not being taken for not dividing by 0, this will revert the code.
+These functions can be called with 0 value in the input, this value is not checked for being bigger than 0, that means in some scenarios this can potentially trigger a division by zero
+
+FILE : 2023-03-asymmetry/contracts/SafEth/SafEth.sol
+
+    88:  uint256 ethAmount = (msg.value * weight) / totalWeight;
+
+[SafEth.sol#L88](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L88)
+
+   98: uint256 mintAmount = (totalStakeValueEth * 10 ** 18) / preDepositPrice;
+
+[SafEth.sol#L98](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L98)
+
+   115: uint256 derivativeAmount = (derivatives[i].balance() *
+         _safEthAmount) / safEthTotalSupply;
+
+[SafEth.sol#L115-L116](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L115-L116)
+
+   149: uint256 ethAmount = (ethAmountToRebalance * weights[i]) /
+                totalWeight;
+
+[SafEth.sol#L149-L150)](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L149-L150)
+
+FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/Reth.sol
+
+   171: uint rethPerEth = (10 ** 36) / poolPrice();
+
+[Reth.sol#L171](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L171)
+
+##
+
+### [L-9] Consider using OpenZeppelin’s SafeCast library to prevent unexpected behavior when casting uint
+
+FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/Reth.sol
+
+   241: return (sqrtPriceX96 * (uint(sqrtPriceX96)) * (1e18)) >> (96 * 2);
+
+[derivatives/Reth.sol#L241](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L241)
+
+##
+
+### [L-10] abi.encodePacked() should not be used with dynamic types when passing the result to a hash function such as keccak256()
+
+Use abi.encode() instead which will pad items to 32 bytes, which will prevent hash collisions (e.g. abi.encodePacked(0x123,0x456) => 0x123456 => abi.encodePacked(0x1,0x23456), but abi.encode(0x123,0x456) => 0x0...1230...456). "Unless there is a compelling reason, abi.encode should be preferred". If there is only one argument to abi.encodePacked() it can often be cast to bytes() or bytes32() instead. If all arguments are strings and or bytes, bytes.concat() should be used instead
+
+FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/Reth.sol
+
+  RocketStorageInterface(ROCKET_STORAGE_ADDRESS).getAddress(
+                keccak256(
+                    abi.encodePacked("contract.address", "rocketTokenRETH")
+                )
+            );
+
+[Reth.sol#L68-L72](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L68-L72)
+
+     address rocketDepositPoolAddress = RocketStorageInterface(
+            ROCKET_STORAGE_ADDRESS
+        ).getAddress(
+                keccak256(
+                    abi.encodePacked("contract.address", "rocketDepositPool")
+                )
+            );
+
+[Reth.sol#L121-L127](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L121-L127)
+
+    address rocketProtocolSettingsAddress = RocketStorageInterface(
+            ROCKET_STORAGE_ADDRESS
+        ).getAddress(
+                keccak256(
+                    abi.encodePacked(
+                        "contract.address",
+                        "rocketDAOProtocolSettingsDeposit"
+                    )
+                )
+            );
+
+[Reth.sol#L132-L141](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L132-L141)
+
+     address rocketDepositPoolAddress = RocketStorageInterface(
+            ROCKET_STORAGE_ADDRESS
+        ).getAddress(
+                keccak256(
+                    abi.encodePacked("contract.address", "rocketDepositPool")
+                )
+            );
+
+[Reth.sol#L158-L164](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L158-L164)
+
+    address rocketTokenRETHAddress = RocketStorageInterface(
+                ROCKET_STORAGE_ADDRESS
+            ).getAddress(
+                    keccak256(
+                        abi.encodePacked("contract.address", "rocketTokenRETH")
+                    )
+                );
+
+[Reth.sol#L187-L193](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L187-L193)
+
+    address rocketTokenRETHAddress = RocketStorageInterface(
+            ROCKET_STORAGE_ADDRESS
+        ).getAddress(
+                keccak256(
+                    abi.encodePacked("contract.address", "rocketTokenRETH")
+                )
+            );
+
+[Reth.sol#L229-L235](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L229-L235)
+
+##
+
+### [L-11] initialize() function missing the events 
+
+FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/WstEth.sol
+
+    function initialize(address _owner) external initializer {
+        _transferOwnership(_owner);
+        maxSlippage = (1 * 10 ** 16); // 1%
+    }
+
+[WstEth.sol#L33-L36](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/WstEth.sol#L33-L36)
+
+FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/SfrxEth.sol
+ 
+    function initialize(address _owner) external initializer {
+        _transferOwnership(_owner);
+        maxSlippage = (1 * 10 ** 16); // 1%
+    }
+
+[SfrxEth.sol#L36-L39](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/SfrxEth.sol#L36-L39)
+
+FILE : 2023-03-asymmetry/contracts/SafEth/SafEth.sol
+
+    function initialize(
+        string memory _tokenName,
+        string memory _tokenSymbol
+    ) external initializer {
+        ERC20Upgradeable.__ERC20_init(_tokenName, _tokenSymbol);
+        _transferOwnership(msg.sender);
+        minAmount = 5 * 10 ** 17; // initializing with .5 ETH as minimum
+        maxAmount = 200 * 10 ** 18; // initializing with 200 ETH as maximum
+    }
+
+[SafEth.sol#L48-L56](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L48-L56)
+
+FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/Reth.sol
+
+   function initialize(address _owner) external initializer {
+        _transferOwnership(_owner);
+        maxSlippage = (1 * 10 ** 16); // 1%
+    }
+
+[Reth.sol#L42-L45](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L42-L45)
+
+
+
 
 # NON CRITICAL FINDINGS 
 
@@ -392,7 +637,67 @@ Locking the pragma helps to ensure that contracts do not accidentally get deploy
 
 Note that pragma statements can be allowed to float when a contract is intended for consumption by other developers, as in the case with contracts in a library or a package.
 
+##
 
+### [NC-8] Interchangeable usage of uint and uint256
+
+  function setMaxSlippage(
+        uint _derivativeIndex,
+        uint _slippage
+    ) external onlyOwner {
+        derivatives[_derivativeIndex].setMaxSlippage(_slippage);
+        emit SetMaxSlippage(_derivativeIndex, _slippage);
+    }
+
+[SafEth.sol#L202-L208](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L202-L208)
+
+##
+
+### [NC-9] TYPOS
+
+FILE: 2023-03-asymmetry/contracts/SafEth/SafEth.sol
+
+  /// @audit derivates => derivatives 
+ - 160:    @dev - If you want exact weights either do the math off chain or reset all existing derivates to 
+   the weights you want
+ + 160:    @dev - If you want exact weights either do the math off chain or reset all existing derivatives to 
+   the weights you want
+
+##
+
+### [NC-10] Include return parameters in NatSpec comments
+
+Context
+All Contracts
+
+Description
+It is recommended that Solidity contracts are fully annotated using NatSpec for all public interfaces (everything in the ABI). It is clearly stated in the Solidity official documentation. In complex projects such as Defi, the interpretation of all functions and their arguments and returns is important for code readability and auditability.
+
+[natspec-format.html](https://docs.soliditylang.org/en/v0.8.15/natspec-format.html)
+
+Recommendation
+Include return parameters in NatSpec comments
+
+Recommendation Code Style: (from Uniswap3)
+
+    /// @notice Adds liquidity for the given recipient/tickLower/tickUpper position
+    /// @dev The caller of this method receives a callback in the form of IUniswapV3MintCallback#uniswapV3MintCallback
+    /// in which they must pay any token0 or token1 owed for the liquidity. The amount of token0/token1 due depends
+    /// on tickLower, tickUpper, the amount of liquidity, and the current price.
+    /// @param recipient The address for which the liquidity will be created
+    /// @param tickLower The lower tick of the position in which to add liquidity
+    /// @param tickUpper The upper tick of the position in which to add liquidity
+    /// @param amount The amount of liquidity to mint
+    /// @param data Any data that should be passed through to the callback
+    /// @return amount0 The amount of token0 that was paid to mint the given amount of liquidity. Matches the value in the callback
+    /// @return amount1 The amount of token1 that was paid to mint the given amount of liquidity. Matches the value in the callback
+    function mint(
+        address recipient,
+        int24 tickLower,
+        int24 tickUpper,
+        uint128 amount,
+        bytes calldata data
+    ) external returns (uint256 amount0, uint256 amount1);
   
 
    
