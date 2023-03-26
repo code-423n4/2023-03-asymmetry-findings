@@ -83,7 +83,9 @@ FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/Reth.sol
     /// @audit initialize(),name(),setMaxSlippage(),rethAddress(),swapExactInputSingleHop(),withdraw(),poolCanDeposit(),deposit(),ethPerDerivative(),balance(),poolPrice()
     19: contract Reth is IDerivative, Initializable, OwnableUpgradeable {
 
+##
 
+### [G-4] 
   
 
    
