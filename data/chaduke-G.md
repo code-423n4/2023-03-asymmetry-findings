@@ -36,3 +36,13 @@ function addDerivative(
         emit DerivativeAdded(_contractAddress, _weight, derivativeCount);
     }
 ```
+G3. One can simply return poolPrice() here:
+```diff
+ function ethPerDerivative(uint256 _amount) public view returns (uint256) {
+        if (poolCanDeposit(_amount))
+            return
+                RocketTokenRETHInterface(rethAddress()).getEthValue(10 ** 18);
+-        else return (poolPrice() * 10 ** 18) / (10 ** 18);
++        else return poolPrice();
+    }
+```
