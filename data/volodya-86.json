@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "volodya",
+  "risk": "3",
+  "title": "The contract could be drained of funds due to a reentrancy vulnerability issue.",
+  "issueId": 86,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/86"
+}
