@@ -13,4 +13,4 @@ function adjustWeight(
 ```
 
 # Add a function previewUnstake
-Currently `unstake` doesn't return the ETH amount that it's actually unstaked. It's better to have a `function previewUnstake(uint256 _safEthAmount) external view returns (uint256)` which can let the user know how much ETH he will receive for a given `_safEthAmount`
+Currently `unstake` doesn't return the ETH amount that it's actually unstaked. It's better to have a `function previewUnstake(uint256 _safEthAmount) external view returns (uint256)` which can let the user know how much ETH he will receive for a given `_safEthAmount` before doing `unstake`
