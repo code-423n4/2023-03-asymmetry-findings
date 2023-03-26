@@ -46,4 +46,5 @@ QA4: If a user sent ETH to the ``WstEth`` by mistake, it will be withdrawn by th
 
 Mitigation: 
 Delete the  ``receive()`` function from ``WstEth`` so that no user can send ETH to the contract directly.
+For the same reason, ``receive()`` should be deleted from ``SfrxEth`` as well.
 
