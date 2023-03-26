@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "p_crypt0",
+  "risk": "2",
+  "title": "PreDepositPrice can be manipulated by early adopters, minting SafEth for free",
+  "issueId": 78,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/78"
+}
