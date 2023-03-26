@@ -85,7 +85,65 @@ FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/Reth.sol
 
 ##
 
-### [G-4] 
+### [G-4] Don't declare the variables inside the loops costs more gas 
+
+FILE : 2023-03-asymmetry/contracts/SafEth/SafEth.sol
+
+[SafEth.sol#L71-L96](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L71-L96)
+[SafEth.sol#L113-L119](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L113-L119)
+[SafEth.sol#L140-L153](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L140-L153)
+
+##
+
+### [G-5] Avoid contract existence checks by using low level calls
+
+Prior to 0.8.10 the compiler inserted extra code, including EXTCODESIZE (100 gas), to check for contract existence for external function calls. In more recent solidity versions, the compiler will not insert these checks if the external call has a return value. Similar behavior can be achieved in earlier versions by using low-level calls, since low level calls never check for contract existence
+
+FILE: 2023-03-asymmetry/contracts/SafEth/derivatives/WstEth.sol
+
+   90:    IERC20(_tokenIn).approve(UNISWAP_ROUTER, _amountIn);
+   101:   amountOut = ISwapRouter(UNISWAP_ROUTER).exactInputSingle(params);
+   108:   RocketTokenRETHInterface(rethAddress()).burn(amount);
+   197:   uint256 rethBalance1 = rocketTokenRETH.balanceOf(address(this));
+   199:   uint256 rethBalance2 = rocketTokenRETH.balanceOf(address(this));
+   222:   return IERC20(rethAddress()).balanceOf(address(this));
+
+[Reth.sol#L90](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L90),[Reth.sol#L101](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L101),[Reth.sol#L108](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L108),[Reth.sol#L197](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L197),[Reth.sol#L199](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L199),[Reth.sol#L222](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L222)
+
+##
+
+### [G-6] ADD UNCHECKED {} FOR SUBTRACTIONS WHERE THE OPERANDS CANNOT UNDERFLOW BECAUSE OF A PREVIOUS REQUIRE() OR IF-STATEMENT . This saves 30-40 gas
+
+SOLUTION:
+
+ require(a <= b); x = b - a => require(a <= b); unchecked { x = b - a } if(a <= b); x = b - a => if(a <= b); unchecked { x = b - a }
+
+This will stop the check for overflow and underflow so it will save gas.
+
+FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/Reth.sol
+
+    200: require(rethBalance2 > rethBalance1, "No rETH was minted");
+    201: uint256 rethMinted = rethBalance2 - rethBalance1; 
+
+[Reth.sol#L200-L201](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L200-L201)
+
+##
+
+### [G-7] Public function not called by contract declare external to save gas 
+
+FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/Reth.sol
+
+  211: function ethPerDerivative(uint256 _amount) public view returns (uint256) {
+
+  221: function balance() public view returns (uint256) {
+
+[Reth.sol#L211](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L211),[Reth.sol#L221](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L221),
+
+
+
+
+  
+
   
 
    
