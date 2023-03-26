@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "carrotsmuggler",
+  "risk": "3",
+  "title": "sfrxEth uses Curve spot Price, which can be manipulated to favour depositor",
+  "issueId": 126,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/126"
+}
