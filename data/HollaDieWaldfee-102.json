@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "HollaDieWaldfee",
+  "risk": "2",
+  "title": "SafEth.stake: ETH are lost when all weights are set to zero",
+  "issueId": 102,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/102"
+}
