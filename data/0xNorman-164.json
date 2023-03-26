@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "0xNorman",
+  "risk": "2",
+  "title": "minAmount and maxAmount may be inconsistent ",
+  "issueId": 164,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/164"
+}
