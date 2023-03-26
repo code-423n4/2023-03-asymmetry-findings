@@ -1,3 +1,37 @@
+## Max approval
+
+All derivative contracts could pre-approve maximum value `type(uint256).max` to reduce `CALL` operations for each transaction.
+
+### `Reth.sol` 
+
+Add maximum approval in [`initialize`](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L42).
+
+```Solidity
+IERC20(W_ETH_ADDRESS).approve(UNISWAP_ROUTER, type(uint256).max);
+```
+
+And remove approval in [`swapExactInputSingleHop`](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L83).
+
+### `SfrxEth.sol` 
+
+Add maximum approval in [`initialize`](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/SfrxEth.sol#L36).
+
+```Solidity
+IsFrxEth(FRX_ETH_ADDRESS).approve(FRX_ETH_CRV_POOL_ADDRESS, type(uint256).max);
+```
+
+And remove approval in [`withdraw`](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/SfrxEth.sol#L60).
+
+### `WstEth.sol`
+
+Add maximum approval in [`initialize`](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/WstEth.sol#L33).
+
+```Solidity
+IERC20(STETH_TOKEN).approve(LIDO_CRV_POOL, type(uint256).max);
+```
+
+And remove approval in [`withdraw`](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/WstEth.sol#L56).
+
 ## Redundant calculations `SafEth`
 
 Functions [`adjustWeight`](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L165) and ['addDerivative'](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L182) recalculates `totalWeight` iterating over all `weights`.
