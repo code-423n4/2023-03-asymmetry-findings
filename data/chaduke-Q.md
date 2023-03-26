@@ -1,4 +1,4 @@
-QA1. Once a derivative contract is added, there is no way to remove it. 
+QA1. Once a derivative contract is added, there is no way to remove it. No setting a weight = 0 will not dot it since ``unstake()`` will still withdraw ETH from that derivative contract with a weight zero.
 
 Mitigation: add a new function so that the owner can remove an existing derivative contract.
 
