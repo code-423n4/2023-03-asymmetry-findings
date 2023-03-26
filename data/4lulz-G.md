@@ -27,6 +27,8 @@ https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f68
 
 ### `derivativeCount`
 
+Save `derivativeCount` to memory before first storage read.
+
 https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L71
 
 https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L140
@@ -40,6 +42,8 @@ Save into memory address:
 IDerivative derivative = derivatives[i];
 ```
 https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L113
+
+### Derivative memory array
 
 Function [stake()](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L63) saves a derivative address in [the second loop](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L86), although there are 3 `SLOAD` operations for each address in the first loop.
 
