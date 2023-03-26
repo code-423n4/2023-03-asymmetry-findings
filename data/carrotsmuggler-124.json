@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "carrotsmuggler",
+  "risk": "3",
+  "title": "rEth `poolPrice` uses spot price, which is susceptible to price manipulation attacks",
+  "issueId": 124,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/124"
+}
