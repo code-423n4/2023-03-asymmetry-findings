@@ -40,3 +40,10 @@ if(totalSupply == 0) minAmount = (totalStakeValueEth;
 else minAmount =  totalStakeValueEth * totalSupply / underlyingValue;
 ```
 
+QA4: If a user sent ETH to the ``WstEth`` by mistake, it will be withdrawn by the user who unstakes from ``WstEth`` at L63 of the following withdraw() function:
+
+[https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/WstEth.sol#L56-L67](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/WstEth.sol#L56-L67)
+
+Mitigation: 
+Delete the  ``receive()`` function from ``WstEth`` so that no user can send ETH to the contract directly.
+
