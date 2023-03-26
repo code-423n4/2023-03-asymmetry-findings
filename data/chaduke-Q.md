@@ -48,3 +48,32 @@ Mitigation:
 Delete the  ``receive()`` function from ``WstEth`` so that no user can send ETH to the contract directly.
 For the same reason, ``receive()`` should be deleted from ``SfrxEth`` as well.
 
+QA5. swapExactInputSingleHop() might not work for some tokens such as 
+USDT and KNC, which do not allow approving an amount M > 0 when an existing amount N > 0 is already approved.
+
+[https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L83-L102](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L83-L102)
+
+Mitigation: approve to zero first and then approve to the needed amount:
+```diff
+function swapExactInputSingleHop(
+        address _tokenIn,
+        address _tokenOut,
+        uint24 _poolFee,
+        uint256 _amountIn,
+        uint256 _minOut
+    ) private returns (uint256 amountOut) {
++        IERC20(_tokenIn).approve(UNISWAP_ROUTER, 0);
+        IERC20(_tokenIn).approve(UNISWAP_ROUTER, _amountIn);
+        ISwapRouter.ExactInputSingleParams memory params = ISwapRouter
+            .ExactInputSingleParams({
+                tokenIn: _tokenIn,
+                tokenOut: _tokenOut,
+                fee: _poolFee,
+                recipient: address(this),
+                amountIn: _amountIn,
+                amountOutMinimum: _minOut,
+                sqrtPriceLimitX96: 0
+            });
+        amountOut = ISwapRouter(UNISWAP_ROUTER).exactInputSingle(params);
+    }
+```
