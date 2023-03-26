@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "mrudenko",
+  "risk": "2",
+  "title": "Missing inspection in of _safEthAmout in unstake function",
+  "issueId": 157,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/157"
+}
