@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "mrudenko",
+  "risk": "2",
+  "title": "rebalanceToWeights have single point of failure in deposit function",
+  "issueId": 161,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/161"
+}
