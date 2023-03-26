@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "ravikiranweb3",
+  "risk": "2",
+  "title": "setMaxSlippage should check for existence of derivative before attempting to set",
+  "issueId": 98,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/98"
+}
