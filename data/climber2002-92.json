@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "climber2002",
+  "risk": "3",
+  "title": "When `unstake` user could lose funds when totalSupply is big but unstakeAmount is small",
+  "issueId": 92,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/92"
+}
