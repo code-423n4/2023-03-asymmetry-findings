@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "Sabit",
+  "risk": "3",
+  "title": "Reentrancy attack",
+  "issueId": 109,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/109"
+}
