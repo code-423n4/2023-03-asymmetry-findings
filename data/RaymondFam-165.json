@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "RaymondFam",
+  "risk": "3",
+  "title": "Accounting mess up by `adjustWeight()` and `addDerivative()`",
+  "issueId": 165,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/165"
+}
