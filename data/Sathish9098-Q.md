@@ -30,6 +30,8 @@ FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/Reth.sol
 
 ### [L-2] MISSING CHECKS FOR ADDRESS(0X0) WHEN ASSIGNING VALUES TO ADDRESS STATE VARIABLES
 
+Owner address is not checked before calling _transferOwnership function 
+
 FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/WstEth.sol
 
     function initialize(address _owner) external initializer {
@@ -38,6 +40,15 @@ FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/WstEth.sol
     }
 
 [WstEth.sol#L33-L36](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/WstEth.sol#L33-L36)
+
+FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/SfrxEth.sol
+
+   function initialize(address _owner) external initializer {
+        _transferOwnership(_owner);
+        maxSlippage = (1 * 10 ** 16); // 1%
+    }
+
+[SfrxEth.sol#L36-L39](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/SfrxEth.sol#L36-L39)
 
 ##
 
@@ -54,6 +65,113 @@ FILE : FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/WstEth.sol
 [WstEth.sol#L48-L50](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/WstEth.sol#L48-L50)
 
 [WstEth.sol#L56-L67](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/WstEth.sol#L56-L67)
+
+FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/SfrxEth.sol
+
+   function setMaxSlippage(uint256 _slippage) external onlyOwner {
+        maxSlippage = _slippage;
+    }
+
+[SfrxEth.sol#L51-L53](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/SfrxEth.sol#L51-L53)
+
+##
+
+### [L-4] LOSS OF PRECISION DUE TO ROUNDING
+
+FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/WstEth.sol
+
+   60: uint256 minOut = (stEthBal * (10 ** 18 - maxSlippage)) / 10 ** 18;
+
+[WstEth.sol#L60](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/WstEth.sol#L60)
+
+FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/SfrxEth.sol
+
+   uint256 minOut = (((ethPerDerivative(_amount) * _amount) / 10 ** 18) *
+            (10 ** 18 - maxSlippage)) / 10 ** 18;
+
+[SfrxEth.sol#L74-L75](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/SfrxEth.sol#L74-L75)
+
+    return ((10 ** 18 * frxAmount) /
+            IFrxEthEthPool(FRX_ETH_CRV_POOL_ADDRESS).price_oracle());
+
+[SfrxEth.sol#L115-L116](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/SfrxEth.sol#L115-L116)
+
+FILE : 2023-03-asymmetry/contracts/SafEth/SafEth.sol
+
+   81:  else preDepositPrice = (10 ** 18 * underlyingValue) / totalSupply;
+
+[SafEth.sol#L81](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L81)
+
+   88: uint256 ethAmount = (msg.value * weight) / totalWeight;
+
+[SafEth.sol#L88](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L88)
+
+   uint derivativeReceivedEthValue = (derivative.ethPerDerivative(
+                depositAmount
+            ) * depositAmount) / 10 ** 18;
+
+[SafEth.sol#L92-L94](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L92-L94)
+
+   98: uint256 mintAmount = (totalStakeValueEth * 10 ** 18) / preDepositPrice;
+
+[SafEth.sol#L98](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L98)
+
+     uint256 derivativeAmount = (derivatives[i].balance() *
+                _safEthAmount) / safEthTotalSupply;
+
+[SafEth.sol#L115-L116](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L115-L116)
+
+   uint256 ethAmount = (ethAmountToRebalance * weights[i]) /
+                totalWeight;
+
+[SafEth.sol#L149-L150](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L149-L150)
+
+##
+
+### [L-5] A single point of failure
+
+The onlyOwner role has a single point of failure and onlyOwner can use critical a few functions.
+
+Even if protocol admins/developers are not malicious there is still a chance for Owner keys to be stolen. In such a case, the attacker can cause serious damage to the project due to important functions. In such a case, users who have invested in project will suffer high financial losses
+
+File: contracts/SafEth/SafEth.sol
+
+138:     function rebalanceToWeights() external onlyOwner {
+
+168:     ) external onlyOwner {
+
+185:     ) external onlyOwner {
+
+205:     ) external onlyOwner {
+
+214:     function setMinAmount(uint256 _minAmount) external onlyOwner {
+
+223:     function setMaxAmount(uint256 _maxAmount) external onlyOwner {
+
+232:     function setPauseStaking(bool _pause) external onlyOwner {
+
+241:     function setPauseUnstaking(bool _pause) external onlyOwner {
+File: contracts/SafEth/derivatives/Reth.sol
+
+58:     function setMaxSlippage(uint256 _slippage) external onlyOwner {
+
+107:     function withdraw(uint256 amount) external onlyOwner {
+
+156:     function deposit() external payable onlyOwner returns (uint256) {
+File: contracts/SafEth/derivatives/SfrxEth.sol
+
+51:     function setMaxSlippage(uint256 _slippage) external onlyOwner {
+
+60:     function withdraw(uint256 _amount) external onlyOwner {
+
+94:     function deposit() external payable onlyOwner returns (uint256) {
+File: contracts/SafEth/derivatives/WstEth.sol
+
+48:     function setMaxSlippage(uint256 _slippage) external onlyOwner {
+
+56:     function withdraw(uint256 _amount) external onlyOwner {
+
+73:     function deposit() external payable onlyOwner returns (uint256) {
 
 # NON CRITICAL FINDINGS 
 
@@ -211,6 +329,70 @@ FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/Reth.sol
         0x1F98431c8aD98523631AE4a59f267346ea31F984;
 
 [Reth.sol#L20-L27](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L20-L27)
+
+##
+
+### [NC-4] Shorter the inheritance 
+
+FILE : 2023-03-asymmetry/contracts/SafEth/SafEth.sol
+
+   contract SafEth is
+    Initializable,
+    ERC20Upgradeable,
+    OwnableUpgradeable,
+    SafEthStorage
+
+[SafEth/SafEth.sol#L15-L19](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L15-L19)
+
+##
+
+### [NC-5] EMPTY BLOCKS SHOULD BE REMOVED OR EMIT SOMETHING
+
+FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/WstEth.sol
+
+    97:  receive() external payable {}
+
+[WstEth.sol#L97](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/WstEth.sol#L97)
+
+FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/SfrxEth.sol
+ 
+    126: receive() external payable {}
+
+[SfrxEth.sol#L126](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/SfrxEth.sol#L126)
+
+FILE : 2023-03-asymmetry/contracts/SafEth/SafEth.sol
+
+   246: receive() external payable {}
+
+[SafEth.sol#L246](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L246)
+
+FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/Reth.sol
+
+   244: receive() external payable {}
+
+##
+
+### [NC-6] ADD PARAMETER TO EVENT-EMIT
+
+Some event-emit description hasn’t parameter. Add to parameter for front-end website or client app , they can has that something has happened on the blockchain
+
+FILE : 2023-03-asymmetry/contracts/SafEth/SafEth.sol
+
+  34: event Rebalanced();
+
+[SafEth.sol#L34](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L34)
+
+##
+
+### [NC-7] Pragma float
+All the contracts in scope are floating the pragma version.
+
+Recommendation
+Locking the pragma helps to ensure that contracts do not accidentally get deployed using an outdated compiler version.
+
+Note that pragma statements can be allowed to float when a contract is intended for consumption by other developers, as in the case with contracts in a library or a package.
+
+
   
 
    
