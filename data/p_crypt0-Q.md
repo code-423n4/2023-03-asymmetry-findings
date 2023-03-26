@@ -110,3 +110,13 @@ As such, you can alter the `stake` function thus:
 ```
 
 ***
+# [Low/Informational] No functionality to remove or freeze a certain derivative
+## Summary
+Whilst there is functionality to add a derivative to SafEth.sol, there is no functionality to remove one if it performs unexpectedly. This can be problematic, since if admin is not happy with the derivative setup they would have to deploy an upgrade to the SafEth.sol contract and freeze all staking (and possibly unstaking), causing unnecessarily frozen funds for end-users (users who aren't in those derivatives), with no guarantee for how long.
+
+Adding a function called `removeDerivative(address)` or `freezeDerivative(address)` which removes a derivative from SafEth.sol would allow for more flexibility for admin.
+
+## Concerns
+There are some concerns with removing derivatives.
+
+Namely, the contract must ensure that user funds that have been supplied to derivatives get redistributed correctly across other derivatives.
