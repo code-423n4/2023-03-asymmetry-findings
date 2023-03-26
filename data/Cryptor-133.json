@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "Cryptor",
+  "risk": "3",
+  "title": "Incorrect for loops in SafETh.sol will break the protocol",
+  "issueId": 133,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/133"
+}
