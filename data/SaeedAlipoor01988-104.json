@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "SaeedAlipoor01988",
+  "risk": "3",
+  "title": "By front-running to the supported staked derivatives contracts, the malicious user can withdraw more ETH balance than the actual amount",
+  "issueId": 104,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/104"
+}
