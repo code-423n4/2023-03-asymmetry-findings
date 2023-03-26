@@ -125,6 +125,19 @@ https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/deriv
 https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/derivatives/WstEth.sol
 
 
+## 7. For functions, follow Solidity standard naming conventions
+
+The code doesn’t follow Solidity’s standard naming convention,
+
+- internal and private functions : the mixedCase format starting with an underscore (_mixedCase starting with an underscore)
+
+- public and external functions : only mixedCase
+
+
+https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/derivatives/Reth.sol#L83-L89
+https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/derivatives/Reth.sol#L120
+https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/derivatives/Reth.sol#L228
+ 
 
 
 
