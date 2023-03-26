@@ -77,3 +77,33 @@ function swapExactInputSingleHop(
         amountOut = ISwapRouter(UNISWAP_ROUTER).exactInputSingle(params);
     }
 ```
+
+QA6. Attackers might steal funds from ``SafEth`` by manipulating the price of ``Reth``.
+
+The ``Reth`` price is based on ``ethPerDerivative()``:
+
+[https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L211-L223](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L211-L223)
+
+which is based on the following ``poolPrice()`` function:
+
+``javascript
+function poolPrice() private view returns (uint256) {
+        address rocketTokenRETHAddress = RocketStorageInterface(
+            ROCKET_STORAGE_ADDRESS
+        ).getAddress(
+                keccak256(
+                    abi.encodePacked("contract.address", "rocketTokenRETH")
+                )
+            );
+        IUniswapV3Factory factory = IUniswapV3Factory(UNI_V3_FACTORY);
+        IUniswapV3Pool pool = IUniswapV3Pool(
+            factory.getPool(rocketTokenRETHAddress, W_ETH_ADDRESS, 500)
+        );
+        (uint160 sqrtPriceX96, , , , , , ) = pool.slot0();
+        return (sqrtPriceX96 * (uint(sqrtPriceX96)) * (1e18)) >> (96 * 2);
+    }
+```
+
+However, an attacker can manipulate the spot price of ``sqrtPriceX96`` and trade to steal funds from the contract. It is always better to use TWAP price rather than the spot price. 
+
+Mitigatin: use TWAP price rather than the spot price of ``reth``. 
