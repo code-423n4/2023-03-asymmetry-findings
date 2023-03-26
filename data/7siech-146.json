@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "7siech",
+  "risk": "3",
+  "title": "Loss of precision can result in lost user funds during staking",
+  "issueId": 146,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/146"
+}
