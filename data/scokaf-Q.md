@@ -91,3 +91,42 @@ Manual Analysis
 
 Consider importing OZ first, then all interfaces, then all utils if available.
 
+# 4: INTERCHANGEABLE USAGE OF UINT AND UINT256
+
+Vulnerability details
+
+## Context:
+
+Interchangeable usage of uint and uint256. Below are instances where uint was used rather than uint256 like in the rest of the code.
+
+## Proof of Concept
+
+> ***File: SafEth.sol***
+
+https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L26-L28
+
+https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L31-L32
+
+https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L71
+
+https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L84
+
+https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L92
+
+https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L140
+
+https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L147
+
+https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L203-L204
+
+> ***File: Reth.sol***
+
+https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L171
+
+## Tools Used
+
+Manual Analysis
+
+### Recommended Mitigation Steps
+
+Consider using only one approach throughout the codebase, e.g. only uint or only uint256.
