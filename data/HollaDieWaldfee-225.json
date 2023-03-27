@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "HollaDieWaldfee",
+  "risk": "2",
+  "title": "Reth.sol: poolCanDeposit function lacks check which impacts the availability of the SafEth.stake functionality",
+  "issueId": 225,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/225"
+}
