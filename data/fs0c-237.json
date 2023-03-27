@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "fs0c",
+  "risk": "3",
+  "title": "poolPrice can be manipulated using a flash-loan attack.",
+  "issueId": 237,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/237"
+}
