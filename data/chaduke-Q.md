@@ -119,3 +119,7 @@ More seriously, if some weight becomes ZERO, then that derivatives will only be 
 
 Mitigation: 
 Whenever some weight is changed, either by addDerivative() or by adjustWeight(), call ``rebalanceToWeights()`` to rebalance all the derivatives according to the new weight distribution.
+
+QA8: There is no _gap[50] state variable for the upgradable contracts. 
+
+It is important to declare a uint _gap[50] state variable for the following upgradable implementation contracts so that when they are upgraded with the introduction of new state variables, other inheriting contracts will not be disturbed. A storage gap allows new variables to be added in future versions of the contracts without changing the inheritance chain. see https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps for further explanation.
