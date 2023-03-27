@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "reassor",
+  "risk": "2",
+  "title": "Missing checks in WstEth if depositing in Lido is possible",
+  "issueId": 247,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/247"
+}
