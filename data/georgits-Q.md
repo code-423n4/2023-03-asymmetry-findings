@@ -52,3 +52,6 @@ SafEth.sol - [224](https://github.com/code-423n4/2023-03-asymmetry/blob/main/con
 ## Wrong NatSpec
 SafEth.sol - [158](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L158)
 The function doesn’t add a new derivative to the index fund
+
+## Remove unnecessary `receive()` method
+[WstEth.sol](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/derivatives/WstEth.sol#L97), [SfrxEth.sol](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/derivatives/SfrxEth.sol#L126), [Reth.sol](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/derivatives/Reth.sol#L244)
