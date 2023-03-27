@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "igingu",
+  "risk": "2",
+  "title": "Computation behind underlyingValue and staking is not consistent accross derivatives",
+  "issueId": 219,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/219"
+}
