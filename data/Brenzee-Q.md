@@ -194,6 +194,37 @@ User1 tries to stake and transaction fails.
 
 Suggesting to validate  `weight` in `adjustWeight` and `addDerivative` functions so it is not too high or too low. Additionally suggesting to change  `uint256` to a smaller value type.
 
+## [L-06] Not all ETH that is sent to `stake()` function is used/deposited in derivatives
+https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L63-L101
+
+For example, `SafEth.sol` has 3 derivative contracts with 1e18 as weight for every derivative (like in current tests). Bob stakes 1 ether via `stake()` function, but because there are 3 derivatives with the same weight, 1 wei will not be used in the `stake()`  function and ETH will be locked in the contract.
+
+Code inside `stake()` function in `SafEth.sol`
+```solidity
+        uint256 totalStakeValueEth = 0; // total amount of derivatives worth of ETH in system
+        for (uint i = 0; i < derivativeCount; i++) {
+            uint256 weight = weights[i];
+            IDerivative derivative = derivatives[i];
+            if (weight == 0) continue;
+            uint256 ethAmount = (msg.value * weight) / totalWeight;
+
+            // This is slightly less than ethAmount because slippage
+            uint256 depositAmount = derivative.deposit{value: ethAmount}();
+            uint derivativeReceivedEthValue = (derivative.ethPerDerivative(
+                depositAmount
+            ) * depositAmount) / 10 ** 18;
+            totalStakeValueEth += derivativeReceivedEthValue;
+        }
+		
+        // After stake of 1 ether is deposited into 3 derivatives, 1 wei will be unused
+		
+        // mintAmount represents a percentage of the total assets in the system
+        uint256 mintAmount = (totalStakeValueEth * 10 ** 18) / preDepositPrice;
+        _mint(msg.sender, mintAmount);
+```
+
+
+
 ## [N-01] Unused function parameter `_amount` 
 https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/derivatives/SfrxEth.sol#L111
 https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/derivatives/WstEth.sol#L86
