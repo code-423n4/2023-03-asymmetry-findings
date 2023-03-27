@@ -14,6 +14,8 @@
 | [L-09] | Add a timelock to critical functions                                                                        | 8             |
 | [L-10] | Lock pragmas to specific compiler version                                                                   | 4             |
 | [L-11] | Use `uint256` instead `uint`                                                                                | 16            |
+| [L-12] | Inconsistent check between Reth.Deposit() and WstEth.deposit(), SfrxEth.deposit()                           | 2             |
+| [L-13] | Critical changes should use-two step procedure                                                              | 4             |
 
 | Total Non-Critical issues |
 |---------------------------|
@@ -231,7 +233,7 @@ The contract `owner` is not prevented from renouncing the role/ownership while t
 
 Prevent the owner from renouncing the role/ownership while the staking or the unstaking is paused.
 
-## [NC-06] Unused `receive()` Function Will Lock Ether In Contract
+## [L-06] Unused `receive()` Function Will Lock Ether In Contract
 
 #### Description
 
@@ -560,6 +562,54 @@ For example if doing `bytes4(keccak('transfer(address, uint)’))`, you'll get a
 #### Recommended Mitigation Steps
 
 Use `uint256` instead `uint`.
+
+## [L-12] Inconsistent check between Reth.Deposit() and WstEth.deposit(), SfrxEth.deposit()
+
+#### Description
+
+The following check in [`Reth.Deposit()`](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/derivatives/Reth.sol#L200) function ensures that some Reth were minted to the caller:
+
+```solidity
+            require(rethBalance2 > rethBalance1, "No rETH was minted");
+```
+
+However, there is no such checks in [`WstEth.deposit()`](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/derivatives/WstEth.sol#L73), [`SfrxEth.deposit()`](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/derivatives/SfrxEth.sol#L94) functions which may lead to unexpected behavior in the future.
+
+#### Lines of code 
+
+- [Reth.sol#L156](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/derivatives/Reth.sol#L156)
+
+- [WstEth.sol#L73](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/derivatives/WstEth.sol#L73)
+
+- [SfrxEth.sol#L94](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/derivatives/SfrxEth.sol#L94)
+
+#### Recommended Mitigation Steps
+
+Add the same check to the other functions to make them more robust.
+
+## [L-13] Critical changes should use-two step procedure
+
+#### Description
+
+The following contracts ([`WstEth.sol`](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/derivatives/WstEth.sol), [`SfrxEth.sol`](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/derivatives/SfrxEth.sol), [`SafEth.sol`](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol), [`Reth.sol`](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/derivatives/Reth.sol)) inherit [`OwnableUpgradeable.sol`](https://github.com/OpenZeppelin/openzeppelin-contracts-upgradeable/blob/master/contracts/access/OwnableUpgradeable.sol) which have a function that allows the owner to transfer ownership to a different address. If the owner accidentally uses an invalid address for which they do not have the private key, then the system will gets locked.
+
+#### Lines of code 
+
+```solidity
+    function _transferOwnership(address newOwner) internal virtual {
+        address oldOwner = _owner;
+        _owner = newOwner;
+        emit OwnershipTransferred(oldOwner, newOwner);
+    }
+```
+
+- [OwnableUpgradeable.sol#L83-L87](https://github.com/OpenZeppelin/openzeppelin-contracts-upgradeable/blob/master/contracts/access/OwnableUpgradeable.sol#L83-L87)
+
+#### Recommended Mitigation Steps
+
+Consider adding two step procedure on the critical functions where the first is announcing a pending new owner and the new address should then claim its ownership or inherit [`Ownable2StepUpgradeable.sol`](https://github.com/OpenZeppelin/openzeppelin-contracts-upgradeable/blob/master/contracts/access/Ownable2StepUpgradeable.sol) instead.
+
+A similar issue was reported in a previous contest and was assigned a severity of medium: code-423n4/2021-06-realitycards-findings#105
 
 ## [NC-01] Include return parameters in NatSpec comments
 
