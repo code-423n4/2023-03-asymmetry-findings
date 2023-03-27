@@ -135,3 +135,11 @@ QA9: A compromised/malicious owner of SafEth can easily drain the whole safEth a
 
 Mitigation: 
 ``addDrivative()`` should only be allowed during deployment and the introduction of new derivatives should use proxy patterns to upgrade existing contracts. The practice should follow a standard proxy pattern best practice. 
+
+QA10. setMaxSlippage() might have a silent failure. 
+
+[https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L202-L208](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L202-L208)
+
+The reason that setMaxSlippage() might have a silent failure is because ``derivatives`` state mapping variable, so even when ``derivativeIndex >= derivativeCount``, derivative[_derivativeIndex] will be equal to zero address. Calling a method on a zero address will have a silent success even thought nothing is accomplished. The event will also be emitted even though no slippage is actually set. 
+
+Mitigation: check to make sure ``derivativeIndex < derivativeCount``.
