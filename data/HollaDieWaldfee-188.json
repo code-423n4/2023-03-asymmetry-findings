@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "HollaDieWaldfee",
+  "risk": "2",
+  "title": "WstEth.sol: assumed peg between stETH and ETH leads to issues with slippage calculation (availability and insufficient slippage protection impact)",
+  "issueId": 188,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/188"
+}
