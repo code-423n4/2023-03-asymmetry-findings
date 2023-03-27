@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "T1MOH",
+  "risk": "2",
+  "title": "Possible Denial-of-Service when price price RETH / ETH goes up",
+  "issueId": 239,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/239"
+}
