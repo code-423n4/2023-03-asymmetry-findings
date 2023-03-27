@@ -21,7 +21,7 @@ https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f68
         return ((10 ** 18 * frxAmount) /
             IFrxEthEthPool(FRX_ETH_CRV_POOL_ADDRESS).price_oracle());
     }
-``
+```
 In this snippet from the ethPerDerivative function in SfrxEth.sol, it can be seen that `_amount` is unused. 
 
 - **Tools Used**
