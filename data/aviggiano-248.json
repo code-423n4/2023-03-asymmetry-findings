@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "aviggiano",
+  "risk": "3",
+  "title": "`SfrxEth.ethPerDerivative` miscalculation will result in a wrong value of `SafEth` tokens being minted on user stake",
+  "issueId": 248,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/248"
+}
