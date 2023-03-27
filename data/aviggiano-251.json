@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "aviggiano",
+  "risk": "3",
+  "title": "Using swap pools as price oracles is vulnerable to price manipulation attacks",
+  "issueId": 251,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/251"
+}
