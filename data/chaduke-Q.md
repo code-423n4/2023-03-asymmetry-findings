@@ -123,3 +123,15 @@ Whenever some weight is changed, either by addDerivative() or by adjustWeight(),
 QA8: There is no _gap[50] state variable for the upgradable contracts. 
 
 It is important to declare a uint _gap[50] state variable for the following upgradable implementation contracts so that when they are upgraded with the introduction of new state variables, other inheriting contracts will not be disturbed. A storage gap allows new variables to be added in future versions of the contracts without changing the inheritance chain. see https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps for further explanation.
+
+QA9: A compromised/malicious owner of SafEth can easily drain the whole safEth assets.
+1) He can call ``addDrivative()`` to add a new malicious derivative contract ``BadContract``.
+
+2) He calls adjustWeight() to set the weights of all other derivative contracts to zero and set the weight of ``BadContract`` to 100.
+
+3) He calls rebalanceToWeights() to pull all the assets into ``BadContract``. 
+
+4) The bad contracts send all the ETH to the attacker's private wallet.
+
+Mitigation: 
+``addDrivative()`` should only be allowed during deployment and the introduction of new derivatives should use proxy patterns to upgrade existing contracts. The practice should follow a standard proxy pattern best practice. 
