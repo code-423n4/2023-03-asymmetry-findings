@@ -107,3 +107,15 @@ function poolPrice() private view returns (uint256) {
 However, an attacker can manipulate the spot price of ``sqrtPriceX96`` and trade to steal funds from the contract. It is always better to use TWAP price rather than the spot price. 
 
 Mitigatin: use TWAP price rather than the spot price of ``reth``. 
+
+
+QA7. addDerivative() and adjustWeight() might make different derivatives out of balance.
+
+[https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L165-L175](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L165-L175)
+
+[https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L182-L195](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L182-L195)
+
+More seriously, if some weight becomes ZERO, then that derivatives will only be withdrawn and not be deposited. 
+
+Mitigation: 
+Whenever some weight is changed, either by addDerivative() or by adjustWeight(), call ``rebalanceToWeights()`` to rebalance all the derivatives according to the new weight distribution.
