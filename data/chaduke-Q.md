@@ -1,6 +1,8 @@
-QA1. Once a derivative contract is added, there is no way to remove it. No setting a weight = 0 will not dot it since ``unstake()`` will still withdraw ETH from that derivative contract with a weight zero.
+QA1. The protocol lacks the method ``removeDerivative()``. Setting the weight for a derivative contract to ZERO will not do it since a user can still unstake from a derivative contract with zero weight.
 
-Mitigation: add a new function so that the owner can remove an existing derivative contract.
+Mitigation: 1) Call ``rebalanceToWeights()`` after any weight of the derivative contract is adjusted. 
+In this way, zero-weight derivative contract will have zero asset in it; or 2) explicitly implement a new method ``removeDerivative()``. The later is preferred. 
+
 
 QA2. The protocol assumes that each derivative has 18 decimals, so the protocol will break when the underlying derivative has different decimals. 
 
