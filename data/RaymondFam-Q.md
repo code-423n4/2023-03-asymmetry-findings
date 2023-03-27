@@ -62,3 +62,80 @@ Here is an instance entailed:
 
 154:        emit Rebalanced();
 ```
+## No storage gap for upgradeable contracts
+Consider adding a storage gap at the end of an upgradeable contract, just in case it would entail some child contracts in the future. This would ensure no shifting down of storage in the inheritance chain.
+
+```diff
++ uint256[50] private __gap;
+```
+Here are the contract instances entailed:
+
+[File: SafEth.sol](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol)
+[File: WstEth.sol](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/derivatives/WstEth.sol)
+[File: SfrxEth.sol](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/derivatives/SfrxEth.sol)
+[File: Reth.sol](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/derivatives/Reth.sol)
+
+## Inadequate NatSpec
+Solidity contracts can use a special form of comments, i.e., the Ethereum Natural Language Specification Format (NatSpec) to provide rich documentation for functions, return variables and more. Please visit the following link for further details:
+
+https://docs.soliditylang.org/en/v0.8.16/natspec-format.html
+
+Consider fully equipping all contracts with complete set of NatSpec to better facilitate users/developers interacting with the protocol's smart contracts.
+
+For instance, it will be very helpful commenting the function below as to why the missing @ param _amount is inputted as a parameter but not used in the function logic on top of the missing @ return:
+
+[File: SfrxEth.sol#L108-L117](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/derivatives/SfrxEth.sol#L108-L117)
+
+```solidity
+    /**
+        @notice - Get price of derivative in terms of ETH
+     */
+    function ethPerDerivative(uint256 _amount) public view returns (uint256) {
+        uint256 frxAmount = IsFrxEth(SFRX_ETH_ADDRESS).convertToAssets(
+            10 ** 18
+        );
+        return ((10 ** 18 * frxAmount) /
+            IFrxEthEthPool(FRX_ETH_CRV_POOL_ADDRESS).price_oracle());
+    }
+```
+## Typo mistakes
+[File: SafEth.sol#L90](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L90)
+
+```diff
+-            // This is slightly less than ethAmount because slippage
++            // This is slightly less than ethAmount because of slippage
+```
+## Gas griefing/theft is possible on unsafe external call
+`return` data (bool success,) has to be stored due to EVM architecture, if in a usage like below, ‘out’ and ‘outsize’ values are given (0,0). Thus, this storage disappears and may come from external contracts a possible gas grieving/theft problem is avoided as denoted in the link below:
+
+https://twitter.com/pashovkrum/status/1607024043718316032?t=xs30iD6ORWtE2bTTYsCFIQ&s=19
+
+Here is a specific instance entailed:
+
+[File: SafEth.sol#L124-L127](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L124-L127)
+
+```solidity
+        (bool sent, ) = address(msg.sender).call{value: ethAmountToWithdraw}(
+            ""
+        );
+        require(sent, "Failed to send Ether");
+```
+## Non-compliant contract layout with Solidity's Style Guide
+According to Solidity's Style Guide below:
+
+https://docs.soliditylang.org/en/v0.8.17/style-guide.html
+
+In order to help readers identify which functions they can call, and find the constructor and fallback definitions more easily, functions should be grouped according to their visibility and ordered in the following manner:
+
+constructor, receive function (if exists), fallback function (if exists), external, public, internal, private
+
+And, within a grouping, place the view and pure functions last.
+
+Additionally, inside each contract, library or interface, use the following order:
+
+type declarations, state variables, events, modifiers, functions
+
+Consider adhering to the above guidelines for all contract instances entailed.
+
+## Tokens accidentally sent to the contract cannot be recovered
+It is deemed unrecoverable if the tokens accidentally arrive at the contract addresses, which has happened to many popular projects. Consider adding a recovery code to your critical contracts.
