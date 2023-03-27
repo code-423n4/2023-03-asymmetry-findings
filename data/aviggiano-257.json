@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "aviggiano",
+  "risk": "2",
+  "title": "`SafEth.addDerivative` allows duplicates, which may lead to user `unstake`ing double the amount of what they are owed",
+  "issueId": 257,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/257"
+}
