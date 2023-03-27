@@ -2,11 +2,16 @@ Overall code is simple and self-explanatory. The codebase is small and to the po
 
 # Low severity
 
+## Wrong price of the lido derivative
+* Problem: https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/derivatives/WstEth.sol#L87 returns the amount of stETH for one wstETH. And it should return the amount of ETH for one wstETH.
+
+* Solution: Use the curve or chainlink oracle to determine the amount of ETH per wstETH
+
+
 ## Adjusting weights of non-existing derivatives
 * Problem: It is possible to set the weight of a derivative that doesnt exist https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L169. Though it doesnt cause issues its probably good to revert as feedback.
 
 * Solution: require the derivative to exist
-
 
 
 ## Slippage should be limited
