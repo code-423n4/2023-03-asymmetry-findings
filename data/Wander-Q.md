@@ -41,3 +41,22 @@ function adjustWeight(
         emit WeightChange(_derivativeIndex, _weight);
     }
 ```
+
+## 2. There is no need to recalculate the value of ```totalWeight``` in ```addDerivative```
+https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L190-L193
+The mentioned code lines can be replaced with a single line of code.
+```addDerivative``` function can be changed as follows:
+```
+function addDerivative(
+        address _contractAddress,
+        uint256 _weight
+    ) external onlyOwner {
+        derivatives[derivativeCount] = IDerivative(_contractAddress);
+        weights[derivativeCount] = _weight;
+        derivativeCount++;
+
+        totalWeight += _weight; // <<----------- This line should be enough ----------
+
+        emit DerivativeAdded(_contractAddress, _weight, derivativeCount);
+    }
+```
