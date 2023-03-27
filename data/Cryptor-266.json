@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "Cryptor",
+  "risk": "2",
+  "title": "Deposit in Reth contract could revert ",
+  "issueId": 266,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/266"
+}
