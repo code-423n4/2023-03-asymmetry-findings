@@ -25,6 +25,7 @@ Overall code is simple and self-explanatory. The codebase is small and to the po
 ## Overflow in localTotalWeight calculation
 
 * Problem: In the scenario where the weights add up to be more than the uint256 can hold the transaction will revert (https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L192, https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L172)
+
 * Solution: Use a smaller uint8 or similar for storing the weights.
 
 
