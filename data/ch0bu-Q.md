@@ -138,8 +138,18 @@ https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/deriv
 https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/derivatives/Reth.sol#L120
 https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/derivatives/Reth.sol#L228
  
+## 8. Unused function parameter and local variable
 
-
+Local variable `_amount` is not used anywhere in the function and can be removed
+```
+111	function ethPerDerivative(uint256 _amount) public view returns (uint256) {
+112		uint256 frxAmount = IsFrxEth(SFRX_ETH_ADDRESS).convertToAssets(
+113			10 ** 18
+114		);
+115		return ((10 ** 18 * frxAmount) /
+116			IFrxEthEthPool(FRX_ETH_CRV_POOL_ADDRESS).price_oracle());
+117	}
+```
 
 
 
