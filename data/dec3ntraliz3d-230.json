@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "dec3ntraliz3d",
+  "risk": "3",
+  "title": "Adding an Incorrect derivative address will brick SafEth.sol contract",
+  "issueId": 230,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/230"
+}
