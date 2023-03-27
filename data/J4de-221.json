@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "J4de",
+  "risk": "2",
+  "title": "`SafEth` contract `underlyingValue` variable has unnecessary precision loss",
+  "issueId": 221,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/221"
+}
