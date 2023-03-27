@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "aviggiano",
+  "risk": "2",
+  "title": "`SafEth.rebalanceToWeights` incorrectly rebalances only derivatives total balance, which leads to stuck ether on contract",
+  "issueId": 256,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/256"
+}
