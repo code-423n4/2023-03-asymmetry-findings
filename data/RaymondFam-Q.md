@@ -1,3 +1,12 @@
+## Timelock for `adjustWeight()` and `addDerivative()`
+Changes made via `adjustWeight()` and `addDerivative()` are sensitive transactions that may go against users` original portfolio plan with Asymmetry Finance. As such, users of the system should have assurances about the behavior of the changed action(s) they’re about to take.
+
+Here are two typical secnarios that could transpire:
+- A user decides to stake 100 ETH after seeing a placing of weights to his desire the system has on the the three derivatives, i.e. Reth, SfrxEth and WstEth. His call happens to be inadvertently front run by [`adjustWeight()`](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L165-L175) or [`addDerivative()`](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L182-L195) with his ETH now diversified to a different portfolio of staked derivatives.
+- The same situation could also happen later, if not front run.   
+
+Consider implementing a time lock by making the weight and derivative parameter changes require two steps with a mandatory time window between them. The first step merely broadcasts to users that a particular change is coming, and the second step commits that change after a suitable waiting period. This allows users that do not accept the change to withdraw their positions in time.
+
 ## Modularity on import usages
 For cleaner Solidity code in conjunction with the rule of modularity and modular programming, use named imports with curly braces instead of adopting the global import approach.
 
@@ -53,4 +62,3 @@ Here is an instance entailed:
 
 154:        emit Rebalanced();
 ```
-## 
