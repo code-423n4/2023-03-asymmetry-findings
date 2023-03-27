@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "volodya",
+  "risk": "2",
+  "title": "If WstEth and SfrxEth cannot be deposited, the `stake` function will be reverted.",
+  "issueId": 175,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/175"
+}
