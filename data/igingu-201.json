@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "igingu",
+  "risk": "2",
+  "title": "Underlying value of Reth in Eth should be determined using Uniswap's TWAP, not Spot price",
+  "issueId": 201,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/201"
+}
