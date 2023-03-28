@@ -7,10 +7,11 @@
 |Id|Title|Instances|
 |:--:|:-------|:--:|
 |[L-01]| No limits to max slippage | 1 |
-|[L-02]| Owner can renounce ownership | 17 |
-|[L-03]| Lack of two-step Ownership | 4 |
+|[L-02]| Missing safe limits in `setMinAmount` and `setMaxAmount` | 1 |
+|[L-03]| Owner can renounce ownership | 17 |
+|[L-04]| Lack of two-step Ownership | 4 |
 
-Total: 22 instances over 3 issues.
+Total: 23 instances over 4 issues.
 
 ### Non Critical Findings
 |Id|Title|Instances|
@@ -49,7 +50,30 @@ File: contracts/SafEth/SafEth.sol
 
 ```
 
-### [L-02] Owner can renounce ownership
+### [L-02] Missing safe limits in `setMinAmount` and `setMaxAmount`
+
+
+The `minAmount` should never be greater than `maxAmount`, as it would lock the `stake` function. Consider adding some safechecks to those setters.
+
+
+*There is 1 instance of this issue.*
+
+
+```solidity
+File: contracts/SafEth/SafEth.sol
+
+214: 		    function setMinAmount(uint256 _minAmount) external onlyOwner {
+215: 		        minAmount = _minAmount;
+216: 		        emit ChangeMinAmount(minAmount);
+217: 		    }
+223: 		    function setMaxAmount(uint256 _maxAmount) external onlyOwner {
+224: 		        maxAmount = _maxAmount;
+225: 		        emit ChangeMaxAmount(maxAmount);
+226: 		    }
+
+```
+
+### [L-03] Owner can renounce ownership
 
 The contract's owner is the account that deploys the contract. As a result, the owner is able to perform certain privileged activities.
 
@@ -108,7 +132,7 @@ File: contracts/SafEth/derivatives/WstEth.sol
 
 ```
 
-### [L-03] Lack of two-step Ownership
+### [L-04] Lack of two-step Ownership
 
 A single step Ownership change is risky due to the fact that the address could be wrong, so it's better to use a two - step Ownership.
 
