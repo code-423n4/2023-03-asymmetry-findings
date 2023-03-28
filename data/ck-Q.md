@@ -1,6 +1,6 @@
 ## Pausing functionality can be done with just one function
 
-There are currently separate functions for pusing and unpausing
+There are currently separate functions for pausing and unpausing
 
 ```solidity
    function setPauseStaking(bool _pause) external onlyOwner {
