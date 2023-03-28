@@ -145,3 +145,16 @@ QA10. setMaxSlippage() might have a silent failure.
 The reason that setMaxSlippage() might have a silent failure is because ``derivatives`` state mapping variable, so even when ``derivativeIndex >= derivativeCount``, derivative[_derivativeIndex] will be equal to zero address. Calling a method on a zero address will have a silent success even thought nothing is accomplished. The event will also be emitted even though no slippage is actually set. 
 
 Mitigation: check to make sure ``derivativeIndex < derivativeCount``.
+
+QA11. Stake() and unstake() for the strategy contract will be blocked when one of its underlying derivative contract services become temporarily unavailable. 
+
+[https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L63-L129](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L63-L129)
+
+
+1. The stake() and unstake() function for the strategy contract will revert whenever one of the deposit() or withdraw() of the underlying derivative contract fails. As a result, stake() and unstake() become unavailable even though all other derivative contracts are still available. 
+
+2. Set a weight to zero for that temporarily unavailable derivative contract is not the solution since the asset is still in that underlying contract and there is no way to rebalance it. Ignoring it won't work either since that means a user will unstake less amount of ETH - loss of funds
+
+3. The design of the architecture should have the fault-tolerance property such that a user can still stake/unstake using the remaining derivative contracts without losing funds in ETH value.
+
+Mitigation: a user should be able to stake/unstake using the remaining derivative contracts when one of them becomes unavailable  and resume to use it when it becomes available again. 
