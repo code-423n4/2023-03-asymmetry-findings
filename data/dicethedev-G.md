@@ -35,6 +35,33 @@ https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f68
 
 https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L108
 
+7. In the `rethAddress()` function, you could store the `RocketStorageInterface` instance as a contract-level variable instead of creating a new instance each time the function is called. This would save gas because it would reduce the number of calls to the `getAddress()` function.
+
+https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L68
+
+8. In the `swapExactInputSingleHop()` function, you could add a check to see if the `_minOut` parameter is greater than zero. If it is not, you could skip the call to the Uniswap router, saving gas.
+
+https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L83-L102
+
+9. In the withdraw() function, you could remove the sent variable and use the require() statement to check if the transfer was successful. This would save gas because it would reduce the number of variables.
+
+https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L110
+
+10. In the `poolCanDeposit()` function, you could store the `rocketDepositPool` and `rocketProtocolSettings`` instances as contract-level variables instead of creating new instances each time the function is called. This would save gas because it would reduce the number of calls to the getAddress() function.
+
+https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L120-L150
+
+11. The `poolCanDeposit` function could be made public if it is intended to be called by other contracts. Otherwise, it could be made internal to save gas costs for not creating a new public function entry in the contract ABI.
+
+https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L120
+
+12. The `swapExactInputSingleHop` function could use `IERC20(_tokenIn).transferFrom(msg.sender, address(this), _amountIn)` instead of `IERC20(_tokenIn).approve(UNISWAP_ROUTER, _amountIn)` to save gas costs for approving the token transfer.
+
+https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L90
+
+13.  
+
+
 
 
 
