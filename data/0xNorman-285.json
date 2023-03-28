@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "0xNorman",
+  "risk": "2",
+  "title": "Lack of input validation for _slippage in setMaxSlippage result in underflow",
+  "issueId": 285,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/285"
+}
