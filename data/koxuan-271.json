@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "koxuan",
+  "risk": "3",
+  "title": "stETH can depeg with ETH which can cause incorrect ethPerDerivative for WstEth ",
+  "issueId": 271,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/271"
+}
