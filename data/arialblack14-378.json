@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "arialblack14",
+  "risk": "2",
+  "title": "The `weight` of the derivatives can be set to 0, but setting all weights to 0 causes the staking transactions to revert.",
+  "issueId": 378,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/378"
+}
