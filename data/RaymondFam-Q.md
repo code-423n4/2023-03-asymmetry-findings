@@ -7,6 +7,11 @@ Here are two typical secnarios that could transpire:
 
 Consider implementing a time lock by making the weight and derivative parameter changes require two steps with a mandatory time window between them. The first step merely broadcasts to users that a particular change is coming, and the second step commits that change after a suitable waiting period. This allows users that do not accept the change to withdraw their positions in time.
 
+## Uninitialized critical variables
+In SafEth.sol, consider initializing the settable variable, i.e. [`weights`](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEthStorage.sol#L23), via [`addDerivative`](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L182-L195) in [`initialize()`](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L48-L56) just to make sure [`stake()`](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L84-L96) dependent on them are not going to break or malfunction due to calls being made before the derivatives get added and the respective weights manage to be set.
+
+Although this can be circumvented via [`setPauseStaking()`](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L232-L235) upon contract deployment, it will require added work to maneuver since `pauseStaking == false` by default. 
+
 ## Modularity on import usages
 For cleaner Solidity code in conjunction with the rule of modularity and modular programming, use named imports with curly braces instead of adopting the global import approach.
 
@@ -138,4 +143,7 @@ type declarations, state variables, events, modifiers, functions
 Consider adhering to the above guidelines for all contract instances entailed.
 
 ## Tokens accidentally sent to the contract cannot be recovered
-It is deemed unrecoverable if the tokens accidentally arrive at the contract addresses, which has happened to many popular projects. Consider adding a recovery code to your critical contracts.
+It is deemed unrecoverable if any of the ERC20 tokens accidentally arrive at the contract addresses, which has happened to many popular projects. Consider adding a recovery code to your critical contracts.
+
+## Atomic transaction to circumvent front-run initializers
+Consider having contract deployment and [`initialize()`](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L48-L56) transacted atomically from the deployment script to avoid the front-runnable initializer from being hijacked by malicious actors.  
