@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "mrudenko",
+  "risk": "3",
+  "title": "Full control over `rebalanceToWeights` for one admin",
+  "issueId": 291,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/291"
+}
