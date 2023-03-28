@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "Krace",
+  "risk": "3",
+  "title": "SafEth: DEPOSITOR CAN BREAK MINTING OF SafEth AND STEAL OTHER DEPOSITOR'S ETH DIRECTLY",
+  "issueId": 315,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/315"
+}
