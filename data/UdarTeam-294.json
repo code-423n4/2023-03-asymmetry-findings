@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "UdarTeam",
+  "risk": "3",
+  "title": "[H-01] Reth poolPrice function vulnerable to price manipulation",
+  "issueId": 294,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/294"
+}
