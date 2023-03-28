@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "Dewaxindo",
+  "risk": "3",
+  "title": "User Can Steal Another User's ETH in `SafeETH.stake()` function",
+  "issueId": 287,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/287"
+}
