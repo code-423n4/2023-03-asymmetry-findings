@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "arialblack14",
+  "risk": "2",
+  "title": "A value in `minAmount` higher than `maxAmount` or for `maxAmount` lower than `minAmount` will revert staking by all users.",
+  "issueId": 366,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/366"
+}
