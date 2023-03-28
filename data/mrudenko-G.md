@@ -10,3 +10,17 @@ In contacts where loops are used contract can be optimized by setting i++ increm
 unchecked {
             i += 1;
         }
+
+----
+function adjustWeight can be optimized as follow
+```
+    function adjustWeight(
+        uint256 _derivativeIndex,
+        uint256 _weight
+    ) external onlyOwner {
+        uint256 oldWeight = weights[_derivativeIndex];
+        weights[_derivativeIndex] = _weight;
+        totalWeight = totalWeight - oldWeight + _weight;
+        emit WeightChange(_derivativeIndex, _weight);
+    }
+```
