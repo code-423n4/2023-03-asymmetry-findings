@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "HollaDieWaldfee",
+  "risk": "2",
+  "title": "SfrxEth.sol: Frax submit functionality can be paused which leads to DOS in stake and rebalanceToWeights function",
+  "issueId": 308,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/308"
+}
