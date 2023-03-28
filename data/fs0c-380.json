@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "fs0c",
+  "risk": "3",
+  "title": "Slippage protection doesn’t protect against sandwich attacks.",
+  "issueId": 380,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/380"
+}
