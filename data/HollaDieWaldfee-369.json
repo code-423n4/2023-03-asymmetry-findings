@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "HollaDieWaldfee",
+  "risk": "2",
+  "title": "SafEth.sol: When one (possibly abandoned) derivative misbehaves users cannot unstake",
+  "issueId": 369,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/369"
+}
