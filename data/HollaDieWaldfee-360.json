@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "HollaDieWaldfee",
+  "risk": "2",
+  "title": "Reth.sol: ethPerDerivative is prone to price manipulation due to raw use of sqrtPriceX96 which allows an attacker to mint an unfair amount of safETH tokens",
+  "issueId": 360,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/360"
+}
