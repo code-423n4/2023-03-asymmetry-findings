@@ -59,7 +59,23 @@ https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f68
 
 https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L90
 
-13.  
+13. The `withdraw()` function could be optimized by avoiding the use of the `approve` function to approve the `FRX_ETH_CRV_POOL_ADDRESS` to spend the `FRX_ETH_ADDRESS` tokens. Instead, the contract could hold the `FRX_ETH_ADDRESS` tokens directly and call the `exchange` function on the `IFrxEthEthPool` contract with the `FRX_ETH_ADDRESS` token allowance set to zero. This would save gas on the additional `approve` call and the subsequent `safeTransferFrom` call by the pool contract to transfer the tokens.
+
+https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/SfrxEth.sol#L60-L88
+
+14. The `deposit()` function could be optimized by combining the two `IERC20` balance checks into a single call to `IERC20.balanceOf` by passing the contract address as an array of size 1 instead of calling it twice with the same argument.
+
+https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/SfrxEth.sol#L98-L100
+
+https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/SfrxEth.sol#L102-L104
+
+15. Consider adding `view` to the `setMaxSlippage()` function. If a function does not modify state, it is more gas efficient to declare it as `view` instead of `external`
+
+https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/SfrxEth.sol#L51
+
+16. The `withdraw()` function uses `call()` to send ETH to the owner of the contract. However, `transfer()` is a safer and cheaper option for sending ETH as it limits the amount of gas that can be consumed by the recipient contract.
+
+https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/WstEth.sol#L63
 
 
 
