@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "0xadrii",
+  "risk": "2",
+  "title": "Potential storage collision due to lack of storage gap in upgradable contract",
+  "issueId": 282,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/282"
+}
