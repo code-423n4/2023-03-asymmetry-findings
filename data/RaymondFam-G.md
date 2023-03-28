@@ -19,6 +19,10 @@ Consider refactoring the affected code as follows:
         emit Rebalanced();
     }
 ```
+## Use array of mappings
+When a derivative has turned obsolete, i.e. weights assigned zero and the associated underlyingValue has been fully drained after [`rebalanceToWeights()`](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L138-L155) is called, it does not make sense the derivative will have to be called and skipped each time `unstake()` is called, which incurs additional gas.
+
+Consider adding `derivatives[x]` and `weights[x]` to their respective arrays in [`addDerivative()`](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L182-L195) and have the obsolete mappings removed from the arrays via `rebalanceToWeights()` or a separately implemented function when need be and deemed fit. Use the array length to iterate the for loop in [`stake()`](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L71-L96) and [`unstake()`](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L113-L119) instead of `derivativeCount`.
 
 ## Avoid comparing boolean expressions to boolean literals
 Comparing a boolean value to a boolean literal incurs the `ISZERO` operation and costs more gas than using a boolean expression.
