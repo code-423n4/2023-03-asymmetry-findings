@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "Trust_me_bro",
+  "risk": "2",
+  "title": "Incorrect Calculation of Minimum Output Amount in withdraw() Function",
+  "issueId": 343,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/343"
+}
