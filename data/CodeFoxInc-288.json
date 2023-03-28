@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "CodeFoxInc",
+  "risk": "2",
+  "title": "# Adopt ERC4626 instead of creating a vault-like system from scratch",
+  "issueId": 288,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/288"
+}
