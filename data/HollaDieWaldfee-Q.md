@@ -7,6 +7,7 @@
 | L-03      | OwnableUpgradeable: Does not implement 2-Step-Process for transferring ownership | SafEth.sol | 1 |
 | L-04      | `SafEth.stake`: check `ethAmount` for zero instead of `weight` | SafEth.sol | 1 |
 | L-05      | Fixed slippage setting is inefficient because traded amounts can vary | - | 3 |
+| L-06      | `Reth.ethPerDerivative` function should always use ETH value from Rocketpool instead of pool price | Reth.sol | 1 |
 | N-01      | Remove unnecessary imports | - | 5 |  
 | N-02      | `SafEth` contract `receive` function can be dangerous for users | SafEth.sol | 1 |  
 | N-03      | `SafEth`: Use `address(this).balance` instead of calculating difference | SafEth.sol | 2 |  
@@ -123,6 +124,35 @@ I estimate this to be of "Low" severity because currently the liquidity in all p
 However the liquidity may dry out and then a single slippage percentage offers no slippage protection when small amounts are traded.  
 
 Therefore it might be beneficial to let users choose the slippage percentage for themselves.  
+
+## [L-06] `Reth.ethPerDerivative` function should always use ETH value from Rocketpool instead of pool price  
+[https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L211-L216](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L211-L216)  
+
+The `Reth.ethPerDerivative` function currently checks if deposits to Rocketpool are possible and calculates the `ethPerDerivative` value depending on this.  
+
+The `ethPerDerivative` value should always be calculated via the `getEthValue` function from Rocketpool and never via the pool price.  
+
+This is because withdrawals are currently always handled through Rocketpool.  
+
+So the value of the `rETH` (how many `ETH` it is worth upon withdrawal) is determined by Rocketpool not the Curve pool.  
+
+Fix:  
+```diff
+diff --git a/contracts/SafEth/derivatives/Reth.sol b/contracts/SafEth/derivatives/Reth.sol
+index b6e0694..79bbd8c 100644
+--- a/contracts/SafEth/derivatives/Reth.sol
++++ b/contracts/SafEth/derivatives/Reth.sol
+@@ -209,10 +209,7 @@ contract Reth is IDerivative, Initializable, OwnableUpgradeable {
+         @param _amount - amount to check for ETH price
+      */
+     function ethPerDerivative(uint256 _amount) public view returns (uint256) {
+-        if (poolCanDeposit(_amount))
+-            return
+-                RocketTokenRETHInterface(rethAddress()).getEthValue(10 ** 18);
+-        else return (poolPrice() * 10 ** 18) / (10 ** 18);
++        return RocketTokenRETHInterface(rethAddress()).getEthValue(10 ** 18);
+     }
+```
 
 ## [N-01] Remove unnecessary imports
 Unnecessary imports should be removed from the source files to improve readability.
