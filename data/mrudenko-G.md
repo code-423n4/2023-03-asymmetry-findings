@@ -12,6 +12,17 @@ unchecked {
         }
 
 ----
+
+`derivativeCount` is a derived variable be which can be received from derivatives.length
+It's bad practice to store contract-derived results.
+A good practice is to create view function derivativeCount, as follows
+
+```
+function derivativeCount() private view returns(uint256) {
+ return derivatives.length;
+}
+```
+and we can use calls for these functions everywhere. In other functions, we can reduce the manual increment of the derivativeCount variable, which will decrease gas cost for external function execution
 function adjustWeight can be optimized as follow
 ```
     function adjustWeight(
