@@ -106,6 +106,45 @@ In the protocol, there are function's values with the risk of being downcasted.
 ## Recommended Mitigation Steps
 Consider using OpenZeppelin’s SafeCast library to prevent unexpected overflows when casting from `uint256`.
 
+# [L-05] `abi.encodePacked()` should not be used with dynamic types when passing the result to a hash function such as `keccak256()`
+Use `abi.encode()` instead which will pad items to 32 bytes, which will prevent [hash collisions](https://docs.soliditylang.org/en/v0.8.13/abi-spec.html#non-standard-packed-mode) (e.g. `abi.encodePacked(0x123,0x456) => 0x123456 => abi.encodePacked(0x1,0x23456)`, but `abi.encode(0x123,0x456) => 0x0...1230...456)`. "Unless there is a compelling reason, abi.encode should be preferred". If there is only one argument to `abi.encodePacked()` it can often be cast to `bytes()` or `bytes32()` instead. If all arguments are strings and or bytes, `bytes.concat()` should be used [instead](https://ethereum.stackexchange.com/questions/30912/how-to-compare-strings-in-solidity#answer-82739).     
+         
+Instances (6):
+````solidity
+contracts/SafEth/derivatives/Reth.sol
+67        return
+68                    RocketStorageInterface(ROCKET_STORAGE_ADDRESS).getAddress(
+69                        keccak256(
+70                            abi.encodePacked("contract.address", "rocketTokenRETH")
+71                        )
+72                    );
+
+124        keccak256(
+125                            abi.encodePacked("contract.address", "rocketDepositPool")
+126                        )
+127:                    );
+
+135        keccak256(
+136                            abi.encodePacked(
+137                                "contract.address",
+138                                "rocketDAOProtocolSettingsDeposit"
+139                            )
+140:                        )
+
+161        keccak256(
+162                            abi.encodePacked("contract.address", "rocketDepositPool")
+163                        )
+164:                    );
+
+190        keccak256(
+191                                abi.encodePacked("contract.address", "rocketTokenRETH")
+192                            )
+193:                        );
+
+232        keccak256(
+233                            abi.encodePacked("contract.address", "rocketTokenRETH")
+234:                        )
+````
 
 
 # [N-01] Upgradeable contract is missing a `__gap[50]` storage variable to allow for new storage variables in later versions
@@ -341,3 +380,21 @@ File                                            |  % Stmts | % Branch |  % Funcs
   SafEthV2MockStorage.sol                       |      100 |      100 |      100 |      100 |                |
 ------------------------------------------------|----------|----------|----------|----------|----------------|
 Due to its capacity, test coverage is expected to be 100%.
+
+
+# [O-01] Function Naming suggestions
+Proper use of `_` as a function name prefix and a common pattern is to prefix internal and private function names with `_`.
+This pattern is correctly applied in the Party contracts, however there are some inconsistencies in the libraries.       
+      
+Instances:
+````solidity
+contracts/SafEth/derivatives/Reth.sol
+66:     function rethAddress() private view returns (address) { // @audit o
+
+83:     function swapExactInputSingleHop(// @audit o
+
+120:    function poolCanDeposit(uint256 _amount) private view returns (bool) {// @audit o
+
+228:    function poolPrice() private view returns (uint256) {// @audit o
+````
+
