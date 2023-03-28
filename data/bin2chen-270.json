@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "bin2chen",
+  "risk": "2",
+  "title": "stake() underlyingValue may unreasonable calculation",
+  "issueId": 270,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/270"
+}
