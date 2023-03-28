@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "dingo2077",
+  "risk": "2",
+  "title": "Absence of slippage control could lead to lost user funds in some scenarios or return unexpected variable.",
+  "issueId": 314,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/314"
+}
