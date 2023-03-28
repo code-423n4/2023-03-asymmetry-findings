@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "jasonxiale",
+  "risk": "2",
+  "title": "Native ether value lockout in the contract SafEth.sol via payable functions",
+  "issueId": 330,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/330"
+}
