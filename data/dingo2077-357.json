@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "dingo2077",
+  "risk": "2",
+  "title": "If  sum of pool weight is even - every user will lose 1 wei after calling stake() function;",
+  "issueId": 357,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/357"
+}
