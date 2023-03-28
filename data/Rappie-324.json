@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "Rappie",
+  "risk": "2",
+  "title": "Unstaking small amounts can revert due to rounding",
+  "issueId": 324,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/324"
+}
