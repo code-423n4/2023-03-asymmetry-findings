@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "hihen",
+  "risk": "3",
+  "title": "SafEth.addDerivative() can result in freezing all users' assets if an invalid derivative contract is provided.",
+  "issueId": 354,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/354"
+}
