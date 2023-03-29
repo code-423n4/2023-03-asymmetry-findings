@@ -302,3 +302,28 @@ Despite on fact there is no direct function for transfer to owner or other desti
 
 ## Recommended Mitigation Steps
 Owner have to be at least multisig(better DAO for adding new derivatives);
+
+## [L-04] User can unstake() more funds if someone mistakenly sent funds to pools.
+SC: all vaults.
+
+Let's dive into WstEth.sol
+
+```solidity
+    function withdraw(uint256 _amount) external onlyOwner {                                               
+        IWStETH(WST_ETH).unwrap(_amount);
+        uint256 stEthBal = IERC20(STETH_TOKEN).balanceOf(address(this));
+        IERC20(STETH_TOKEN).approve(LIDO_CRV_POOL, stEthBal);                                                   
+        uint256 minOut = (stEthBal * (10 ** 18 - maxSlippage)) / 10 ** 18;                                   
+        IStEthEthPool(LIDO_CRV_POOL).exchange(1, 0, stEthBal, minOut);
+        // solhint-disable-next-line
+        (bool sent, ) = address(msg.sender).call{value: address(this).balance}(                                             
+            ""
+        );
+        require(sent, "Failed to send Ether");
+    }
+```
+User's trader contract before` withdraw()` can calculate expect return value and use this data for other trading process. But if someone send `WST` token to `WST_ETH =   0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0` than return value will be more than expected what can leads to some unexpected circumstances. Because of WstEth.sol is sending whole balance of contract: `(bool sent, ) = address(msg.sender).call{value: address(this).balance}`  
+Other contracts have same logic.
+
+## Recommended Mitigation Steps
+Instead of `value: address(this).balance`, contract could pull out msg.value by handling it in `receive()` fallback function.
