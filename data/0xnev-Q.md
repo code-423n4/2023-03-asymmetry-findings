@@ -6,7 +6,7 @@
 | R  | Refactor | Code changes |
 | O | Ordinary | Commonly found issues |
 
-| Total Found Issues | 24 |
+| Total Found Issues | 26 |
 |:--:|:--:|
 
 ### Low Risk Template
@@ -45,8 +45,10 @@
 | [R-09] | Emiting storage variables instead of arguments in memory | 4 |
 | [R-10] | Repeated function logic can be refactored into a single function  | 2 |
 | [R-11] | Use existing `rethAddress()` function already declared  | 1 |
+| [R-12] | Refactor functions `adjustWeight` and `addDerivative`  | 2 |
+| [R-13] | Shift check before declaration of `IDerivative derivative`  | 1 |
 
-| Total Refactor Issues | 11 |
+| Total Refactor Issues | 12 |
 |:--:|:--:|
 
 ### Ordinary Issues 
@@ -745,6 +747,92 @@ function deposit() external payable onlyOwner returns (uint256)
 ```
 
 In the function `deposit()` the address `rocketTokenRETHAddress` can be obtained by simply calling the existing function `rethAddress()` instead of rewriting the same logic again
+
+## [R-12] Refactor functions `adjustWeight` and `addDerivative`
+```solidity
+2 files - 2 results
+
+/SafEth.sol
+165:    function adjustWeight(
+166:        uint256 _derivativeIndex,
+167:        uint256 _weight
+168:    ) external onlyOwner {
+169:        weights[_derivativeIndex] = _weight;
+170:        uint256 localTotalWeight = 0;
+171:        for (uint256 i = 0; i < derivativeCount; i++)
+172:            localTotalWeight += weights[i];
+173:        totalWeight = localTotalWeight;
+174:        emit WeightChange(_derivativeIndex, _weight);
+175:    }
+
+182:    function addDerivative(
+183:        address _contractAddress,
+184:        uint256 _weight
+185:    ) external onlyOwner {
+186:        derivatives[derivativeCount] = IDerivative(_contractAddress);
+187:        weights[derivativeCount] = _weight;
+188:        derivativeCount++;
+189:
+190:        uint256 localTotalWeight = 0;
+191:        for (uint256 i = 0; i < derivativeCount; i++)
+192:            localTotalWeight += weights[i];
+193:        totalWeight = localTotalWeight;
+194:        emit DerivativeAdded(_contractAddress, _weight, derivativeCount);
+195:    }
+```
+
+For the above functions `adjustWeight` and `function addDerivative`, there is no need to loop through the whole `weights` mapping to update `totalWeight`. We can simply update the `totalWeight` state variable by adding the new `_weight` to the `totalWeight` variable. This can also have significant gas savings by removing the for loops.
+
+```solidity
+function adjustWeight(
+    uint256 _derivativeIndex,
+    uint256 _weight
+) external onlyOwner {
+    weights[_derivativeIndex] = _weight;
+    totalWeight = totalWeight + _weight;
+    emit WeightChange(_derivativeIndex, _weight);
+}
+
+
+function addDerivative(
+    address _contractAddress,
+    uint256 _weight
+) external onlyOwner {
+    derivatives[derivativeCount] = IDerivative(_contractAddress);
+    weights[derivativeCount] = _weight;
+    derivativeCount++;
+
+    totalWeight = totalWeight + _weight;
+    emit DerivativeAdded(_contractAddress, _weight, derivativeCount);
+}
+```
+
+## [R-13] Shift check before declaration of `IDerivative derivative`
+```solidity
+1 result - 1 file
+
+/SafEth.sol
+63:    function stake() external payable
+        ...
+84:        for (uint i = 0; i < derivativeCount; i++) {
+85:            uint256 weight = weights[i];
+86:            IDerivative derivative = derivatives[i];
+87:            if (weight == 0) continue;
+88:            uint256 ethAmount = (msg.value * weight) / totalWeight;
+```
+
+In the above instance, shift the check of
+`if (weight == 0) continue;` before declaring `IDerivative derivative` so that the for loop will properly skip `weight` with value of 0 without wasting gas by unnecessarily declaring the derivative contract for further computation.
+
+```solidity
+function stake() external payable{
+    ...
+    for (uint i = 0; i < derivativeCount; i++) {
+        uint256 weight = weights[i];
+        if (weight == 0) continue;
+        IDerivative derivative = derivatives[i];       
+```
+
 
 ## [O-1] Unlocked Pragma
 ```solidity
