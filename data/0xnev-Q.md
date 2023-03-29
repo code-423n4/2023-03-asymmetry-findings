@@ -6,7 +6,7 @@
 | R  | Refactor | Code changes |
 | O | Ordinary | Commonly found issues |
 
-| Total Found Issues | 26 |
+| Total Found Issues | 28 |
 |:--:|:--:|
 
 ### Low Risk Template
@@ -14,6 +14,7 @@
 |:--:|:-------|:--:|
 | [L-01] | Critical address changes should use 2 step procedure | 4 |
 | [L-02] | Remove unnecessary `receive() external payable`| 4 |
+| [L-03] | `onlyOwner` modifier not needed in `SafEth.setMaxSlippage`| 1 |
 
 | Total Low Risk Issues | 2 |
 |:--:|:--:|
@@ -27,8 +28,9 @@
 | [N-04] | Missing zero-address checks for `initialize` functions | 4 |
 | [N-05] |Upgradeable contract is missing a `__gap[50]` storage variable to allow for new storage variables in later versions | 4 |
 | [N-06] | Insufficient Coverage | 3 |
+| [N-07] | Add timelock to critical functions | 5 |
 
-| Total Non-Critical Issues | 6 |
+| Total Non-Critical Issues | 7 |
 |:--:|:--:|
 
 ### Refactor Issues Template
@@ -137,6 +139,25 @@ Exit: `unstake()`
 Recommendation:
 Remove `receive() external payable` functions
 
+## [L-03] `onlyOwner` modifier not needed in `SafEth.setMaxSlippage`
+```solidity
+202:    function setMaxSlippage(
+203:        uint _derivativeIndex,
+204:        uint _slippage
+205:    ) external onlyOwner {
+206:        derivatives[_derivativeIndex].setMaxSlippage(_slippage);
+207:        emit SetMaxSlippage(_derivativeIndex, _slippage);
+208:    }
+```
+
+Since ownership of individual derivative contracts (`WstEth.sol, SfrxEth.sol, Reth.sol`) is expected to be the same owner of `SafEth.sol`, `SafEth.setMaxSlippage()` does not require the `onlyOwner` modifier since the individual derivatives contracts has each already implemented the onlyOwner modifier for the respective `setMaxSlippage()` functions. 
+
+In the event where owner of `SafEth.sol` and individual derivative contracts is different, this will cause `SafEth.setMaxSlippage()` to always revert due to the onlyOwner modifier.
+
+However, It should be noted that there are centralization risks as admin can influence `maxSlippage` which in turn can influence token swaps for users.
+
+Recommendation:
+Remove `onlyOwner` modifier for `SafEth.setMaxSlippage()`
 
 ## [N-01] Implement checks for input validation for extra safety in setters
 ```solidity
@@ -311,6 +332,42 @@ See this [link](https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_
 The test coverage of the project is 98.06%. 
 
 Due to its capacity, test coverage is expected to be 100%. Ensure the contracts `WstEth.sol`, `SfrxEth.sol` and `Reth.sol` have 100% coverage
+
+## [N-07] Add timelock to critical functions
+```solidity
+5 results - 1 file
+
+/SafEth.sol
+202:    function setMaxSlippage(
+203:        uint _derivativeIndex,
+204:        uint _slippage
+205:    ) external onlyOwner {
+206:        derivatives[_derivativeIndex].setMaxSlippage(_slippage);
+207:        emit SetMaxSlippage(_derivativeIndex, _slippage);
+208:    }
+
+214:    function setMinAmount(uint256 _minAmount) external onlyOwner {
+215:        minAmount = _minAmount;
+216:        emit ChangeMinAmount(minAmount);
+217:    }
+
+223:    function setMaxAmount(uint256 _maxAmount) external onlyOwner {
+224:        maxAmount = _maxAmount;
+225:        emit ChangeMaxAmount(maxAmount);
+226:    }
+
+232:    function setPauseStaking(bool _pause) external onlyOwner {
+233:        pauseStaking = _pause;
+234:        emit StakingPaused(pauseStaking);
+235:    }
+
+241:    function setPauseUnstaking(bool _pause) external onlyOwner {
+242:        pauseUnstaking = _pause;
+243:        emit UnstakingPaused(pauseUnstaking);
+244:    }
+```
+
+It is a good practice to give time for users to react and adjust to critical changes. A timelock provides more guarantees and reduces the level of trust required, thus decreasing risk for users. It also indicates that the project is legitimate (less risk of a malicious owner making a sandwich attack on a user). Consider adding a timelock to the above instances
 
 
 ## [R-01] Overly complex calculation
@@ -832,7 +889,6 @@ function stake() external payable{
         if (weight == 0) continue;
         IDerivative derivative = derivatives[i];       
 ```
-
 
 ## [O-1] Unlocked Pragma
 ```solidity
