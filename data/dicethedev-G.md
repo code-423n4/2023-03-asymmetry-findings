@@ -77,9 +77,6 @@ https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f68
 
 https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/WstEth.sol#L63
 
+17. Consider using the `revert()` function instead of `require()`: In the `withdraw()` function, you can use the `revert()` function instead of `require()` as it is slightly cheaper in terms of gas usage.
 
-
-
-
-
-
+https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/SfrxEth.sol#L87
