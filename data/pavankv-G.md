@@ -1,5 +1,5 @@
 
-Total Gas saves by this report = 3367 gas .
+Total Gas saves by this report = 1367 gas .
 
 ## 1. Payable constructor can save gas if not dealing with msg.value:-
 If constructor declare as payable it prevents Opcode which 
@@ -40,17 +40,8 @@ Without named return Deployment of WstEth.sol = 906125
 With named return delpoyment of WstEth.sol= 905281
 
 
-## 4 . Try to avoid to compare booleans expressions to boolean literals to save gas :-
 
-saves deployment gas per compare = 1002 
-
-total gas = 2004
-
-code snippet:-
-https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L64
-https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L109 
-
-## 5 . Use a more recent version of solidity
+## 4 . Use a more recent version of solidity
 Solidity 0.8.10 has a useful change that reduced gas costs of external calls which expect a return value.
 
 In 0.8.15 the conditions necessary for inlining are relaxed. Benchmarks show that the change significantly decreases the bytecode size (which impacts the deployment cost) while the effect on the runtime gas usage is smaller.
