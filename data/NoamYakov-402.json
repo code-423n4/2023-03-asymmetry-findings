@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "NoamYakov",
+  "risk": "3",
+  "title": "`unstake()` would always fail if the prices ratio between ETH and stETH is smaller than `1e18 - maxSlippage` (ETH is more expensive)",
+  "issueId": 402,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/402"
+}
