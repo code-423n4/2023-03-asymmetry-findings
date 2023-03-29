@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "catellatech",
+  "risk": "2",
+  "title": "## [M-02] UPGRADEABLE CONTRACT IS MISSING A __GAP[50] STORAGE VARIABLE ",
+  "issueId": 484,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/484"
+}
