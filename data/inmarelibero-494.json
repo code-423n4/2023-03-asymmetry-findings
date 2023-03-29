@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "inmarelibero",
+  "risk": "3",
+  "title": "Risk to set \"minAmount\" > \"maxAmount\", or \"maxAmount\" = 0, and block staking",
+  "issueId": 494,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/494"
+}
