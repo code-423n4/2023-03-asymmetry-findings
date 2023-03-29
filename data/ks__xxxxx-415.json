@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "ks__xxxxx",
+  "risk": "2",
+  "title": "[M-01] Prevent division by 0 in unstake() function which would further lead to a revert",
+  "issueId": 415,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/415"
+}
