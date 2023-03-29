@@ -49,7 +49,7 @@ contract SafEthAudit is Test {
         vm.deal(attacker, 100000 ether);
 
         vm.startPrank(eoa);
-        //SafEthProxy amd SafETH deploy;
+        //SafEthProxy and SafETH deploy;
         safEthSC = new SafEth();
         safERC1967ProxySC = new ERC1967Proxy(address(safEthSC),abi.encodeWithSelector(
                     safEthSC.initialize.selector,
@@ -59,21 +59,21 @@ contract SafEthAudit is Test {
 
         SafEthProxy = SafEth(payable(address(safERC1967ProxySC)));
 
-        //RethProxy amd Reth deploy;
+        //RethProxy and Reth deploy;
         rethEthSC = new Reth();
         rethERC1967ProxySC = new ERC1967Proxy(address(rethEthSC),abi.encodeWithSelector(
                     rethEthSC.initialize.selector,address(SafEthProxy)));
 
         RethProxy = Reth(payable(address(rethERC1967ProxySC)));
 
-        //SfrxEthProxy amd SfrxEth deploy;
+        //SfrxEthProxy and SfrxEth deploy;
         SfrxEthSC = new SfrxEth();
         sfrxEthERC1967ProxySC = new ERC1967Proxy(address(SfrxEthSC),abi.encodeWithSelector(
                     SfrxEthSC.initialize.selector,address(SafEthProxy)));
 
         SfrxEthProxy = SfrxEth(payable(address(sfrxEthERC1967ProxySC)));
 
-         //WstEthProxy amd WstEth deploy;
+         //WstEthProxy and WstEth deploy;
         WstEthSC = new WstEth();
         wstEthERC1967ProxySC = new ERC1967Proxy(address(WstEthSC),abi.encodeWithSelector(
                     WstEthSC.initialize.selector,address(SafEthProxy)));
