@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "lopotras",
+  "risk": "2",
+  "title": "Blocking of `stake`, `unstake` and `rebalanceToWeights` on any underlying derivative protocol failure",
+  "issueId": 448,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/448"
+}
