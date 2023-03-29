@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "0xkazim",
+  "risk": "2",
+  "title": "user may loose their fund when owner calling `setMinAmount()` function",
+  "issueId": 527,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/527"
+}
