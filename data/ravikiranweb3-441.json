@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "ravikiranweb3",
+  "risk": "3",
+  "title": "Send Ether to SafEth contract directly before calling unstake",
+  "issueId": 441,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/441"
+}
