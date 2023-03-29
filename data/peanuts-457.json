@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "peanuts",
+  "risk": "2",
+  "title": "Reth.sol uses slot0 to determine the price of Reth, which makes it easily to manipulate the price",
+  "issueId": 457,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/457"
+}
