@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "Bahurum",
+  "risk": "2",
+  "title": "High slippage in `rebalanceToWeights` can cause loss up to 1% of all funds or deny rebalancing",
+  "issueId": 533,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/533"
+}
