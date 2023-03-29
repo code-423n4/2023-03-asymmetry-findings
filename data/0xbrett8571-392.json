@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "0xbrett8571",
+  "risk": "3",
+  "title": "When calculating `ethAmount` the multiplication/division can cause the values to exceed the maximum/minimum uint256 value.",
+  "issueId": 392,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/392"
+}
