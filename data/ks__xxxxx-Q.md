@@ -11,8 +11,8 @@ There is another Openzeppelin Ownable contract (Ownable2StepUpgradeable.sol) has
 [Ownable2StepUpgradeable.sol](https://github.com/OpenZeppelin/openzeppelin-contracts-upgradeable/blob/master/contracts/access/Ownable2StepUpgradeable.sol)
 
 ##### [L-02] Prevent division by 0
-In the unstake() function precautions are not being taken for not dividing by 0, this will revert the code.
-The above function can be called with 0 value in the input, this value is not checked for being bigger than 0, that means in some scenarios this can potentially trigger a division by zero.
+In the unstake() function there is a change of dividing by 0 error which can revert the code.
+Calling the above function when the totalSupply() = 0 can potentially trigger a division by zero.
 
 [SafEth.sol](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L116)
 
