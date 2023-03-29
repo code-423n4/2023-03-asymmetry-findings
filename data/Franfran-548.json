@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "Franfran",
+  "risk": "2",
+  "title": "[Medium - 2] stETH derivative assumes a 1:1 peg with ETH which will cause DOS on each deposit in bad market conditions",
+  "issueId": 548,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/548"
+}
