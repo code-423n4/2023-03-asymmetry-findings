@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "NoamYakov",
+  "risk": "2",
+  "title": "`rebalanceToWeights()` loses all the contract assets if all the weights are zero",
+  "issueId": 403,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/403"
+}
