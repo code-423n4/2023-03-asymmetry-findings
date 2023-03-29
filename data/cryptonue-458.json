@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "cryptonue",
+  "risk": "3",
+  "title": "`Reth` derivative did not check if deposit is enabled in the pool, potential for loss of asset",
+  "issueId": 458,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/458"
+}
