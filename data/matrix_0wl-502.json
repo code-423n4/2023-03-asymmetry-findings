@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "matrix_0wl",
+  "risk": "2",
+  "title": "Very critical Owner privileges can cause complete destruction of the project in a possible privateKey exploit",
+  "issueId": 502,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/502"
+}
