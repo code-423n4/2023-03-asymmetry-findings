@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "deadrxsezzz",
+  "risk": "3",
+  "title": "Lack of derivative validation might lead to break of contract functionality and loss of funds",
+  "issueId": 493,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/493"
+}
