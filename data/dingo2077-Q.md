@@ -2,7 +2,7 @@
 SC: SafEth.sol
 
 The core of lack is lying in function `addDerivative()` where any address can be added as vault.
-If in new vault has not implemented IDerivative interface or even uncorrect realization of functions - user's can't stake or stake their funds.
+If in new vault has not implemented IDerivative interface or even uncorrect realization of functions - user's can't stake or stake their funds. Also there is no function to delete derivative contract.
 ![](https://i.imgur.com/YUZkIb1.png)
  
 ## Proof of Concept
