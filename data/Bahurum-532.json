@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "Bahurum",
+  "risk": "2",
+  "title": "`unstake` will always fail if stETH price is less than 0.99 ETH",
+  "issueId": 532,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/532"
+}
