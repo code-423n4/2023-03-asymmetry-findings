@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "RedTiger",
+  "risk": "3",
+  "title": "Weak Oracle  from Uniswap used to get the price of rETH can lead to loss of funds",
+  "issueId": 446,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/446"
+}
