@@ -70,3 +70,13 @@ There are 5 instances of this particular usage
 [WstEth.sol#L63](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/WstEth.sol#L63)
 
 [WstEth.sol#L76](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/WstEth.sol#L76)
+
+### [L-05] unused import 
+
+Please remove the unused import in SafEth.sol
+```
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+```
+IERC20 is imported, but it is not being used anywhere in the code.
+
+https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L4
