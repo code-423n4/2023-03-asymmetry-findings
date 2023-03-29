@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "codetilda",
+  "risk": "2",
+  "title": "Calling stack() function of SafEth.sol contract when derivativeCount = 0 and pauseStaking = false will cause two unexpected behaviours",
+  "issueId": 524,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/524"
+}
