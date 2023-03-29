@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "hihen",
+  "risk": "2",
+  "title": "In the event that any derivative's withdraw function fails, all funds staked to SafEth will be frozen",
+  "issueId": 506,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/506"
+}
