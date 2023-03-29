@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "UniversalCrypto",
+  "risk": "2",
+  "title": "user can lose value when depositing",
+  "issueId": 510,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/510"
+}
