@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "0xkazim",
+  "risk": "2",
+  "title": "No storage gap for upgradeable contracts",
+  "issueId": 521,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/521"
+}
