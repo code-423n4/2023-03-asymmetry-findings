@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "CodeFoxInc",
+  "risk": "2",
+  "title": "Sending Ether directly to the contract is not handled",
+  "issueId": 467,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/467"
+}
