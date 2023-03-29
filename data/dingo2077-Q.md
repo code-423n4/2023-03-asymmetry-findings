@@ -135,3 +135,14 @@ Add in function `addDerivative` checking process:
 3) `require (success)`
 
 
+## [L-02] Owner can steal all funds.
+SC: all
+
+Despite on fact there is no direct function for transfer to owner or other destination there is backdoor in this implementation.
+1) Owner set weights for every derivative contract to `0`;
+2) Owner add new derivative with weight `100` with implemented functions `deposit()` but custom logic.
+3) Owner call `rebalanceToWeights`. 
+4) All funds from vault are going to new custom derivativeContract.
+
+## Recommended Mitigation Steps
+-Owner should be at least multisig(better dao for adding new derivatives);
