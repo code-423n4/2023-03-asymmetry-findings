@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "0xbepresent",
+  "risk": "2",
+  "title": "```Reth.sol::poolCanDeposit()``` does not implement the ```rocketDAOProtocolSettingsDeposit.getDepositEnabled()``` check",
+  "issueId": 544,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/544"
+}
