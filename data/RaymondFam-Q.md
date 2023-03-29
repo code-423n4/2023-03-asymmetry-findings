@@ -8,7 +8,7 @@ Here are two typical secnarios that could transpire:
 Consider implementing a time lock by making the weight and derivative parameter changes require two steps with a mandatory time window between them. The first step merely broadcasts to users that a particular change is coming, and the second step commits that change after a suitable waiting period. This allows users that do not accept the change to withdraw their positions in time.
 
 ## Zero address check
-Zero address check for `_contractAddress` should be implemented in `addDerivative()`. It is more crucial than having a zero value check for `_weight` because the former, if there is any any error committed, can never be undone or deleted since we dealing here with a mapping that has no function implemented to update or make changes to it. If this were to happen, `stake()` would have to forever be dealing with this obsolete mapping variable in its for loops.   
+Zero address check for `_contractAddress` should be implemented in `addDerivative()`. It is more crucial than having a zero value check for `_weight` because the former, if there is any any error committed, can never be undone or deleted since we are dealing here with a mapping that has no function implemented to update or make changes to it. If this were to happen, `stake()` would have to forever be dealing with this obsolete mapping variable in its for loops.   
 
 ## Modularity on import usages
 For cleaner Solidity code in conjunction with the rule of modularity and modular programming, use named imports with curly braces instead of adopting the global import approach.
