@@ -7,8 +7,11 @@
 | [G-02] | Emit memory value instead of state variable | 4 |  388 |
 | [G-03] | Sort solidity operations using short-circuit mode | 43 | at least 4171  |
 | [G-04] | Functions guaranteed to revert when called by normal users can be marked payable | 17 |  357 |
+| [G-05] | Refactor functions `adjustWeight` and `addDerivative` | 2 |  - |
+| [G-06] | Shift checks before declaration for possible gas savings | 1 |  - |
+| [G-07] | Consider declaring stack variables outside loop to save gas | 1 |  ~6 gas per loop |
 
-| Total Found Issues | 4 |
+| Total Found Issues | 7 |
 |:--:|:--:|
 
 ### [G-01] Multiple accesses of a storage variable should use a local variable cache
@@ -309,3 +312,115 @@ So setting less costly function to “f(x)” and setting costly function to “
 If a function modifier such as onlyOwner is used, the function will revert if a normal user tries to pay the function. Marking the function as payable will lower the gas cost for legitimate callers because the compiler will not include checks for whether a payment was provided. The extra opcodes avoided are CALLVALUE(2),DUP1(3),ISZERO(3),PUSH2(3),JUMPI(10),PUSH1(3),DUP1(3),REVERT(0),JUMPDEST(1),POP(2), which costs an average of about 21 gas per call to the function, in addition to the extra deployment cost.
 
 Consider marking the functions as payable. However, it is valid if protocol decides against it due to confusion, readability and possibility of receiving funds.
+
+## [G-05] Refactor functions `adjustWeight` and `addDerivative`
+```solidity
+2 results - 2 files
+
+/SafEth.sol
+165:    function adjustWeight(
+166:        uint256 _derivativeIndex,
+167:        uint256 _weight
+168:    ) external onlyOwner {
+169:        weights[_derivativeIndex] = _weight;
+170:        uint256 localTotalWeight = 0;
+171:        for (uint256 i = 0; i < derivativeCount; i++)
+172:            localTotalWeight += weights[i];
+173:        totalWeight = localTotalWeight;
+174:        emit WeightChange(_derivativeIndex, _weight);
+175:    }
+
+182:    function addDerivative(
+183:        address _contractAddress,
+184:        uint256 _weight
+185:    ) external onlyOwner {
+186:        derivatives[derivativeCount] = IDerivative(_contractAddress);
+187:        weights[derivativeCount] = _weight;
+188:        derivativeCount++;
+189:
+190:        uint256 localTotalWeight = 0;
+191:        for (uint256 i = 0; i < derivativeCount; i++)
+192:            localTotalWeight += weights[i];
+193:        totalWeight = localTotalWeight;
+194:        emit DerivativeAdded(_contractAddress, _weight, derivativeCount);
+195:    }
+```
+
+For the above functions `adjustWeight` and `function addDerivative`, there is no need to loop through the whole `weights` mapping to update `totalWeight`. We can simply update the `totalWeight` state variable by adding the new `_weight` to the `totalWeight` variable. This can also have significant gas savings by removing the for loops.
+
+```solidity
+function adjustWeight(
+    uint256 _derivativeIndex,
+    uint256 _weight
+) external onlyOwner {
+    weights[_derivativeIndex] = _weight;
+    totalWeight = totalWeight + _weight;
+    emit WeightChange(_derivativeIndex, _weight);
+}
+
+
+function addDerivative(
+    address _contractAddress,
+    uint256 _weight
+) external onlyOwner {
+    derivatives[derivativeCount] = IDerivative(_contractAddress);
+    weights[derivativeCount] = _weight;
+    derivativeCount++;
+
+    totalWeight = totalWeight + _weight;
+    emit DerivativeAdded(_contractAddress, _weight, derivativeCount);
+}
+```
+
+## [G-06] Shift checks before declaration for possible gas savings
+
+```solidity
+1 result - 1 file
+
+/SafEth.sol
+63:    function stake() external payable
+        ...
+84:        for (uint i = 0; i < derivativeCount; i++) {
+85:            uint256 weight = weights[i];
+86:            IDerivative derivative = derivatives[i];
+87:            if (weight == 0) continue;
+88:            uint256 ethAmount = (msg.value * weight) / totalWeight;
+```
+
+In the above instance, shift the check of
+`if (weight == 0) continue;` before declaring `IDerivative derivative` so that the for loop will properly skip `weight` with value of 0 without wasting gas by unnecessarily declaring the derivative contract for further computation.
+
+```solidity
+function stake() external payable{
+    ...
+    for (uint i = 0; i < derivativeCount; i++) {
+        uint256 weight = weights[i];
+        if (weight == 0) continue;
+        IDerivative derivative = derivatives[i];       
+```
+
+## [G-07] Consider declaring stack variables outside loop to save gas
+```solidity
+7 results - 1 file
+
+/SafEth.sol
+63:     function stake() external payable
+84:        for (uint i = 0; i < derivativeCount; i++) {
+85:            uint256 weight = weights[i];
+86:            IDerivative derivative = derivatives[i];
+88:            uint256 ethAmount = (msg.value * weight) / totalWeight;
+91:            uint256 depositAmount = derivative.deposit{value: ethAmount}();
+92:            uint derivativeReceivedEthValue
+
+108:    function unstake(uint256 _safEthAmount) external
+113:        for (uint256 i = 0; i < derivativeCount; i++)
+115:            uint256 derivativeAmount
+
+138:     function rebalanceToWeights() external onlyOwner
+147:        for (uint i = 0; i < derivativeCount; i++)
+149:            uint256 ethAmount
+```
+
+Description:
+Consider initializing the stack variables before the loop to avoid reinitialization on every loop to save gas. Saves  around [~6 gas per loop](https://ethereum.stackexchange.com/questions/118754/is-it-more-gas-efficient-to-declare-variable-inside-or-outside-of-a-for-or-while)
+
