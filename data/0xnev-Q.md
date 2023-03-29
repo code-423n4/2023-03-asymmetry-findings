@@ -6,7 +6,7 @@
 | R  | Refactor | Code changes |
 | O | Ordinary | Commonly found issues |
 
-| Total Found Issues | 20 |
+| Total Found Issues | 24 |
 |:--:|:--:|
 
 ### Low Risk Template
@@ -41,8 +41,12 @@
 | [R-05] | Use ternary operators to shorten if/else statements | 2 |
 | [R-06] | Indent logic in for loops in code blocks {} correctly | 2 |
 | [R-07] | Should not allow `_weight` parameter to be set as zero | 2 |
+| [R-08] | Use of `uint` and `uint256` interchangeably | 16 |
+| [R-09] | Emiting storage variables instead of arguments in memory | 4 |
+| [R-10] | Repeated function logic can be refactored into a single function  | 2 |
+| [R-11] | Use existing `rethAddress()` function already declared  | 1 |
 
-| Total Refactor Issues | 7 |
+| Total Refactor Issues | 11 |
 |:--:|:--:|
 
 ### Ordinary Issues 
@@ -601,6 +605,146 @@ function addDerivative(
     emit DerivativeAdded(_contractAddress, _weight, derivativeCount);
 }
 ```
+
+## [R-08] Use of `uint` and `uint256` interchangeably
+```solidity
+16 results - 2 files
+
+/SafEth.sol
+26:    event Staked(address indexed recipient, uint ethIn, uint safEthOut);
+27:    event Unstaked(address indexed recipient, uint ethOut, uint safEthIn);
+28:    event WeightChange(uint indexed index, uint weight);
+31:        uint weight,
+32:        uint index
+71:        for (uint i = 0; i < derivativeCount; i++)
+84:        for (uint i = 0; i < derivativeCount; i++) 
+92:            uint derivativeReceivedEthValue
+147:        for (uint i = 0; i < derivativeCount; i++)
+203:        uint _derivativeIndex,
+204:        uint _slippage
+
+/Reth.sol
+172:            uint rethPerEth = (10 ** 36) / poolPrice();
+242:        return (sqrtPriceX96 * (uint(sqrtPriceX96)) * (1e18)) >> (96 * 2);
+```
+  
+Consider using only one approach throughout the codebase, e.g. only uint or only uint256 for consistency.
+
+## [R-09] Emiting storage variables instead of arguments in memory
+```solidity
+4 results - 1 file
+
+/SafEth.sol
+214:    function setMinAmount(uint256 _minAmount) external onlyOwner {
+215:        minAmount = _minAmount;
+216:        emit ChangeMinAmount(minAmount);
+217:    }
+
+223:    function setMaxAmount(uint256 _maxAmount) external onlyOwner {
+224:        maxAmount = _maxAmount;
+225:        emit ChangeMaxAmount(maxAmount);
+226:    }
+
+232:    function setPauseStaking(bool _pause) external onlyOwner {
+233:        pauseStaking = _pause;
+234:        emit StakingPaused(pauseStaking);
+235:    }
+
+241:    function setPauseUnstaking(bool _pause) external onlyOwner {
+242:        pauseUnstaking = _pause;
+243:        emit UnstakingPaused(pauseUnstaking);
+244:    }
+```
+
+The above instances can be refactored to emit the argument inputted stored in memory instead of emitting the storage variable. This also saves gas as it replaces a SLOADs (Gwarmaccess, 100 gas) with a MLOAD (3 gas)
+
+## [R-10] Repeated function logic can be refactored into a single function 
+```solidity
+2 results - 1 file
+
+/Reth.sol
+120:    function poolCanDeposit(uint256 _amount) private view returns (bool) {
+121:        address rocketDepositPoolAddress = RocketStorageInterface(
+122:            ROCKET_STORAGE_ADDRESS
+123:        ).getAddress(
+124:                keccak256(
+125:                    abi.encodePacked("contract.address", "rocketDepositPool")
+126:                )
+127:            );
+128:        RocketDepositPoolInterface rocketDepositPool = RocketDepositPoolInterface(
+129:                rocketDepositPoolAddress
+130:            );
+
+
+156:    function deposit() external payable onlyOwner returns (uint256) {
+157:        // Per RocketPool Docs query addresses each time it is used
+158:        address rocketDepositPoolAddress = RocketStorageInterface(
+159:            ROCKET_STORAGE_ADDRESS
+160:        ).getAddress(
+161:                keccak256(
+162:                    abi.encodePacked("contract.address", "rocketDepositPool")
+163:                )
+164:            );
+165:
+166:        RocketDepositPoolInterface rocketDepositPool = RocketDepositPoolInterface(
+167:                rocketDepositPoolAddress
+168:            );
+```
+
+
+In `poolCanDeposit` and `deposit()`, A function like `rocketDepositPoolAddress()` similar to `rethAddress()` can be created to replace the repeated function logic. In fact since the same interface `rocketDepositPool` is used in both functions, the logic can be combined to form a single function `getRocketDepositPoolInterface()` that returns the required interface.
+
+```solidity
+function getRocketDepositPoolInterface() private view returns (RocketDepositPoolInterface rocketDepositPool) {
+    address rocketDepositPoolAddress = RocketStorageInterface(
+    ROCKET_STORAGE_ADDRESS
+).getAddress(
+        keccak256(
+            abi.encodePacked("contract.address", "rocketDepositPool")
+        )
+    );
+ rocketDepositPool = RocketDepositPoolInterface(
+        rocketDepositPoolAddress
+    );
+}
+```
+
+## [R-11] Use existing `rethAddress()` function already declared
+```solidity
+1 file - 1 result
+
+66:    function rethAddress() private view returns (address) {
+67:        return
+68:            RocketStorageInterface(ROCKET_STORAGE_ADDRESS).getAddress(
+69:                keccak256(
+70:                    abi.encodePacked("contract.address", "rocketTokenRETH")
+71:                )
+72:            );
+73:    }
+```
+The following can be refactored from this:
+```solidity
+/Reth.sol
+156:    function deposit() external payable onlyOwner returns (uint256)
+            ...
+188:            address rocketTokenRETHAddress = RocketStorageInterface(
+189:                ROCKET_STORAGE_ADDRESS
+190:            ).getAddress(
+191:                    keccak256(
+192:                        abi.encodePacked("contract.address", "rocketTokenRETH")
+193:                    )
+194:                );
+```
+
+to 
+
+```solidity
+function deposit() external payable onlyOwner returns (uint256)
+        ...
+        address rocketTokenRETHAddress = rethAddress();
+```
+
+In the function `deposit()` the address `rocketTokenRETHAddress` can be obtained by simply calling the existing function `rethAddress()` instead of rewriting the same logic again
 
 ## [O-1] Unlocked Pragma
 ```solidity
