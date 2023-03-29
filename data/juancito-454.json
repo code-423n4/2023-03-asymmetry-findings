@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "juancito",
+  "risk": "3",
+  "title": "Adversary can alter derivatives balances in contracts to steal Ether",
+  "issueId": 454,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/454"
+}
