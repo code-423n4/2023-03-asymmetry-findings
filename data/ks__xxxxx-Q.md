@@ -48,7 +48,7 @@ There are 5 instances of this particular usage
 
 [WstEth.sol#L76](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/WstEth.sol#L76)
 
-### [L-05] unused import 
+### [L-04] unused import 
 
 Please remove the unused import in SafEth.sol
 ```
@@ -57,3 +57,13 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 IERC20 is imported, but it is not being used anywhere in the code.
 
 https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L4
+
+### [L-05] Missing events for critical arithmetic parameters
+
+It would be better if we can add a event for setMaxSlippage() function in Reth.sol and SfrxEth.sol since maxSlippage is used in deposit() and withdraw() functions in the above two contracts respectively.
+
+[Reth.sol](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L58)
+
+[SfrxEth.sol](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/SfrxEth.sol#L51)
+
+setMaxSlippage() does not emit an event, so it is difficult to track changes in the value of maxSlippage off-chain.
