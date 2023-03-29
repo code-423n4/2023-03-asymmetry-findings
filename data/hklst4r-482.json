@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "hklst4r",
+  "risk": "2",
+  "title": "When deposit amount reaches deposit limit but the pool is not full yet, partial fund should be deposited by staking and others by swapping",
+  "issueId": 482,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/482"
+}
