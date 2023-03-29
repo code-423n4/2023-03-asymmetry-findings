@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "NoamYakov",
+  "risk": "2",
+  "title": "Stakers can steal funds if a derivative is registered more than once",
+  "issueId": 405,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/405"
+}
