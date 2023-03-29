@@ -101,7 +101,7 @@ The following table contains all instances where `uint` is used:
 | SafEth   | 203 | https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L203 |
 | SafEth   | 204 | https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L204 |
 | Reth     | 171 | https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/derivatives/Reth.sol#L171 |
-| Reth     | 171 | https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/derivatives/Reth.sol#L241 |
+| Reth     | 241 | https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/derivatives/Reth.sol#L241 |
 
 ### Recommendation
 Using `uint256` rather than `uint`.
