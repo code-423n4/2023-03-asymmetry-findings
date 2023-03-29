@@ -11,7 +11,7 @@
 | [G-06] | Shift checks before declaration for possible gas savings | 1 |  - |
 | [G-07] | Consider declaring stack variables outside loop to save gas | 1 |  ~6 gas per loop |
 
-| Total Found Issues | 7 |
+| Total Possible Gas Savings | at least 4916 |
 |:--:|:--:|
 
 ### [G-01] Multiple accesses of a storage variable should use a local variable cache
