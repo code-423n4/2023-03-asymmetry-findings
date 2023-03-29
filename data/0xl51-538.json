@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "0xl51",
+  "risk": "2",
+  "title": "Pool with statically typed fee tier is used in Reth.sol",
+  "issueId": 538,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/538"
+}
