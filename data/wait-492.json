@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "wait",
+  "risk": "3",
+  "title": "Malicious users can manipulate the price of RETH through flashloan to attack SafEth and profit",
+  "issueId": 492,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/492"
+}
