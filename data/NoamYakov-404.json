@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "NoamYakov",
+  "risk": "2",
+  "title": "Accidental owner call to `addDerivative()` would result in permanent DoS (loss of all the contract's assets)",
+  "issueId": 404,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/404"
+}
