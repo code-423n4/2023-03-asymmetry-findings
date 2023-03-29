@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "bart1e",
+  "risk": "2",
+  "title": "Malicious user can manipulate `SAFETH` price so that it's higher than users expect",
+  "issueId": 491,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/491"
+}
