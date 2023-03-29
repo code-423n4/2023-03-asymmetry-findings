@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "0xbrett8571",
+  "risk": "2",
+  "title": "`swapExactInputSingleHop()` function doesn't validate user input, allowing a malicious user to pass invalid or malicious values to it.",
+  "issueId": 391,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/391"
+}
