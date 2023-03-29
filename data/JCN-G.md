@@ -1201,12 +1201,12 @@ index ebadb4b..e09841c 100644
 +                mstore(0x20, derivatives.slot) // slot for mapping
 +                let derivative := sload(keccak256(0x00, 0x40)) // storage location for mapping value is keccak256(key, slot)
 +                mstore(0x00, 0xb69ef8a82bd6de1d) // function signatures for "balance()" + "ethPerDerivative(uint256)"
-+                let success1 := call(gas(), derivative, 0x00, 0x18, 0x04, 0x20, 0x20) // 0x18 == offset for "balance()"
++                let success1 := staticcall(gas(), derivative, 0x18, 0x04, 0x20, 0x20) // 0x18 == offset for "balance()"
 +                if iszero(success1) {
 +                    revert(0, 0)
 +                }
 +                let bal := mload(0x20) // load from return data from first call
-+                let success2 := call(gas(), derivative, 0x00, 0x1c, 0x24, 0x20, 0x20) // 0x1c == offset for "ethPerDerivative(uint256)"
++                let success2 := staticcall(gas(), derivative, 0x1c, 0x24, 0x20, 0x20) // 0x1c == offset for "ethPerDerivative(uint256)"
 +                if iszero(success2) {
 +                    revert(0, 0)
 +                }
@@ -1276,7 +1276,7 @@ index ebadb4b..e09841c 100644
 +                        revert(0, 0)
 +                    }
 +                    let depositAmount := mload(0x20) // return data from first call
-+                    let success2 := call(gas(), derivative, 0x00, 0x1c, 0x24, 0x20, 0x20) // 0x1c == offset for "ethPerDerivative(uint256)"
++                    let success2 := staticcall(gas(), derivative, 0x1c, 0x24, 0x20, 0x20) // 0x1c == offset for "ethPerDerivative(uint256)"
 +                    if iszero(success2) {
 +                        revert(0, 0)
 +                    }
@@ -1323,7 +1323,7 @@ index ebadb4b..e09841c 100644
 +                mstore(0x20, derivatives.slot) // slot for mapping
 +                let derivative := sload(keccak256(0x00, 0x40)) // storage location for mapping value is keccak256(Key, Slot)
 +                mstore(0x00, 0xb69ef8a82e1a7d4d) // function signatures for "balance()" and "withdraw(uint256)"
-+                let success1 := call(gas(), derivative, 0x00, 0x18, 0x04, 0x20, 0x20) // 0x18 == offset for "balance()"
++                let success1 := staticcall(gas(), derivative, 0x18, 0x04, 0x20, 0x20) // 0x18 == offset for "balance()"
 +                if iszero(success1) {
 +                    revert(0, 0)
 +                }
@@ -1514,12 +1514,12 @@ index ebadb4b..e09841c 100644
 +                mstore(0x20, derivatives.slot)
 +                let derivative := sload(keccak256(0x00, 0x40))
 +                mstore(0x00, 0xb69ef8a82bd6de1d)
-+                let success1 := call(gas(), derivative, 0x00, 0x18, 0x04, 0x20, 0x20)
++                let success1 := staticcall(gas(), derivative, 0x18, 0x04, 0x20, 0x20)
 +                if iszero(success1) {
 +                    revert(0, 0)
 +                }
 +                let bal := mload(0x20)
-+                let success2 := call(gas(), derivative, 0x00, 0x1c, 0x24, 0x20, 0x20)
++                let success2 := staticcall(gas(), derivative, 0x1c, 0x24, 0x20, 0x20)
 +                if iszero(success2) {
 +                    revert(0, 0)
 +                }
@@ -1563,7 +1563,7 @@ index ebadb4b..e09841c 100644
 +                        revert(0, 0)
 +                    }
 +                    let depositAmount := mload(0x20)
-+                    let success2 := call(gas(), derivative, 0x00, 0x1c, 0x24, 0x20, 0x20)
++                    let success2 := staticcall(gas(), derivative, 0x1c, 0x24, 0x20, 0x20)
 +                    if iszero(success2) {
 +                        revert(0, 0)
 +                    }
@@ -1603,7 +1603,7 @@ index ebadb4b..e09841c 100644
 +                mstore(0x20, derivatives.slot)
 +                let derivative := sload(keccak256(0x00, 0x40))
 +                mstore(0x00, 0xb69ef8a82e1a7d4d)
-+                let success1 := call(gas(), derivative, 0x00, 0x18, 0x04, 0x20, 0x20)
++                let success1 := staticcall(gas(), derivative, 0x18, 0x04, 0x20, 0x20)
 +                if iszero(success1) {
 +                    revert(0, 0)
 +                }
