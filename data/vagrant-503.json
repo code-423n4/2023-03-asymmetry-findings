@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "vagrant",
+  "risk": "3",
+  "title": "Not pausing staking upon deployment/initializing can cause loss of funds for anyone calling SafEth.stake()",
+  "issueId": 503,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/503"
+}
