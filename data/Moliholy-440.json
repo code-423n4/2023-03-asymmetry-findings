@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "Moliholy",
+  "risk": "2",
+  "title": "All protocol ETH will get stuck in the SafEth contract if invoking the rebalanceToWeights function with all weights equal to zero",
+  "issueId": 440,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/440"
+}
