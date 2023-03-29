@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "wait",
+  "risk": "2",
+  "title": "Users may lose assets if all derivatives weights are set to 0",
+  "issueId": 471,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/471"
+}
