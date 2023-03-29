@@ -16,7 +16,7 @@
 | [L-02] | Remove unnecessary `receive() external payable`| 4 |
 | [L-03] | `onlyOwner` modifier not needed in `SafEth.setMaxSlippage`| 1 |
 
-| Total Low Risk Issues | 2 |
+| Total Low Risk Issues | 3 |
 |:--:|:--:|
 
 ### Non-Critical Template
@@ -50,7 +50,7 @@
 | [R-12] | Refactor functions `adjustWeight` and `addDerivative`  | 2 |
 | [R-13] | Shift check before declaration of `IDerivative derivative`  | 1 |
 
-| Total Refactor Issues | 12 |
+| Total Refactor Issues | 13 |
 |:--:|:--:|
 
 ### Ordinary Issues 
