@@ -158,3 +158,22 @@ QA11. Stake() and unstake() for the strategy contract will be blocked when one o
 3. The design of the architecture should have the fault-tolerance property such that a user can still stake/unstake using the remaining derivative contracts without losing funds in ETH value.
 
 Mitigation: a user should be able to stake/unstake using the remaining derivative contracts when one of them becomes unavailable  and resume to use it when it becomes available again. 
+
+QA12. The amount of deposit() will impact the price of ``rEth``. As a result, a user might instead call deposit() with many small amounts for deposit to take advantage of the system with a favorable price to him. On the other hand, another user who call deposit() with a large amount will end up a worse price.
+In summary, the system might be not fair to different users. 
+
+[https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L211-L216](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L211-L216)
+
+Consider the following scenario: 
+1) Suppose rocketDAOProtocolSettingsDeposit.getMaximumDepositPoolSize()  is large enough and this maximum won't be exceeded for the next few months. 
+
+2) Suppose rocketDAOProtocolSettingsDeposit.getMinimumDeposit() = 0.01e18
+
+3) If a user needs to deposit 10e18, without splitting this amount, let's say the price would be 
+1.1e18 (RocketTokenRETHInterface(rethAddress()).getEthValue(10 ** 18)). 
+
+4) On the other hand, if the user split 10e18 into 1001 subtransactions, as a result, each deposit piece is small than rocketDAOProtocolSettingsDeposit.getMinimumDeposit() = 0.01e18. Therefore, ``poolCanDeposit(_amount) = false``, and another price poolPrice() will be used instead, which could be more favorable, say 1.09e18. Using the later price, the user will get more ``rETH`` shares since 1.09e18 < 1.1e18.
+
+5) In summary, depending on if one splits the whole deposit into small transactions or not, there might be two different prices of ``rETH`` used. This is not a fair system.
+
+Mitigation: use only one source for ``rETH`` price so that the price is consistent regardless of the deposit amount. 
