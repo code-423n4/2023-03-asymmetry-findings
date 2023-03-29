@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "BanPaleo",
+  "risk": "2",
+  "title": "Sandwich Attack on `swapExactInputSingleHop` function",
+  "issueId": 531,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/531"
+}
