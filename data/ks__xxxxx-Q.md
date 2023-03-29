@@ -10,16 +10,8 @@ There is another Openzeppelin Ownable contract (Ownable2StepUpgradeable.sol) has
 
 [Ownable2StepUpgradeable.sol](https://github.com/OpenZeppelin/openzeppelin-contracts-upgradeable/blob/master/contracts/access/Ownable2StepUpgradeable.sol)
 
-##### [L-02] Prevent division by 0
-In the unstake() function there is a change of dividing by 0 error which can revert the code.
-Calling the above function when the totalSupply() = 0 can potentially trigger a division by zero.
 
-[SafEth.sol](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L116)
-
-In the above calculation `safEthTotalSupply` can be 0 and there is no check for the value being greater than 0.
-
-
-##### [L-03] Gas griefing/theft is possible on unsafe external call
+##### [L-02] Gas griefing/theft is possible on unsafe external call
 return data (bool success,) has to be stored due to EVM architecture, if in a usage like below, ‘out’ and ‘outsize’ values are given (0,0).
 Thus, this storage disappears and may come from external contracts a possible Gas griefing/theft problem is avoided
 
@@ -48,7 +40,7 @@ There are 5 instances of this particular usage
 
 [WstEth.sol#L76](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/WstEth.sol#L76)
 
-### [L-04] unused import 
+### [L-03] unused import 
 
 Please remove the unused import in SafEth.sol
 ```
@@ -58,7 +50,7 @@ IERC20 is imported, but it is not being used anywhere in the code.
 
 https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L4
 
-### [L-05] Missing events for critical arithmetic parameters
+### [L-04] Missing events for critical arithmetic parameters
 
 It would be better if we can add a event for setMaxSlippage() function in Reth.sol and SfrxEth.sol since maxSlippage is used in deposit() and withdraw() functions in the above two contracts respectively.
 
