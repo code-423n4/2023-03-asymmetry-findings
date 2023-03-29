@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "Sathish9098",
+  "risk": "3",
+  "title": "Attacker can front run the stake function and get more rewards than usual if any large volume of stake going to happen ",
+  "issueId": 417,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/417"
+}
