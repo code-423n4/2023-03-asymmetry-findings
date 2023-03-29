@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "RedTiger",
+  "risk": "3",
+  "title": "Wrong calculation of the price of FrxEth can lead to loss of funds.",
+  "issueId": 431,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/431"
+}
