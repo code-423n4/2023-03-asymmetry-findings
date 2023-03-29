@@ -4,8 +4,7 @@
 |---|---|
 | [Low-1] | Loss of Precision due to rounding  |
 | [Low-2] | Function Parameters Without Bounds |
-| [Low-3] | Owner can renounce Ownership |
-| [Low-4] | Lack of zero address checks |
+| [Low-3] | Lack of zero address checks |
 
 ## [Low-1] Loss of Precision due to rounding
 In the `stake` function, the ethAmount is calculated by `(msg.value * weight) / totalWeight` at line 88. Due to a potential loss of precision when rounding, there is a possibility that some wei may remain in the `SafEth` contract.
@@ -50,13 +49,7 @@ https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEt
 ### Recommendation
 Define limits or constraints on function parameters to prevent unintended consequences.
 
-## [Low-3] Owner can renounce Ownership
-Renouncing ownership results in the contract being left without an owner, removing any functionality that is only available to the owner.
-
-### Recommendation
-Reimplementing the function to disable it or clearly stating whether it is part of the contract design.
-
-## [Low-4] Lack of zero address checks
+## [Low-3] Lack of zero address checks
 If the variable get configured with address zero, failure to immediately reset the value can result in unexpected behavior for the project.
 
 ### Reccommendation
