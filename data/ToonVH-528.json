@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "ToonVH",
+  "risk": "2",
+  "title": "First deposit can be frontrun and is susceptible to a donation attack, allowing an attacker to steal the first deposit.",
+  "issueId": 528,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/528"
+}
