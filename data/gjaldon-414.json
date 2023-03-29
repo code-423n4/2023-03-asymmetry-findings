@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "gjaldon",
+  "risk": "2",
+  "title": "Different price oracles affects mint amount that leads to loss",
+  "issueId": 414,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/414"
+}
