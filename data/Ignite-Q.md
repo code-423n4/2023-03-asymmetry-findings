@@ -4,7 +4,8 @@
 |---|---|
 | [Low-1] | Loss of Precision due to rounding  |
 | [Low-2] | Function Parameters Without Bounds |
-| [Low-3] | Lack of zero address checks |
+| [Low-3] | Missing deadline checks allow pending transactions to be maliciously executed |
+| [Low-4] | Lack of zero address checks |
 
 ## [Low-1] Loss of Precision due to rounding
 In the `stake` function, the ethAmount is calculated by `(msg.value * weight) / totalWeight` at line 88. Due to a potential loss of precision when rounding, there is a possibility that some wei may remain in the `SafEth` contract.
@@ -49,8 +50,58 @@ https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEt
 ### Recommendation
 Define limits or constraints on function parameters to prevent unintended consequences.
 
-## [Low-3] Lack of zero address checks
+## [Low-3] Missing deadline checks in `swapExactInputSingleHop()` function
+
+The `swapExactInputSingleHop()` function lacks a deadline for its actions that execute swaps on the `deposit()` function. This missing feature can result in pending transactions being executed later, potentially leading to outdated slippage.
+
+https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/derivatives/Reth.sol#L83-L89
+```solidity
+    function swapExactInputSingleHop(
+        address _tokenIn,
+        address _tokenOut,
+        uint24 _poolFee,
+        uint256 _amountIn,
+        uint256 _minOut
+    ) private returns (uint256 amountOut) {
+```
+
+### Recommendation
+Adding a `deadline` parameter to function which perform a swap.
+
+## [Low-4] Lack of zero address checks
 If the variable get configured with address zero, failure to immediately reset the value can result in unexpected behavior for the project.
 
-### Reccommendation
+### Recommendation
 Add zero address checks.
+
+# Non-Critical Issues
+
+| | Issues | Instances |
+| -------- | -------- | -------- |
+| NC-1     | Using `uint256` rather than `uint`     |      |
+
+## [NC-1] Using `uint256` rather than `uint`
+
+Using `uint256` instead of `uint` is for clarity and consistency. Using `uint256` indicates that you are specifically declaring an unsigned integer of 256 bits, while using `uint` may be less clear and may lead to confusion with other integer types that have a different number of bits.
+
+The following table contains all instances where `uint` is used:
+
+| Contract | Line | Link to Code |
+| -------- | -------- | ---- |
+| SafEth   | 26 | https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L26 |
+| SafEth   | 27 | https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L27 |
+| SafEth   | 28 | https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L28 |
+| SafEth   | 31 | https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L31 |
+| SafEth   | 32 | https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L32 |
+| SafEth   | 71 | https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L71 |
+| SafEth   | 84 | https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L84 |
+| SafEth   | 92 | https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L92 |
+| SafEth   | 140 | https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L140 |
+| SafEth   | 147 | https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L147 |
+| SafEth   | 203 | https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L203 |
+| SafEth   | 204 | https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L204 |
+| Reth     | 171 | https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/derivatives/Reth.sol#L171 |
+| Reth     | 171 | https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/derivatives/Reth.sol#L241 |
+
+### Recommendation
+Using `uint256` rather than `uint`.
