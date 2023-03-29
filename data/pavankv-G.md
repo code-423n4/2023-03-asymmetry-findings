@@ -1,3 +1,6 @@
+
+Total Gas saves by this report = 3367 gas .
+
 ## 1. Payable constructor can save gas if not dealing with msg.value:-
 If constructor declare as payable it prevents Opcode which 
 were used to check "msg.value == 0" 
@@ -27,14 +30,15 @@ https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/deriv
 
 ## 3 . Use named returns for local variables where it is possible
 
-saves deployment gas per variable :- 1400.
+saves deployment gas per variable :- 650.
 
-total = 2800
+total = 650 
 
-https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/derivatives/Reth.sol#L156
 https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/derivatives/WstEth.sol#L73
 
-Total Gas saves by this report = 3513 gas .
+Without named return Deployment of WstEth.sol = 906125
+With named return delpoyment of WstEth.sol= 905281
+
 
 ## 4 . Try to avoid to compare booleans expressions to boolean literals to save gas :-
 
@@ -54,3 +58,8 @@ In 0.8.15 the conditions necessary for inlining are relaxed. Benchmarks show tha
 In 0.8.17 prevent the incorrect removal of storage writes before calls to Yul functions that conditionally terminate the external EVM call; Simplify the starting offset of zero-length operations to zero. More efficient overflow checks for multiplication.
 
 All scoped contract can be update to latest version .
+
+Total 
+
+
+
