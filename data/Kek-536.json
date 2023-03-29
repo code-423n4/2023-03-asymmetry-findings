@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "Kek",
+  "risk": "2",
+  "title": "Usage of variable `weight` and function `adjustWeight()` leads to mixing of user assets - can lead to unexpected loss of funds in extreme scenarios.",
+  "issueId": 536,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/536"
+}
