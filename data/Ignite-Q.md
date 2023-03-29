@@ -4,7 +4,7 @@
 |---|---|
 | [Low-1] | Loss of Precision due to rounding  |
 | [Low-2] | Function Parameters Without Bounds |
-| [Low-3] | Missing deadline checks allow pending transactions to be maliciously executed |
+| [Low-3] | Missing deadline checks in `swapExactInputSingleHop()` function |
 | [Low-4] | Lack of zero address checks |
 
 ## [Low-1] Loss of Precision due to rounding
