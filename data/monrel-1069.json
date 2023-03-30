@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "monrel",
+  "risk": "2",
+  "title": "Assuming ETH/stETH is 1-1 can lead to reverted withdrawals()",
+  "issueId": 1069,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/1069"
+}
