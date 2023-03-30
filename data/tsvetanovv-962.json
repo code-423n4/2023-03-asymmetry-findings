@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "tsvetanovv",
+  "risk": "2",
+  "title": "Malicious owner can prevent users to use `unstake()` function",
+  "issueId": 962,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/962"
+}
