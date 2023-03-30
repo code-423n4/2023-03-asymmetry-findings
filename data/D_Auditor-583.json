@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "D_Auditor",
+  "risk": "2",
+  "title": "OwnershipUpgradeable uses a single-step ownership transfer system.",
+  "issueId": 583,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/583"
+}
