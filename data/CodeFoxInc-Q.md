@@ -67,7 +67,7 @@ So there is a centralized risk. Owner can always drain funds. Owner needs to be 
 
 Mitigate the risk by at least using a multi-sig wallet for the owner. Plus, the team can create a plan to renounce the ownership in the future if it is possible.  
 
-## N-01 Use a struct array structure instead of `derivativeCount`
+## N-01 Use a struct array structure instead of `uint256 derivativeCount`, mapping `derivatives` and mapping `weights`
 
 [https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEthStorage.sol#L18](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEthStorage.sol#L18)
 
