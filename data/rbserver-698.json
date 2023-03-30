@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "rbserver",
+  "risk": "3",
+  "title": "`SfrxEth.ethPerDerivative` function returns how much frxETH that 10 ** 18 sfrxETH are worth, which can cause `minOut` in `SfrxEth.withdraw` function to be denominated in frxETH instead of ETH and slippage control to be incorrect",
+  "issueId": 698,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/698"
+}
