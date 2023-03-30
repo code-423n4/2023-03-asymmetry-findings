@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "0xepley",
+  "risk": "2",
+  "title": "SfrxEth.sol's  `priceDerivative(_amount)` function can be better secured using the stale check and temper proofness",
+  "issueId": 961,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/961"
+}
