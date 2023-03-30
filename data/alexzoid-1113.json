@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "alexzoid",
+  "risk": "2",
+  "title": "Ether Locked when Attempting to Call `stake()` during Setup",
+  "issueId": 1113,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/1113"
+}
