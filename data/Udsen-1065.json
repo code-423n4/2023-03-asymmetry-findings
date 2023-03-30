@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "Udsen",
+  "risk": "2",
+  "title": "CHANGES TO THE `minAmount` or `maxAmount` CAN REVERT THE PENDING `stake` TRANSACTIONS",
+  "issueId": 1065,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/1065"
+}
