@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "joestakey",
+  "risk": "2",
+  "title": "`sfrxETH.ethPerDerivative` is incorrect, leading to incorrect minting amount of `safETH`",
+  "issueId": 1124,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/1124"
+}
