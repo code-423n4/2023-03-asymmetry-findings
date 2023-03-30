@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "pipoca",
+  "risk": "2",
+  "title": "The `rebalanceToWeights` function may consume too much gas, making it impossible to execute rebalancing + function comments addressed",
+  "issueId": 649,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/649"
+}
