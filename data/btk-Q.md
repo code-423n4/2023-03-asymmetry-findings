@@ -8,7 +8,7 @@
 | [L-03] | Lack of `nonReentrant` modifier                                                                             | 1             |
 | [L-04] | Missing Event for initialize                                                                                | 4             |
 | [L-05] | `owner` can renounce while system is paused                                                                 | 1             |
-| [L-06] | Unused `receive()` Function Will Lock Ether In Contract                                                     | 4             |
+| [L-06] | Unused `receive()` Function Will Lock Ether In Contract                                                     | 1             |
 | [L-07] | Use a more recent version of OpenZeppelin dependencies                                                      | 1             |
 | [L-08] | Value is not validated to be different than the existing one                                                | 5             |
 | [L-09] | Add a timelock to critical functions                                                                        | 8             |
@@ -246,24 +246,6 @@ If the intention is for the Ether to be used, the function should call another f
 ```
 
 - [SafEth.sol#L246](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L246)
-
-```solidity
-    receive() external payable {}
-```
-
-- [Reth.sol#L244](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/derivatives/Reth.sol#L244)
-
-```solidity
-    receive() external payable {}
-```
-
-- [SfrxEth.sol#L126](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/derivatives/SfrxEth.sol#L126)
-
-```solidity
-    receive() external payable {}
-```
-
-- [WstEth.sol#L97](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/derivatives/WstEth.sol#L97)
 
 #### Recommended Mitigation Steps
 
