@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "Matin",
+  "risk": "3",
+  "title": "ETH funds of the derivative contracts can be drained by flash-loan attacks",
+  "issueId": 1035,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/1035"
+}
