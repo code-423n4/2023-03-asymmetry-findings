@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "tsvetanovv",
+  "risk": "2",
+  "title": "Not checked return value from `submitAndDeposit`",
+  "issueId": 978,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/978"
+}
