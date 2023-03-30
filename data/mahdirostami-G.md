@@ -69,11 +69,13 @@ MITIGATION:
 -       if (weight == 0) continue;
 -       uint256 ethAmount = (msg.value * weight) / totalWeight;
 +    uint256 _totalWeight = totalWeight;
-+    for (uint i = 0; i < derivativeCount; i++) {
++    uint256 _derivativeCount = derivativeCount;
++    uint256 msgvalue = msg.value;
++    for (uint i = 0; i < _derivativeCount ; i++) {
 +       uint256 weight = weights[i];
 +       IDerivative derivative = derivatives[i];
 +       if (weight == 0) continue; 
-+       uint256 ethAmount = (msg.value * weight) / _totalWeight;
++       uint256 ethAmount = (msgvalue  * weight) / _totalWeight;
 ```
 
 ## Avoid extra computation
