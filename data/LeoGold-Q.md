@@ -44,3 +44,12 @@ Owner can set minAmount that conflict with maximum Amount.
 ## Recommendation.
 it best to confirm the parameter set by Owner to check that setMaxAmount arguement is not less than the minimum amount set and the parameter set for setMinAmount is not greater than maxAmount set.
 
+# 6. 
+## Description:
+inconsistency with the `unstake()` function, users are unpredictable and can try to withdraw as low as 1wei, 2 wei etc and for a very little amount, it shows that while you caan call the unstake function successfully with passing 0, 1, 2 and 3 as value, user SafEth reduced in value but received 0 ethers in return for the amount deducted in safEth. And also passing 5 and 6 as a value in `unstake function` get reverted at the the point of exchanging on lido protocol calling the exchange function. (this was written in vyper).
+## context [SafEth.sol](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L108).
+
+## Recommendation.
+it is recommended to add minmum amount that can be unstake to correct the inconsistency happening with the `unstake functions`.
+
+
