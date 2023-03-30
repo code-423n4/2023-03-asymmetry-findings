@@ -1,4 +1,5 @@
-In WstEth.sol, the `ethPerDerivative` is hardcoded to return 1 while the sfrxETH is using an oracle.
+In WstEth.sol, the `ethPerDerivative` is hardcoded to return 1 while both rETH and sfrxETH is using a more native conversion within their corresponding protocol.
+
 Actually price of stETH can be fetched from the curveAMM too using the get_dy.
 
 Updated Approach
