@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "BRONZEDISC",
+  "risk": "3",
+  "title": "No checking to see if the `_contractAddress` is IDerivative compliant might break the whole contract.",
+  "issueId": 858,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/858"
+}
