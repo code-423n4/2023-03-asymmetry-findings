@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "shalaamum",
+  "risk": "3",
+  "title": "Attacker with sufficient control over the contract of an underlying derivative can steal all funds held by SafEth (also those held in the other derivatives)",
+  "issueId": 879,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/879"
+}
