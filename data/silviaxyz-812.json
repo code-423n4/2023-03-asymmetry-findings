@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "silviaxyz",
+  "risk": "3",
+  "title": "Missing derivative limit and deposit availability checks will revert the whole `stake()` function",
+  "issueId": 812,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/812"
+}
