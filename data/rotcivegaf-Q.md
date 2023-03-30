@@ -525,3 +525,8 @@ Recommended Mitigation Steps: Setting the owner in the contract's constructor to
 
 When `stake` in the contract `SafEth` some WEIs could be stuck in the contract because the equation [`uint256 ethAmount = (msg.value * weight) / totalWeight;`](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L88), in example: 
 ethAmount = (99 * 1) / 100 = 0.99 = 0 => lost 1 wei
+
+### [L‑06] Can't remove derivatives
+
+The `SafEth` can't remove derivatives, if the any derivative goes wrong can't remove it
+Add a function to give the possibility to remove a derivative
