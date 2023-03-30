@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "bytes032",
+  "risk": "2",
+  "title": "Adding invalid derivative contracts will break the protocol",
+  "issueId": 709,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/709"
+}
