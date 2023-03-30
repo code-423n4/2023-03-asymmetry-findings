@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "rbserver",
+  "risk": "2",
+  "title": "Staking functionality is DOS'ed when `Reth.poolCanDeposit` function returns true but `rocketDAOProtocolSettingsDeposit.getDepositEnabled()` is false in `RocketDepositPool.deposit` function",
+  "issueId": 702,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/702"
+}
