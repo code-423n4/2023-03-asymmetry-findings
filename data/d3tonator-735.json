@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "d3tonator",
+  "risk": "2",
+  "title": "Use _safeMint instead of _mint",
+  "issueId": 735,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/735"
+}
