@@ -1,4 +1,4 @@
-# QA
+# Non-issues
 
 ## Use single DEX
 
@@ -12,3 +12,6 @@ The code for deploying contracts is repeated in multiple places. If the mainnet 
 
 It's already provided by `OwnableUpgradeable`.
 
+## Rely less on the Mainnet state in development
+
+The tests are running on a forked state of Mainnet which is probably excessive, SafETH doesn't care about the vast majority of the blockchain state. It also makes testing different edge cases more difficult, instead of tweaking a mocked ecosystem the tests would need to work with real contracts. Harcoding real addresses everywhere also makes it impossible to run SafETH on a testnet.
