@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "JP_Courses",
+  "risk": "2",
+  "title": "rebalanceToWeights function will deposit all derivatives into derivative contracts, do rebalancing, and then deposit back into pools, even while users are still executing stake/unstake functions",
+  "issueId": 938,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/938"
+}
