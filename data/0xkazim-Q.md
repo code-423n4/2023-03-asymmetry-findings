@@ -1,6 +1,3 @@
-[M-16] Use of Solidity version 0.8.13 which has two known issues applicable to PuttyV2
-intializable inherites ----------> AddressUpgradeable
-
 # Findings Summary
 
 | ID     | Title                                                            | Severity |
