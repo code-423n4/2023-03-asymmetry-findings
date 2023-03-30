@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "hklst4r",
+  "risk": "2",
+  "title": "The `setMaxSlippage` FUNCTION DOES NOT HAVE ANY CHECKS ON THE INPUT VALUE",
+  "issueId": 684,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/684"
+}
