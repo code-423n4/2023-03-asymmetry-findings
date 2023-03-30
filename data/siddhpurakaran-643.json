@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "siddhpurakaran",
+  "risk": "2",
+  "title": "Unstake and rebalanceToWeights functions can have a DOS because the price_oracle() function in SfrxEth can return 0. ",
+  "issueId": 643,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/643"
+}
