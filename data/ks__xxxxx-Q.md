@@ -59,3 +59,19 @@ It would be better if we can add a event for setMaxSlippage() function in Reth.s
 [SfrxEth.sol](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/SfrxEth.sol#L51)
 
 setMaxSlippage() does not emit an event, so it is difficult to track changes in the value of maxSlippage off-chain.
+
+### [L-05] Incorrect Comment on setMinAmount() function in SafEth.sol
+
+###### Detail 
+setMinAmount function have the comment `@notice - Sets the minimum amount a user is allowed to stake`
+but setMinAmount function can only be used by admin. I recommend changing the comment to avoid confusions.
+```
+    /**
+        @notice - Sets the minimum amount a user is allowed to stake
+        @param _minAmount - amount to set as minimum stake value
+    */
+    function setMinAmount(uint256 _minAmount) external onlyOwner {
+        minAmount = _minAmount;
+        emit ChangeMinAmount(_minAmount);
+    }
+```
