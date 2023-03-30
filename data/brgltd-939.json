@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "brgltd",
+  "risk": "2",
+  "title": "A new derivative contract could be added after the user stakes and before the user unstakes, and unstaking will account for the new derivative contract that the user didn't originally stake into it",
+  "issueId": 939,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/939"
+}
