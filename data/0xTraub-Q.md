@@ -10,7 +10,7 @@ Example: If the original SafETH.sol is ever rendered unusable, such as from a st
 
 2. adjustWeight does not include a call to `rebalanceToWeights()` after the weights are adjusted. If a user backruns a change in weights without adjusting the balance then the `balance()` of a derivative may not match its expected value with weight. `rebalanceToWeights()` should be called automatically at the end after weights are adjusted.
 
-3. tag nonReentrant onto the `unstake` method for safety
+3. tag `nonReentrant` onto the `stake` and `unstake` method for safety
 
 --- Reth.sol ---
 
