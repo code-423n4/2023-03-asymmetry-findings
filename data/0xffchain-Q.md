@@ -80,7 +80,7 @@ But this can be done earlier
 
 #### [3]  Validation for contract Address
 
-In the `addDerivative()` function , the first parameter of `_contractAddress` is not validated when passed in, for example the allowed user might pass a zero address and successfully and they would be no way to delete this, except to disable the weight on finding out.
+In the `addDerivative()` function , the first parameter of `_contractAddress` is not validated when passed in, for example the allowed user might pass a zero address successfully and they would be no way to delete this, except to disable the weight on finding out.
 https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L182
 
 a validation like so should be included: 
@@ -220,12 +220,40 @@ There is no error here that returns on failure to deposit derivative into the Sf
 
 https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/derivatives/SfrxEth.sol#L94
 
+	function deposit() external payable onlyOwner returns (uint256) {
+		IFrxETHMinter frxETHMinterContract = IFrxETHMinter(
+		FRX_ETH_MINTER_ADDRESS
+		);
+		uint256 sfrxBalancePre = IERC20(SFRX_ETH_ADDRESS).balanceOf(
+		address(this)
+		);
+		frxETHMinterContract.submitAndDeposit{value: msg.value}(address(this));
+		uint256 sfrxBalancePost = IERC20(SFRX_ETH_ADDRESS).balanceOf(
+		address(this)
+		);
+		return sfrxBalancePost - sfrxBalancePre;
+	}
+	
+
 unlike is available in the other derivatives 
+
 WstEth.sol https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/WstEth.sol#L77
+
+	function deposit() external payable onlyOwner returns (uint256) {
+		.........................
+		require(sent, "Failed to send Ether");
+		.........................
+	}
 
 and 
 
 Reth.sol.https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/derivatives/Reth.sol#L200
+
+	function deposit() external payable onlyOwner returns (uint256) {
+	......................
+		require(rethBalance2 > rethBalance1, "No rETH was minted");
+		...................
+	}
 
 Although since this is a contract to contract call, and would revert on failure, there should be a message from this deriavative about the failure and the reason it failed, just like in the other two derivative contracts. 
 
@@ -280,7 +308,7 @@ there should be a check like so
     }
 	
 
-this way a wrong index that exceeds the already supplied indexes is not included, for example if a wrong index of 7 is supplied when there is only 3 derivatives in this contract, it will mean that the that new derivative would never be reached when looping  for actions that take weights into consideration like so 
+this way a wrong index that exceeds the already supplied indexes is not included, for example if a wrong index of 7 is supplied when there is only 3 derivatives in this contract, it will mean that the new derivative would never be reached when looping  for actions that take weights into consideration like so 
 
 https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L191
 
