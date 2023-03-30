@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "CodingNameKiki",
+  "risk": "2",
+  "title": "A problem occurs in the staking function, which does calculations based on two different eth per derivative values in the beginning and on the end of the function. The problem occurs for the derivatives SfrxEth and WstEth.",
+  "issueId": 991,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/991"
+}
