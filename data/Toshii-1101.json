@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "Toshii",
+  "risk": "2",
+  "title": "Spot UniswapV3 pricing for rETH when staking in SafEth can lead to loss of user funds",
+  "issueId": 1101,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/1101"
+}
