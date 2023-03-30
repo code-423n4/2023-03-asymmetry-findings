@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "yac",
+  "risk": "2",
+  "title": "Hardcoded slippage can cause temporary DoS",
+  "issueId": 699,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/699"
+}
