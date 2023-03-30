@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "JP_Courses",
+  "risk": "2",
+  "title": "MEDIUM RISK?: Create a function modifier for pausing functions until specific functions finish executing to prevent state inconsistencies or other issues. Multiple functions rely on totalWeight and derivativeCount, which can be changed by at least 2 other functions. Changing these values should be done in isolation to avoid any risk of state inconsistencies.",
+  "issueId": 807,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/807"
+}
