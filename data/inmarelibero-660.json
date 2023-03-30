@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "inmarelibero",
+  "risk": "2",
+  "title": "adjustWeight() uses a bizarre method to adjust derivate weights",
+  "issueId": 660,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/660"
+}
