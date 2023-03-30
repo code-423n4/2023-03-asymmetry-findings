@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "alexzoid",
+  "risk": "2",
+  "title": "No Zero Address Check Can Lead to the Entire Project Stalling",
+  "issueId": 1116,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/1116"
+}
