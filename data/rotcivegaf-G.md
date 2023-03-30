@@ -580,3 +580,29 @@ struct Derivative {
 
 mapping(uint256 => Derivative) public derivatives;
 ```
+
+## [G-11] Revert if don't have amount to rebalance
+
+```diff
+@@ -18,6 +18,8 @@ contract SafEth is
+     OwnableUpgradeable,
+     SafEthStorage
+ {
++    error NoEthAmountToRebalance();
++
+     event ChangeMinAmount(uint256 indexed minAmount);
+     event ChangeMaxAmount(uint256 indexed maxAmount);
+     event StakingPaused(bool indexed paused);
+@@ -143,9 +145,10 @@ contract SafEth is
+         }
+         uint256 ethAmountAfter = address(this).balance;
+         uint256 ethAmountToRebalance = ethAmountAfter - ethAmountBefore;
++        if (ethAmountToRebalance == 0) revert NoEthAmountToRebalance();
+
+         for (uint i = 0; i < derivativeCount; i++) {
+-            if (weights[i] == 0 || ethAmountToRebalance == 0) continue;
++            if (weights[i] == 0) continue;
+             uint256 ethAmount = (ethAmountToRebalance * weights[i]) /
+                 totalWeight;
+             // Price will change due to slippage
+```
