@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "siddhpurakaran",
+  "risk": "2",
+  "title": "Major functions of protocol (like stake, unstake) can completely stop working if many derivative contracts will be integrated with this protocol through addDerivative function.",
+  "issueId": 688,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/688"
+}
