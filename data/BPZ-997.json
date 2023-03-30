@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "BPZ",
+  "risk": "2",
+  "title": "The rebalanceToWeights function will always revert when more than 5000 ETH has been allocated to the rETH contract",
+  "issueId": 997,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/997"
+}
