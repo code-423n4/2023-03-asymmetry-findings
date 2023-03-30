@@ -47,3 +47,11 @@ https://github.com/code-423n4/2023-03-asymmetry/blob/a8dd9399565ac608860dcadd7b1
 
 Comment:
 /// @audit GAS OPTIMIZATION: could use 1 and 2 instead of 1 and 0 or true and false. This would save 31 gas per call.
+
+https://github.com/code-423n4/2023-03-asymmetry/blob/b3861c62e22b4c8df2a19d25cad8d98eaaf23a9e/contracts/SafEth/derivatives/Reth.sol#L145-L150
+
+/// @audit GAS OPTIMIZATION: This entire return statement can be written as follows with similar gas costs but improved readability & more explicit: 
+/// @audit GAS OPTIMIZATION: require(rocketDepositPool.getBalance() + _amount <= rocketDAOProtocolSettingsDeposit.getMaximumDepositPoolSize());
+/// @audit GAS OPTIMIZATION: require(_amount >= rocketDAOProtocolSettingsDeposit.getMinimumDeposit());
+/// @audit GAS OPTIMIZATION: return true;
+
