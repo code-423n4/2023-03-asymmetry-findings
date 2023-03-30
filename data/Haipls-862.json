@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "Haipls",
+  "risk": "3",
+  "title": "Users can send funds directly to derivatives, which will break various functionality or logic",
+  "issueId": 862,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/862"
+}
