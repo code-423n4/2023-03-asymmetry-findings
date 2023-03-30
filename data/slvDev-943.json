@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "slvDev",
+  "risk": "2",
+  "title": "Malicious/compromised owner can add compromised derivative and steal funds",
+  "issueId": 943,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/943"
+}
