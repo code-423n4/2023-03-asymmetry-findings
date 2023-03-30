@@ -5,7 +5,7 @@
 |               | Issue         | Instances     |
 | :-------------: |:-------------|:-------------:|
 | 1  | Multiple address/IDs mappings can be combined into a single mapping of an address/id to a struct | 2 |
-| 2  | `storage` variable should be cached into `memory` variables instead of re-reading them  |  4 |
+| 2  | `storage` variable should be cached into `memory` variables instead of re-reading them  |  5 |
 | 3  | Use `unchecked` blocks to save gas  | 1 |
 | 4  | `derivatives[i].balance()` should be cached into memory  | 2 |
 | 5  | `derivativeCount` should not be read at each loop iteration | 7 |
@@ -43,23 +43,28 @@ mapping(uint256 => Derivative) public derivatives;
 
 The instances below point to the second+ access of a state variable within a function, the caching of a state variable replaces each Gwarmaccess (100 gas) with a much cheaper stack read, thus saves **100gas** for each instance.
 
-There are 4 instances of this issue :
+There are 5 instances of this issue :
 
 File: SafEth.sol [Line 71-84](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L71-L84)
 
-In the code linked above the value of `derivativeCount` is read multiple times (2) from storage and it's value does not change so it should be cached into a memory variable in order to save gas by avoiding multiple reads from storage.
+In the code linked above the value of `derivativeCount` is read multiple times (2) from storage and its value does not change so it should be cached into a memory variable in order to save gas by avoiding multiple reads from storage.
 
 File: SafEth.sol [Line 140-147](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L140-L147)
 
-In the code linked above the value of `derivativeCount` is read multiple times (2) from storage and it's value does not change so it should be cached into a memory variable in order to save gas by avoiding multiple reads from storage.
+In the code linked above the value of `derivativeCount` is read multiple times (2) from storage and its value does not change so it should be cached into a memory variable in order to save gas by avoiding multiple reads from storage.
+
+File: SafEth.sol [Line 148-149](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L148-L149)
+
+In the code linked above the value of `weights[i]` is read multiple times (2) from storage and its value does not change so it should be cached into a memory variable in order to save gas by avoiding multiple reads from storage.
 
 File: SafEth.sol [Line 186-187](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L186-L187)
 
-In the code linked above the value of `derivativeCount` is read multiple times (2) from storage and it's value does not change so it should be cached into a memory variable in order to save gas by avoiding multiple reads from storage.
+In the code linked above the value of `derivativeCount` is read multiple times (2) from storage and its value does not change so it should be cached into a memory variable in order to save gas by avoiding multiple reads from storage.
 
 File: SafEth.sol [Line 191-194](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L191-L194)
 
-In the code linked above the value of `derivativeCount` is read multiple times (2) from storage and it's value does not change so it should be cached into a memory variable in order to save gas by avoiding multiple reads from storage.
+In the code linked above the value of `derivativeCount` is read multiple times (2) from storage and its value does not change so it should be cached into a memory variable in order to save gas by avoiding multiple reads from storage.
+
 
 ### 3- Use `unchecked` blocks to save gas :
 
