@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "HHK",
+  "risk": "2",
+  "title": "Impossible to unstake SafETH If rETH pool doesn't have enough liquidity",
+  "issueId": 1070,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/1070"
+}
