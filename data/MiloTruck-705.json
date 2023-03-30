@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "MiloTruck",
+  "risk": "3",
+  "title": "Attacker can permanently break staking when SafETH's `totalSupply` is small",
+  "issueId": 705,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/705"
+}
