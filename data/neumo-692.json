@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "neumo",
+  "risk": "2",
+  "title": "Slippage protection is not calculated correctly in SfrxEth contract",
+  "issueId": 692,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/692"
+}
