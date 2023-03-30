@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "d3e4",
+  "risk": "2",
+  "title": "`Reth.poolCanDeposit` checks only two out of three conditions",
+  "issueId": 1050,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/1050"
+}
