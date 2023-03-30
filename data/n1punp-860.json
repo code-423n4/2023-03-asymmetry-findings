@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "n1punp",
+  "risk": "3",
+  "title": "`withdraw` function in SfrxEth.sol contract is vulnerable to sandwich attack. ",
+  "issueId": 860,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/860"
+}
