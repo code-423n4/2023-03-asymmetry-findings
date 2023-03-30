@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "Infect3d",
+  "risk": "2",
+  "title": " Adding a _contractAddress not correctly implementing the IDerivative interface will cause a DoS of operations",
+  "issueId": 1080,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/1080"
+}
