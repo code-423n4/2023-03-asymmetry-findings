@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "rbserver",
+  "risk": "3",
+  "title": "`minOut` in `WstEth.withdraw` function is denominated in stETH instead of ETH, which causes slippage control to be incorrect",
+  "issueId": 701,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/701"
+}
