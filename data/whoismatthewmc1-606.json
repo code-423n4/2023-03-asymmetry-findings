@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "whoismatthewmc1",
+  "risk": "3",
+  "title": "Unstake of small amounts (eg: 1 wei of safETH) can burn tokens with no ETH sent back to user",
+  "issueId": 606,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/606"
+}
