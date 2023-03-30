@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "JP_Courses",
+  "risk": "2",
+  "title": "MEDIUM RISK?: race-condition vulnerability / lack of atomicity during stake/unstake functions executions by multiple users",
+  "issueId": 892,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/892"
+}
