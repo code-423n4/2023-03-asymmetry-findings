@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "Breeje",
+  "risk": "2",
+  "title": "Missing deadline check allows pending transactions to be maliciously executed resulting in bad swap",
+  "issueId": 905,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/905"
+}
