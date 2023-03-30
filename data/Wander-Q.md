@@ -91,7 +91,7 @@ function ethPerDerivative(uint256 _amount) public view returns (uint256) {
           return (poolPrice() * 10 ** 18) / (10 ** 18);
 }
 ```
-As we see previously, the `derivative[i].balance()` is passed to this function so `_amount` is equal to Reth contract balance, but the Reth contract doesn't want to deposit as much as its balance every time `stake` function is called.
+As we see previously, the `derivative[i].balance()` is passed to this function so `_amount` is equal to Reth contract balance, but logically the Reth contract doesn't want to deposit as much as its balance every time `stake` function is called.
 In other word, when a user calls the `stake` function, Reth contract is not checking the user's ethers can be deposited or not ?! Instead, it every time checks all of the contract balance can be deposited or not.
 
 ## Recommended Solution
