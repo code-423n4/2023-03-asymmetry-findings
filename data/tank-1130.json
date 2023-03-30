@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "tank",
+  "risk": "3",
+  "title": "the depositor can get sanwich attack when call `stake` in SafEth and `deposit` in RETH",
+  "issueId": 1130,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/1130"
+}
