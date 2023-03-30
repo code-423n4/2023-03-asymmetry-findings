@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "ddimitrov22",
+  "risk": "3",
+  "title": "Wrong calculations in the `stake` function",
+  "issueId": 842,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/842"
+}
