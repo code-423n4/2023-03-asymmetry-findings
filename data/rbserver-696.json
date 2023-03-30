@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "rbserver",
+  "risk": "3",
+  "title": "`SafEth.stake` function does not call `Reth.ethPerDerivative` function with ETH amount to be deposited as input, which can cause `mintAmount` to be calculated incorrectly",
+  "issueId": 696,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/696"
+}
