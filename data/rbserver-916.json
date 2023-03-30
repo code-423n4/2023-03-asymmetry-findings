@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "rbserver",
+  "risk": "2",
+  "title": "Only 0.05% fee rETH/ETH Uniswap pool can be used because corresponding fee parameter is hardcoded",
+  "issueId": 916,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/916"
+}
