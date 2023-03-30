@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "rbserver",
+  "risk": "2",
+  "title": "Swap deadline for `Reth` derivative cannot be specified and used for staking",
+  "issueId": 1087,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/1087"
+}
