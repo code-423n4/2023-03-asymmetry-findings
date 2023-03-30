@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "deliriusz",
+  "risk": "3",
+  "title": "`SafEth.rebalanceToWeights()` is DoSed / susceptible to high slippage after depositing >2000 ETH",
+  "issueId": 749,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/749"
+}
