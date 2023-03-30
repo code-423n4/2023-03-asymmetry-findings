@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "0xepley",
+  "risk": "3",
+  "title": "Missing deadline in `ExactInputSingleParams` allows pending transaction to be manipulated and executed maliciously",
+  "issueId": 1013,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/1013"
+}
