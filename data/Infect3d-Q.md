@@ -20,6 +20,7 @@ File: contracts\SafeEth.sol
 
 ## N-02 No event triggered when `minAmount` and `maxAmount` are set
 https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L54-L55
+Importnat changes to the protocol should be emitted through events
 
 ##### SafeEth::initialize
 ```solidity
