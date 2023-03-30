@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "Viktor_Cortess",
+  "risk": "2",
+  "title": "Frontrunning Uniswap V3 WETH/rETH pool with flashloan to break staking process",
+  "issueId": 989,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/989"
+}
