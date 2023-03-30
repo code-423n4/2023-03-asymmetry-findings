@@ -13,6 +13,15 @@ import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {IFrxEthEthPool} from "../../interfaces/curve/IFrxEthEthPool.sol";
 import {IFrxETHMinter} from "../../interfaces/frax/IFrxETHMinter.sol";
 ```
+## MISSING SLIPPAGE PROTECTION
+In SafEth.sol, a slippage option should be provided when users are calling [`stake()`](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L63-L101). This is because [`derivatives[i].ethPerDerivative(derivatives[i].balance())`](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L73) is not returning a fixed value but rather the price of derivative in terms of ETH that can be changing albeit less volatile compared to other crypto pair. Nonetheless, this could affect the amount of [`safETH` minted](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L99).
+
+For instance, if the price returned is higher than the one previously called by another staker, `mintAmount` is going to be proportionately lower in the reverse manner. The same rule shall apply the opposoite way if the price returned is lower.
+
+Suggetsed fix:
+
+It is recommended implementing slippage protection in `stake()` so that users could be assured of the minimum amount of safETH they are going to receive.    
+ 
 ## USE MORE RECENT VERSIONS OF SOLIDITY
 Lower versions like 0.8.13 are being used in the contracts. For better security, it is best practice to use the latest Solidity version, 0.8.19.
 
