@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "carlitox477",
+  "risk": "3",
+  "title": "Lack of `derivativeCount != 0` check in `SafEth.stake` freeze ETH forever.",
+  "issueId": 777,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/777"
+}
