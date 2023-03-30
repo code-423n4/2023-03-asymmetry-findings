@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "bearonbike",
+  "risk": "2",
+  "title": "If the curve pool becomes imbalanced, users may be able to withdraw less ethers than expected.",
+  "issueId": 612,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/612"
+}
