@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "silviaxyz",
+  "risk": "2",
+  "title": "`maxSlippage` will brick the transactions in turbulent market conditions.",
+  "issueId": 814,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/814"
+}
