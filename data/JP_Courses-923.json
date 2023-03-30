@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "JP_Courses",
+  "risk": "2",
+  "title": "No require statement after/for _burn function to check if successful, before sending ETH back to user wallet.",
+  "issueId": 923,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/923"
+}
