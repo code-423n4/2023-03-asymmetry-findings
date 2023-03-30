@@ -1,4 +1,4 @@
-### [L-01] Outdated Compiler 0.8.13 Used by the Contracts
+# [L-01] Outdated Compiler 0.8.13 Used by the Contracts
 
 #### Description:
 
@@ -37,7 +37,7 @@ The latest version of the Solidity compiler contains significant improvements an
 
 
 
-### [L-02] Use _safeMint instead of _mint
+# [L-02] Use _safeMint instead of _mint
 
 #### Description
 During the analysis it was observed that the contract is using function `_mint()` instead of _safeMint(). _mint() has the potential to allow an attacker to mint an arbitrary number of tokens, which could result in a supply inflation vulnerability. Additionally, if the contract does not have proper checks and balances in place, _mint() could be used to generate tokens and transfer them to arbitrary addresses, including attacker-controlled addresses.
@@ -55,3 +55,25 @@ Based on our analysis of the smart contract, we recommend the following changes 
 1- Replace _mint() with _safeMint() to ensure that tokens are only minted and transferred to authorized addresses.
 2- Implement proper checks and balances to ensure that only authorized users are able to call _safeMint().
 3- Consider adding additional security measures, such as multi-factor authentication or permission-based access controls, to further restrict access to the _safeMint() function.
+
+
+
+
+# [L-03] SafEth.sol contracts utilised the draft stage  OwnableUpgradeable.sol and ERC20PermitUpgradeable.sol contracts
+
+### Description
+
+The `SafEth.sol` contracts utilised `OwnableUpgradeable.sol` and `ERC20PermitUpgradeable.sol`, an OpenZeppelin contracts. These contracts are still in draft stage and are not considered ready for mainnet use, thus are subject to potential changes in the future.
+
+#### Proof of Concept:
+
+[https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L9](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L9) 
+
+[https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L9)11 
+
+```solidity
+9   import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+
+11  import "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
+
+```
