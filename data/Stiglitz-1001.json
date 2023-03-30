@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "Stiglitz",
+  "risk": "2",
+  "title": "Derivate contract deployer can trick the users by \"secretly\" setting high slippage",
+  "issueId": 1001,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/1001"
+}
