@@ -37,7 +37,7 @@ For instance, if the price returned is higher than the one previously called by 
 Suggetsed fix:
 
 It is recommended implementing slippage protection in `stake()` so that users could be assured of the minimum amount of safETH they are going to receive.    
- 
+
 ## USE MORE RECENT VERSIONS OF SOLIDITY
 Lower versions like 0.8.13 are being used in the contracts. For better security, it is best practice to use the latest Solidity version, 0.8.19.
 
@@ -133,3 +133,20 @@ Recommendation: Short term, measure the gas savings from optimizations and caref
 
 ## SYSTEM DOCUMENTATION AND TECHNICAL SPECIFICATION
 Having an up-to-date system design specification and documentation is as important as the system implementation because users and developers heavily rely on them to understand how the entire flow works. For the contest, users could only resort to the code base itself, something the vast majority of users cannot understand. Security assessments depend on a complete technical specification to understand the specifics of how a system works. When a behavior is not specified (or is specified incorrectly), security assessments must base their knowledge in assumptions, leading to less effective review. Maintaining and updating code relies on supporting documentation to know why the system is implemented in a specific way. If code maintainers cannot reference documentation, they must rely on memory or assistance to make high-quality changes. Currently, the only documentation available is a single README file, as well as code comments.
+
+## PAUSABLE CHECKS COULD BE GROUPED INTO A MODIFIER
+The [`pauseStaking`](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L64) and [`pauseUnstaking`](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L109) checks are similar in logic and may be grouped into a modifier for better code structure. In line of this, [`setPauseStaking()`](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L232-L235) and [`setPauseUnstaking()`](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L241-L244) may also be simplified into one setPause function.
+
+## BOOLEAN EXPRESSION AND LITERAL COMPARE
+In conjunction to the above suggestion, it is inexpedient comparing a boolean expression to a boolean literal in a require check. Simply use negation, `!`, if it needs to be false. 
+
+Suggested fix:
+
+[SafEth.sol](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol)
+
+```
+64:       require(!pauseStaking, "staking is paused");
+
+109:       require(!pauseUnstaking, "unstaking is paused");
+```
+  
