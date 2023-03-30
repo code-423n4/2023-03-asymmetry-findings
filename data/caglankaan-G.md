@@ -27,7 +27,7 @@ This code optimization involves avoiding the unnecessary initialization of uint2
 Applies for all of the for loops
 ```solidity
 for (uint i = 0; i < derivativeCount; i++) {
-for (uint i = 0; i < derivativeCount; i++) {
+for (uint256 i = 0; i < derivativeCount; i++) {
 ```
 
 ### Recommendation
