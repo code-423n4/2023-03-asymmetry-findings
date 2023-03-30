@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "IceBear",
+  "risk": "3",
+  "title": "Centralization risk: admin have privileges: admin can setPauseStaking/setPauseUnstaking",
+  "issueId": 731,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/731"
+}
