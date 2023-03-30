@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "lukris02",
+  "risk": "3",
+  "title": "If a derivative protocol is hacked, stake() and unstake() functions will become unavailable. Assets will be locked",
+  "issueId": 642,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/642"
+}
