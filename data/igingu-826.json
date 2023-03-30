@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "igingu",
+  "risk": "2",
+  "title": "Mistakenly adding duplicate derivative will break staking, and mint much less SafEth tokens to investors",
+  "issueId": 826,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/826"
+}
