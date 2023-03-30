@@ -1,7 +1,7 @@
 # Report
 
 - Non Critical Issues (5)
-- Low Issues (4)
+- Low Issues (5)
 
 ## Non Critical Issues
 
@@ -185,6 +185,7 @@ Consider defining constants for literal or magic values as it improves readabili
 | [L-2](#L-2) | Rounding down when dividing by weight will leave some ETH leftovers  | 2 |
 | [L-3](#L-3) | `adjustWeight` function should validate derivative index is within range | - |
 | [L-4](#L-4) | `ethPerDerivative` function has confusing semantics | - |
+| [L-5](#L-5) | Protect access to `receive()` function | - |
 
 ### <a name="L-1"></a>[L-1] Contract files should define a locked compiler version
 Contracts should be deployed with the same compiler version and flags that they have been tested with thoroughly. Locking the pragma helps to ensure that contracts do not accidentally get deployed using, for example, an outdated compiler version that might introduce bugs that affect the contract system negatively.
@@ -257,3 +258,9 @@ The `ethPerDerivative` function implemented by the different derivatives takes a
 The amount paramater is mostly ignored by the implementations, except for the Reth derivative which uses it to switch between using the Rocker Pool protocol or the Uniswap pool.
 
 Consider renaming the function to something more appropiate that reflects the semantics of the current implementation and less confusing in terms of its interface.
+
+### <a name="L-5"></a>[L-5] Protect access to `receive()` function
+
+All major contracts implement the `receive` function to allow incoming ETH payments: derivatives need to accept ETH when unstaked or swapped, and SafEth needs to accept ETH coming from derivatives when unstaking or rebalancing.
+
+As a precautionary measure, the different instances of this function can be protected to allow only transfers coming from the intended callers. In the case of SafEth these are the configured derivatives, and in the case of each derivative it should be the address of the corresponding protocol or exchange pool.
