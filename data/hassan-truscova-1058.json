@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "hassan-truscova",
+  "risk": "3",
+  "title": "Wrong arithmetic in unstake function",
+  "issueId": 1058,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/1058"
+}
