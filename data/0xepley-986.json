@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "0xepley",
+  "risk": "3",
+  "title": "Price being fetched from uniswap using `pricePool()` function is spot price and can be easily manipulated.",
+  "issueId": 986,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/986"
+}
