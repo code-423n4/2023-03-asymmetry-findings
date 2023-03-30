@@ -47,7 +47,7 @@ function addDerivative(
 Can be easily update `totalWeight = totalWeight + _weight;` since ` x = x + y` take less gas `x+=y`.
 also there is no need of `for loop` to recalculate weight.
 
-## G[3] Use arithmetic operating instead using loop for new totalWeight calculating
+## G[3] checking for ethAmountBefore before entering loop can save a lot of gas if its value is 0.
 [Link to github permalink](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L138-L155)
 ```diff
  function rebalanceToWeights() external onlyOwner {
@@ -74,4 +74,23 @@ also there is no need of `for loop` to recalculate weight.
 ```
 Here, by adding `if ethAmountToRebalance > 0` condition, we can save a lot of gas by escaping from loop if `ethAmountToRebalance = 0` since `ethAmountToRebalance` been checked for every iteration.
 
+## G[4] Unwanted calcualtion cause more gas
+[Link to github permalink](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L211-L216)
+```diff
+ function ethPerDerivative(uint256 _amount) public view returns (uint256) {
+        if (poolCanDeposit(_amount))
+            return
+                RocketTokenRETHInterface(rethAddress()).getEthValue(10 ** 18);
+-       else return (poolPrice() * 10 ** 18) / (10 ** 18);
++       else return poolPrice();
+    }
+```
+Since `poolPrice()` return `uint256`, we can directly cancel the `10**18 to 10**18`, this saves more gas.
+
+## G[5] Use immutable keyword instead of constant keyword.
+[here](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L20-L27)
+[here](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/SfrxEth.sol#L14-L21)
+[and here](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/WstEth.sol#L13-L18)
+
+use `immutable` Keyword which takes less gas compared to `constant` keyword while accessing.
 
