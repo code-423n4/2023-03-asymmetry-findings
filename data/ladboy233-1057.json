@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "ladboy233",
+  "risk": "2",
+  "title": "Slippage should be always less than 10 **18 to avoid front-running or transaction revert",
+  "issueId": 1057,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/1057"
+}
