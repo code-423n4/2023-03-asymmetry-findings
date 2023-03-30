@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "0xmuxyz",
+  "risk": "2",
+  "title": "Due to lack of the cap (limitation) of `_weight`, the `totalWeight` would be underflow, which results in that the `ethAmount` to be deposited into each derivative contract will be `0`",
+  "issueId": 665,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/665"
+}
