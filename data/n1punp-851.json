@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "n1punp",
+  "risk": "3",
+  "title": "`deposit` function in Reth.sol is vulnerable to sandwich attack.",
+  "issueId": 851,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/851"
+}
