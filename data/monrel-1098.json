@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "monrel",
+  "risk": "3",
+  "title": "An attacker can manipulate the preDepositvePrice to steal from other users.",
+  "issueId": 1098,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/1098"
+}
