@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "0Kage",
+  "risk": "3",
+  "title": "`rebalanceToWeights` can face DDOS as Rocket Pool position may not be exitable",
+  "issueId": 751,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/751"
+}
