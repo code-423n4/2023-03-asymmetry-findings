@@ -1,8 +1,21 @@
 # GAS OPTIMIZATIONS
 
-### [G-1] Use a more recent version of solidity
+|             | Issues| Instances|
+|:--------:|-------|----------|
+| [G-1]   | Use a more recent version of solidity      |4 |
+| [G-2]   | Setting the constructor to payable      |4 |
+| [G-3]   | OPTIMIZE NAMES TO SAVE GAS      | 37|
+| [G-4]   | Don't declare the variables inside the loops costs more gas       |11 |
+| [G-5]   | Avoid contract existence checks by using low level calls     | 33|
+| [G-6]   |  ADD UNCHECKED {} FOR SUBTRACTIONS WHERE THE OPERANDS CANNOT UNDERFLOW BECAUSE OF A PREVIOUS REQUIRE() OR IF-STATEMENT       |1 |
+| [G-7]   | Public function not called by contract declare external to save gas     | 2|
+| [G-8]   | With assembly, .call (bool success) transfer can be done gas-optimized      |3 |
+| [G-9]   | Empty blocks should be removed or emit something      | 4|
+| [G-10]   | Usage of uints/ints smaller than 32 bytes (256 bits) incurs overhead      | 2|
+| [G-11]   |  Private functions only called once can be inlined to save gas      |1 |
+| [G-12]   | Make 3 event parameters indexed when possible      | 5|
 
-##
+### [G-1] Use a more recent version of solidity
 
 In 0.8.15 the conditions necessary for inlining are relaxed. Benchmarks show that the change significantly decreases the bytecode size (which impacts the deployment cost) while the effect on the runtime gas usage is smaller.
 
@@ -27,8 +40,6 @@ FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/Reth.sol
 ##
 
 ### [G-2] Setting the constructor to payable
-
-##
 
 You can cut out 10 opcodes in the creation-time EVM bytecode if you declare a constructor payable. Making the constructor payable eliminates the need for an initial check of msg.value == 0 and saves 13 gas on deployment with no security risks
 
@@ -60,7 +71,6 @@ FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/Reth.sol
 
 ### [G-3] OPTIMIZE NAMES TO SAVE GAS
 
-##
 public/external function names and public member variable names can be optimized to save gas.  Below are the interfaces/abstract contracts that can be optimized so that the most frequently-called functions use the least amount of gas possible during method lookup. Method IDs that have two leading zero bytes can save 128 gas each during deployment, and renaming functions to have lower method IDs will save 22 gas per call, [per sorted position shifted](https://medium.com/joyso/solidity-how-does-function-name-affect-gas-consumption-in-smart-contract-47d270d8ac92)
 
 FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/WstEth.sol
@@ -93,7 +103,6 @@ initialize(),name(),setMaxSlippage(),rethAddress(),swapExactInputSingleHop(),wit
 
 ### [G-4] Don't declare the variables inside the loops costs more gas 
 
-##
 FILE : 2023-03-asymmetry/contracts/SafEth/SafEth.sol
 
 [SafEth.sol#L71-L96](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L71-L96)
@@ -103,8 +112,6 @@ FILE : 2023-03-asymmetry/contracts/SafEth/SafEth.sol
 ##
 
 ### [G-5] Avoid contract existence checks by using low level calls
-
-##
 
 Prior to 0.8.10 the compiler inserted extra code, including EXTCODESIZE (100 gas), to check for contract existence for external function calls. In more recent solidity versions, the compiler will not insert these checks if the external call has a return value. Similar behavior can be achieved in earlier versions by using low-level calls, since low level calls never check for contract existence
 
@@ -172,7 +179,6 @@ FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/Reth.sol
 
 ### [G-6] ADD UNCHECKED {} FOR SUBTRACTIONS WHERE THE OPERANDS CANNOT UNDERFLOW BECAUSE OF A PREVIOUS REQUIRE() OR IF-STATEMENT . This saves 30-40 gas
 
-##
 SOLUTION:
 ```solidity
  require(a <= b); x = b - a => require(a <= b); unchecked { x = b - a } if(a <= b); x = b - a => if(a <= b); unchecked { x = b - a }
@@ -190,7 +196,6 @@ FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/Reth.sol
 
 ### [G-7] Public function not called by contract declare external to save gas 
 
-##
 FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/Reth.sol
 ```solidity
 211: function ethPerDerivative(uint256 _amount) public view returns (uint256) {
@@ -201,8 +206,6 @@ FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/Reth.sol
 ##
 
 ## [G-8] With assembly, .call (bool success) transfer can be done gas-optimized
-
-##
 
 return data (bool success,) has to be stored due to EVM architecture, but in a usage like below, ‘out’ and ‘outsize’ values are given (0,0), this storage disappears and gas optimization is provided
 
@@ -224,8 +227,6 @@ FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/WstEth.sol
 [WstEth.sol#L76](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/WstEth.sol#L76),[WstEth.sol#L63-L65](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/WstEth.sol#L63-L65)
 
 ## Recommended Mitigation:
-
-##
 
 ```solidity
 bool success;                                 
@@ -264,7 +265,7 @@ FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/Reth.sol
 
 ##
 
-### [G-10] Usage of uints/ints smaller than 32 bytes (256 bits) incurs overhead
+## [G-10] Usage of uints/ints smaller than 32 bytes (256 bits) incurs overhead
 
 When using elements that are smaller than 32 bytes, your contracts gas usage may be higher. This is because the EVM operates on 32 bytes at a time. Therefore, if the element is smaller than that, the EVM must use more operations in order to reduce the size of the element from 32 bytes to the desired size.
 
@@ -299,15 +300,25 @@ function swapExactInputSingleHop(
 ```
 [Reth.sol#L83-L89](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L83-L89)
 
+##
 
-GAS-1	Use selfbalance() instead of address(this).balance	7
-GAS-2	Comparing booleans to true or false	2
-GAS-3	Use calldata instead of memory for function arguments that do not get mutated	2
-GAS-4	Use Custom Errors	10
-GAS-5	Don't initialize variables with default value	11
-GAS-6	Pre-increments and pre-decrements are cheaper than post-increments and post-decrements	8
-GAS-7	Using private rather than public for constants, saves gas	11
-GAS-8	Use shift Right/Left instead of division/multiplication if possible	4
-GAS-9	Use storage instead of memory for structs/arrays	1
-GAS-10	Increments can be unchecked in for-loops	7
-GAS-11	Use != 0 instead of > 0 for unsigned integer comparison	1
+## [G-12] Make 3 event parameters indexed when possible
+
+It’s the most gas efficient to make up to 3 event parameters indexed. If there are less than 3 parameters, you need to make all parameters indexed
+
+- use 3 event parameters indexed
+- If less than 3 all event parameters should be indexed 
+
+FILE : 2023-03-asymmetry/contracts/SafEth/SafEth.sol
+```solidity
+    event SetMaxSlippage(uint256 indexed index, uint256 slippage);
+    event Staked(address indexed recipient, uint ethIn, uint safEthOut);
+    event Unstaked(address indexed recipient, uint ethOut, uint safEthIn);
+    event WeightChange(uint indexed index, uint weight);
+    event DerivativeAdded(
+        address indexed contractAddress,
+        uint weight,
+        uint index
+    );
+```
+
