@@ -226,11 +226,13 @@ FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/WstEth.sol
 ## Recommended Mitigation:
 
 ##
+
+```solidity
 bool success;                                 
 + assembly {                                    
 +        success := call(gas(), dest, amount, 0, 0)
 +          }   
-
+```
 ##
 
 ## [G-9] Empty blocks should be removed or emit something
