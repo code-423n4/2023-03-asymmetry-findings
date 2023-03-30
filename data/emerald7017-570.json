@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "emerald7017",
+  "risk": "2",
+  "title": "Unauthorized action can be performed by manipulating tx.origin in withdraw() function.",
+  "issueId": 570,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/570"
+}
