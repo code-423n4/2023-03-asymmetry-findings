@@ -38,6 +38,9 @@ Suggetsed fix:
 
 It is recommended implementing slippage protection in `stake()` so that users could be assured of the minimum amount of safETH they are going to receive.    
 
+## MINIMUM WEIGHT ON RETH DERIVATIVE
+It is recommended this specific `weights` is set or adjusted such that it will fulfill [`_amount >= rocketDAOProtocolSettingsDeposit.getMinimumDeposit()`](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/derivatives/Reth.sol#L149) if this is a going to be a priority to make [`poolCanDeposit(msg.value)`](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/derivatives/Reth.sol#L170) equal true.
+
 ## USE MORE RECENT VERSIONS OF SOLIDITY
 Lower versions like 0.8.13 are being used in the contracts. For better security, it is best practice to use the latest Solidity version, 0.8.19.
 
