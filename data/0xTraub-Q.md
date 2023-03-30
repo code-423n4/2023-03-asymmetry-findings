@@ -14,10 +14,7 @@ Example: If the original SafETH.sol is ever rendered unusable, such as from a st
 
 --- Reth.sol ---
 
-1. The `poolPrice()` function uses the Uniswap V3 pool as its price oracle if the Rocketpool Depositor is unable to deposit. This is bad practice as it can be easily manipulated with a flash loan. The pool only has 5.3M TVL which makes it easy to manipulate with a small flash loan. Consider using a time-weighted oracle to calculate price which is significantly more difficult to manipulate.
-https://blog.openzeppelin.com/secure-smart-contract-guidelines-the-dangers-of-price-oracles/
-
-2. Consider using the CRV pool for RETH/ETH rather than the Uniswap V3 pool. The stableswap invariant makes it harder to engage in oracle manipulation and results in less slippage at high volumes. It also has ~$2M more in liquidity then the Uniswap Pool resulting in a lower price impact
+1. Consider using the CRV pool for RETH/ETH rather than the Uniswap V3 pool. The stableswap invariant makes it harder to engage in oracle manipulation and results in less slippage at high volumes. It also has ~$2M more in liquidity then the Uniswap Pool resulting in a lower price impact
 
 --- All derivatives contracts ---
 All of the derivatives contracts are OwnableUpgradable. However, ownableUpgradable does not set the owner of the contract without an explicit call. It requires you to call `__Ownable_init()` to transfer ownership of the contract to msg.sender. After the constructor there is no ownership set. Similasrly, the initializer modifier does not do a check that the caller is authorized to do so. As a result anyone can backrun the contract deployment and call `initialize(address _owner)` and make themselves the owner, hijacking the contract. This can be resolved by calling `__Ownable_init()` in the constructor to set deployer as owner, and then adding the `onlyOwner` modifier to the `initialize()` function.
