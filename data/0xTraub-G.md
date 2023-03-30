@@ -21,3 +21,7 @@ lines 75, 82, 83, 102, 98, 55, 54
 Replace pauseStaking and pauseUnstaking with uint = 1, and when pauses/unpaused change to 2. Using a bool means an SSTORE that turns a zero-slot into a non-zero slot which costs 21,000 gas every time. Changing a non-zero slot to a non-zero slot only costs 100 gas when pausing/unpausing occurs.
 
 
+---SfrxEth.sol---
+1. Re-use the exponent optimization from above. In `withdraw` saves 180 gas from 10**18 being used 3 times. Is also used on line 113 and 115
+
+2. 
