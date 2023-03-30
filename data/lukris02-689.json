@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "lukris02",
+  "risk": "2",
+  "title": "Functions ```setPauseStaking()``` and ```setPauseUnstaking()``` do not check if staking/unstaking is already enabled or disabled",
+  "issueId": 689,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/689"
+}
