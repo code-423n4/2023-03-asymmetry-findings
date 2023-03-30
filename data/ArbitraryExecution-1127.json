@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "ArbitraryExecution",
+  "risk": "2",
+  "title": "Ether trapped in contract if no derivates exist",
+  "issueId": 1127,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/1127"
+}
