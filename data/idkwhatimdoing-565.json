@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "idkwhatimdoing",
+  "risk": "2",
+  "title": "Potential Denial of Service (DoS) attack when the number of derivatives is too high.",
+  "issueId": 565,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/565"
+}
