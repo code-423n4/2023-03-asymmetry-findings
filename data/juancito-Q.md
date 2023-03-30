@@ -422,7 +422,7 @@ In order to improve consistency of the codebase, consider sticking to one of the
 
 From [Solidity documentation](https://docs.soliditylang.org/en/v0.8.19/structure-of-a-contract.html#errors):
 
-"Errors allow you to define descriptive names and data for failure situations. Errors can be used in revert statements. In comparison to string descriptions, errors are much cheaper and allow you to encode additional data. You can use NatSpec to describe the error to the user."
+"Errors allow you to define descriptive names and data for failure situations. Errors can be used in revert statements. In comparison to string descriptions, errors are much cheaper and allow you to encode additional data. You can use NatSpec to describe the error to the user"
 
 Consider using custom errors for:
 
