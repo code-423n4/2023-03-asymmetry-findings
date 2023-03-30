@@ -4,11 +4,9 @@
 
 ### Low Risk Issues
 
-- [L-1] Trades of derivative tokens are performed with sub-optimal values
-- [L-2] Precision loss in stake function affects share calculation
-- [L-3] Users Ether can be locked in contract if sent by mistake
-- [L-4] Two-step ownership transfer
-- [L-5] Add safety checks to admin functions
+- [L-1] Users Ether can be locked in contract if sent by mistake
+- [L-2] Two-step ownership transfer
+- [L-3] Add safety checks to admin functions
 
 ### Non-Critical Issues
 
@@ -22,239 +20,7 @@
 
 ## Low Risk Issues
 
-### [L-1] Trades of derivative tokens are performed with sub-optimal values
-
-The derivative contracts calculate the `minAmount` to be expected for a trade in a pool in a sub-optimal way due to precision loss errors.
-
-#### Impact
-
-Trades may happen with a lower output amount than expected, receiving less derivative Ether for the protocol, and the users.
-
-#### Proof of Concept
-
-The `deposit` function in the `Reth` derivative contract has a precision loss when calculating `minOut`, as it performs divisions before multiplications:
-
-```solidity
-// File: contracts/SafEth/derivatives/Reth.sol
-
-uint rethPerEth = (10 ** 36) / poolPrice();
-
-uint256 minOut = ((((rethPerEth * msg.value) / 10 ** 18) *
-    ((10 ** 18 - maxSlippage))) / 10 ** 18);
-
-IWETH(W_ETH_ADDRESS).deposit{value: msg.value}();
-uint256 amountSwapped = swapExactInputSingleHop(
-    W_ETH_ADDRESS,
-    rethAddress(),
-    500,
-    msg.value,
-    minOut
-);
-
-return amountSwapped;
-```
-
-[Link to code](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/derivatives/Reth.sol#L171-L185)
-
-The `withdraw` function in the `SfrxEth` derivative contract has a precision loss when calculating `minOut`, as it also performs divisions before multiplications:
-
-```solidity
-// File: contracts/SafEth/derivatives/SfrxEth.sol
-
-function withdraw(uint256 _amount) external onlyOwner {
-    // ...
-
-    uint256 minOut = (((ethPerDerivative(_amount) * _amount) / 10 ** 18) *
-        (10 ** 18 - maxSlippage)) / 10 ** 18;
-
-    IFrxEthEthPool(FRX_ETH_CRV_POOL_ADDRESS).exchange(
-        1,
-        0,
-        frxEthBalance,
-        minOut
-    );
-
-    // ...
-}
-
-function ethPerDerivative(uint256 _amount) public view returns (uint256) {
-    uint256 frxAmount = IsFrxEth(SFRX_ETH_ADDRESS).convertToAssets(
-        10 ** 18
-    );
-    return ((10 ** 18 * frxAmount) /
-        IFrxEthEthPool(FRX_ETH_CRV_POOL_ADDRESS).price_oracle());
-}
-```
-
-[Link to code](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/derivatives/SfrxEth.sol#L74-L82)
-
-#### Recommended Mitigation Steps
-
-Avoid divisions before multiplications to minimize precision loss errors.
-
-Suggested modifications after reorganizing the calculations and canceling common factors:
-
-```diff
-// File: contracts/SafEth/derivatives/Reth.sol
-
-- uint rethPerEth = (10 ** 36) / poolPrice();
-
-- uint256 minOut = ((((rethPerEth * msg.value) / 10 ** 18) *
--     ((10 ** 18 - maxSlippage))) / 10 ** 18);
-+ uint256 minOut = msg.value * (10 ** 18 - maxSlippage) / poolPrice();
-    
-
-IWETH(W_ETH_ADDRESS).deposit{value: msg.value}();
-uint256 amountSwapped = swapExactInputSingleHop(
-    W_ETH_ADDRESS,
-    rethAddress(),
-    500,
-    msg.value,
-    minOut
-);
-
-return amountSwapped;
-```
-
-```diff
-// File: contracts/SafEth/derivatives/SfrxEth.sol
-
-function withdraw(uint256 _amount) external onlyOwner {
-    // ...
-
--   uint256 minOut = (((ethPerDerivative(_amount) * _amount) / 10 ** 18) *
--        (10 ** 18 - maxSlippage)) / 10 ** 18;
-+   uint256 frxAmount = IsFrxEth(SFRX_ETH_ADDRESS).convertToAssets(10 ** 18);
-+   uint256 priceOracle = IFrxEthEthPool(FRX_ETH_CRV_POOL_ADDRESS).price_oracle();
-+   uint256 minOut = frxAmount * _amount * (10 ** 18 - maxSlippage) / priceOracle / 10 ** 18; 
-
-    IFrxEthEthPool(FRX_ETH_CRV_POOL_ADDRESS).exchange(
-        1,
-        0,
-        frxEthBalance,
-        minOut
-    );
-
-    // ...
-}
-```
-
-### [L-2] Precision loss in stake function affects share calculation
-
-The `stake` function in `SafEth` performs divisions before multiplications, which incur in unnecesary precission loss errors, along with other divisions that could be avoided.
-
-#### Impact
-
-The amount of `SafEth` shares received after staking is less than expected if calculated in a way to  minimize precision errors.
-
-#### Proof of Concept
-
-There are many instances on the `stake` function that could be improved to avoid precision loss.
-
-[Link to stake function](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L63-L101)
-
-On the `for` block, the `underlyingValue` is divided by `10 ** 18` for each derivative. This number can be divided just once, to minimize precision loss from each division.
-
-```solidity
-for (uint i = 0; i < derivativeCount; i++)
-    underlyingValue +=
-        (derivatives[i].ethPerDerivative(derivatives[i].balance()) *
-            derivatives[i].balance()) /
-        10 ** 18; // @audit
-```
-
-Later the `underlyingValue` is used to calculate the `preDepositPrice`, and with that the `mintAmount`:
-
-```solidity
-uint256 totalSupply = totalSupply();
-uint256 preDepositPrice; // Price of safETH in regards to ETH
-if (totalSupply == 0)
-    preDepositPrice = 10 ** 18; // initializes with a price of 1
-else preDepositPrice = (10 ** 18 * underlyingValue) / totalSupply;
-
-// ...
-
-uint256 mintAmount = (totalStakeValueEth * 10 ** 18) / preDepositPrice;
-```
-
-There's a division before multiplication covered on the `mintAmount` calculation, that can be avoided as demonstrated here to reduce precision loss:
-
-```soldity
-uint256 mintAmount = (totalStakeValueEth * 10 ** 18) / preDepositPrice;
-uint256 mintAmount = (totalStakeValueEth * 10 ** 18) / ((10 ** 18 * underlyingValue) / totalSupply);
-uint256 mintAmount = totalStakeValueEth * totalSupply / underlyingValue;
-```
-
-Same thing happens with `totalStakeValueEth` which covers another division before multiplication. And also dividing multiple times instead of just once:
-
-```solidity
-uint256 totalStakeValueEth = 0; // total amount of derivatives worth of ETH in system
-for (uint i = 0; i < derivativeCount; i++) {
-    // ...
-
-    uint derivativeReceivedEthValue = (derivative.ethPerDerivative(
-        depositAmount
-    ) * depositAmount) / 10 ** 18; // @audit
-    totalStakeValueEth += derivativeReceivedEthValue;
-}
-
-uint256 mintAmount = (totalStakeValueEth * 10 ** 18) / preDepositPrice;
-```
-
-#### Recommended Mitigation Steps
-
-Refactor the `stake` function to reduce precision loss by avoiding divisions before multiplications, and minimize errors by dividing only once when possible.
-
-Here's a suggested refactoring, moving divisions to the end of the calculation, and simplifying factors that cancel each other like `10 ** 18 / 10 ** 18`.
-
-```diff
-    function stake() external payable {
-        require(pauseStaking == false, "staking is paused");
-        require(msg.value >= minAmount, "amount too low");
-        require(msg.value <= maxAmount, "amount too high");
-
-        uint256 underlyingValue = 0;
-
-        // Getting underlying value in terms of ETH for each derivative
-        for (uint i = 0; i < derivativeCount; i++)
-            underlyingValue +=
-                (derivatives[i].ethPerDerivative(derivatives[i].balance()) *
--                    derivatives[i].balance()) /
--                10 ** 18;
-+                    derivatives[i].balance());
-
-        uint256 totalSupply = totalSupply();
--        uint256 preDepositPrice; // Price of safETH in regards to ETH
--        if (totalSupply == 0)
--            preDepositPrice = 10 ** 18; // initializes with a price of 1
--        else preDepositPrice = (10 ** 18 * underlyingValue) / totalSupply;
-
-        uint256 totalStakeValueEth = 0; // total amount of derivatives worth of ETH in system
-        for (uint i = 0; i < derivativeCount; i++) {
-            uint256 weight = weights[i];
-            IDerivative derivative = derivatives[i];
-            if (weight == 0) continue;
-            uint256 ethAmount = (msg.value * weight) / totalWeight;
-
-            // This is slightly less than ethAmount because slippage
-            uint256 depositAmount = derivative.deposit{value: ethAmount}();
-            uint derivativeReceivedEthValue = (derivative.ethPerDerivative(
-                depositAmount
--           ) * depositAmount) / 10 ** 18;
-+           ) * depositAmount);
-            totalStakeValueEth += derivativeReceivedEthValue;
-        }
-        // mintAmount represents a percentage of the total assets in the system
--        uint256 mintAmount = (totalStakeValueEth * 10 ** 18) / preDepositPrice;
-+        uint256 mintAmount = totalSupply == 0
-+            ? totalStakeValueEth / 10 ** 18
-+            : totalStakeValueEth * totalSupply / underlyingValue;
-        _mint(msg.sender, mintAmount);
-        emit Staked(msg.sender, msg.value, mintAmount);
-    }
-```
-
-### [L-3] Users Ether can be locked in contract if sent by mistake
+### [L-1] Users Ether can be locked in contract if sent by mistake
 
 #### Proof of Concept
 
@@ -276,7 +42,7 @@ In the case of the `SafEth`, require it to only receive Ether from the derivativ
 
 In the case of the derivatives, require them to only receive Ether from the `SafErh` contract address, and from the pools and contracts they interact with.
 
-### [L-4] Two-step ownership transfer
+### [L-2] Two-step ownership transfer
 
 The `owner` role in the `SafEth` contract and the derivatives contracts is critical to perform operations on the platform. In order to prevent transfering it to a wrong address by mistake, it is recommended to perform the transfer in two steps.
 
@@ -294,7 +60,7 @@ The `owner` role in the `SafEth` contract and the derivatives contracts is criti
 
 Use [Ownable2StepUpgradeable](https://github.com/OpenZeppelin/openzeppelin-contracts-upgradeable/blob/master/contracts/access/Ownable2StepUpgradeable.sol) instead of `OwnableUpgradeable` that achieves the same original functionality with the addition of a method to confirm the the ownership.
 
-### [L-5] Add safety checks to admin functions
+### [L-3] Add safety checks to admin functions
 
 Safety checks can prevent admin errors that could greatly harm the project, at the expense of a cheap check.
 
@@ -422,7 +188,7 @@ In order to improve consistency of the codebase, consider sticking to one of the
 
 From [Solidity documentation](https://docs.soliditylang.org/en/v0.8.19/structure-of-a-contract.html#errors):
 
-"Errors allow you to define descriptive names and data for failure situations. Errors can be used in revert statements. In comparison to string descriptions, errors are much cheaper and allow you to encode additional data. You can use NatSpec to describe the error to the user"
+"Errors allow you to define descriptive names and data for failure situations. Errors can be used in revert statements. In comparison to string descriptions, errors are much cheaper and allow you to encode additional data. You can use NatSpec to describe the error to the user."
 
 Consider using custom errors for:
 
