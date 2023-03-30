@@ -24,4 +24,5 @@ Replace pauseStaking and pauseUnstaking with uint = 1, and when pauses/unpaused 
 ---SfrxEth.sol---
 1. Re-use the exponent optimization from above. In `withdraw` saves 180 gas from 10**18 being used 3 times. Is also used on line 113 and 115
 
-2. 
+--- Reth.sol ---
+1. Every time you call `getAddress()` on RocketStorageInterface, you first encode and hash the information. Given that this is static you can calculate it once during the constructor or hard code it into a constant since it will never change. This saves gas from the encoding and at least 30 gas from each use of the keccak256 function. Lines 191, 162, 233, 135, 125, 70
