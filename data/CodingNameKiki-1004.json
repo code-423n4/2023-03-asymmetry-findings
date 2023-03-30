@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "CodingNameKiki",
+  "risk": "3",
+  "title": "A temporary issue shows in the staking functionality which leads to the users receiving less minted tokens.",
+  "issueId": 1004,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/1004"
+}
