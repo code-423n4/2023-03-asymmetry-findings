@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "slvDev",
+  "risk": "3",
+  "title": "DoS from Malicious Derivatives in stake() function",
+  "issueId": 915,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/915"
+}
