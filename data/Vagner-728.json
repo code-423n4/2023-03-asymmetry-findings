@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "Vagner",
+  "risk": "3",
+  "title": "User that deposit less than 1 ether can lose their funds by minting 0 shares",
+  "issueId": 728,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/728"
+}
