@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "Kaysoft",
+  "risk": "2",
+  "title": "DIVISION BEFORE MULTIPLICATION INCURS LOSS OF PRECISION",
+  "issueId": 1096,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/1096"
+}
