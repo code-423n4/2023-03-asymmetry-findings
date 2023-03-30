@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "Kaysoft",
+  "risk": "2",
+  "title": "SafEth.sol CAN RECEIVE ETHER BUT NO WAY TO WITHDRAW SENT ETHER",
+  "issueId": 1025,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/1025"
+}
