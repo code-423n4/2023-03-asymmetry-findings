@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "kaden",
+  "risk": "3",
+  "title": "`Reth.sol` can be partially drained via price manipulation",
+  "issueId": 953,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/953"
+}
