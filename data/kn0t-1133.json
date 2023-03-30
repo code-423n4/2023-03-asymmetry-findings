@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "kn0t",
+  "risk": "3",
+  "title": "All the FRX_ETH tokens of SfrxEth contract can be drained by a malicious user.",
+  "issueId": 1133,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/1133"
+}
