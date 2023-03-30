@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "MadWookie",
+  "risk": "2",
+  "title": "User can experience unnecessary slippage due to miscalculation in `ethPerDerivative` and `poolCanDeposit` when staking Reth",
+  "issueId": 627,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/627"
+}
