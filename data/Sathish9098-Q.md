@@ -1,9 +1,56 @@
 # LOW FINDINGS 
+## LOW
+| | Issues| Instances|
+|---------|-----|--------|
+| [L-1]    | UNUSED RECEIVE() functions  | 4|
+| [L-2]    | Imports can be grouped together   | 3|
+| [L-3]    | Sanity/Threshold/Limit Checks  | 6|
+| [L-4]    | LOSS OF PRECISION DUE TO ROUNDING  | 9|
+| [L-5]    | A single point of failure  | 17|
+| [L-6]    | Use safe variant of _mint() function  | 1|
+| [L-7]    | No Storage Gap for SafEth contract  | 7|
+| [L-8]    | Prevent division by 0  | 5|
+| [L-9]    | Consider using OpenZeppelin’s SafeCast library to prevent unexpected behavior when casting uint  | 1|
+| [L-10]    | abi.encodePacked() should not be used with dynamic types when passing the result to a hash function such as keccak256()  | 6|
+| [L-11]    | Missing Event for critical parameters init and change   | 4|
+| [L-12]    | Gas griefing/theft is possible on unsafe external call  | 3|
+| [L-13]    | Front running attacks by the onlyOwner  | 2|
+| [L-14]    | Function Calls in Loop Could Lead to Denial of Service  | 4|
+| [L-15]    | Use safeTransferOwnership instead of transferOwnership function  | 4|
+
+##
+## NON CRITICAL
+
+| | Issues| Instances|
+|---------|-----|--------|
+| [NC-1]    | For modern and more readable code; update import usages  | 34   |
+| [NC-2]    | Imports can be grouped together  | -  |
+| [NC-3]    | AVOID HARDCODED VALUES  | 11   |
+| [NC-4]    | Shorter the inheritance   | 1   |
+| [NC-5]    | EMPTY BLOCKS SHOULD BE REMOVED OR EMIT SOMETHING  | 5   |
+| [NC-6]    | ADD PARAMETER TO EVENT-EMIT  | 1   |
+| [NC-7]    | Pragma float  | 7   |
+| [NC-8]    | Interchangeable usage of uint and uint256  | 4   |
+| [NC-9]    | TYPOS  | 1   |
+| [NC-10]    | Include (@param and @return) parameters in NatSpec comments  | -   |
+| [NC-11]    | NatSpec comments should be increased in contracts  | -   |
+| [NC-12]    | Function writing that does not comply with the Solidity Style Guide  | -   |
+| [NC-13]    | Add a timelock to critical functions  | 4   |
+| [NC-14]    | For functions, follow Solidity standard naming conventions (private function style rule)  | 3   |
+| [NC-15]    | Missing NatSpec  | 9   |
+| [NC-16]    | Use scientific notation instead of exponential notation  | 12   |
+| [NC-17]    | String constants used in multiple places should be defined as constants  | 6   |
+| [NC-18]    | Events that mark critical parameter changes should contain both the old and the new value  | 3   |
+| [NC-19]    | NO SAME VALUE INPUT CONTROL  | 4   |
+| [NC-20]    | NOT USING THE NAMED RETURN VARIABLES ANYWHERE IN THE FUNCTION IS CONFUSING  | 1   |
+| [NC-21]    | Use a more recent version of Solidity  | 4   |
+| [NC-22]    | Use latest and same versions of openzeppelin contracts   | 22   |
+| [NC-23]    | Implement some type of version counter that will be incremented automatically for contract upgrades  | -   |
+| [NC-24]    | Generate perfect code headers every time  | -   |
+
 ##
 
 ## [L-1] UNUSED RECEIVE() functions
-
-##
 
 If the intention is for the Ether to be used, the function should call another function, otherwise it should revert
 
@@ -32,7 +79,7 @@ FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/Reth.sol
 ##
 
 ## [L-2] MISSING CHECKS FOR ADDRESS(0X0) WHEN TRANSFER OWNERSHIP 
-##
+
 Owner address is not checked before calling _transferOwnership function 
 
 FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/WstEth.sol
@@ -64,7 +111,6 @@ function initialize(address _owner) external initializer {
 [Reth.sol#L42-L45](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L42-L45)
 
 ### Recommendations
-##
 Add necessary address(0) check before tranferownership to new address
 
 
@@ -72,7 +118,6 @@ Add necessary address(0) check before tranferownership to new address
 
 ## [L-3] Sanity/Threshold/Limit Checks
 
-##
 Devoid of sanity/threshold/limit checks, critical parameters can be configured to invalid values, causing a variety of issues and breaking expected interactions within/between contracts.
 
 FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/WstEth.sol
@@ -128,8 +173,6 @@ Add the sanity/threshold/limit checks before assigning critical variable values
 
 ## [L-4] LOSS OF PRECISION DUE TO ROUNDING
 
-##
-
 FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/WstEth.sol
 ```solidity
 60: uint256 minOut = (stEthBal * (10 ** 18 - maxSlippage)) / 10 ** 18;
@@ -176,8 +219,6 @@ uint256 ethAmount = (ethAmountToRebalance * weights[i]) / totalWeight;
 ##
 
 ## [L-5] A single point of failure
-
-##
 
 The onlyOwner role has a single point of failure and onlyOwner can use critical a few functions.
 
@@ -237,11 +278,18 @@ File: contracts/SafEth/derivatives/WstEth.sol
 73:     function deposit() external payable onlyOwner returns (uint256) {
 
 ```
+
+### Recommended Mitigation Steps
+
+Add a time lock to critical functions. Admin-only functions that change critical parameters should emit events and have timelocks.
+
+Events allow capturing the changed parameters so that off-chain tools/interfaces can register such changes with timelocks that allow users to evaluate them and consider if they would like to engage/exit based on how they perceive the changes as affecting the trustworthiness of the protocol or profitability of the implemented financial services.
+
+Also detail them in documentation and NatSpec comments
+
 ##
 
 ## [L-6] Use safe variant of _mint() function
-
-##
 
 .mint won’t check if the recipient is able to receive the tokens. If an incorrect address is passed, it will result in a silent failure and loss of asset.
 
@@ -253,14 +301,12 @@ FILE : 2023-03-asymmetry/contracts/SafEth/SafEth.sol
 ```
 [SafEth.sol#L99](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L99)
 
-Recommendation
+### Recommendation
 Replace _mint() with _safeMint()
 
 ##
 
 ## [L-7] No Storage Gap for SafEth contract
-
-##
 
 Impact
 For upgradeable contracts, inheriting contracts may introduce new variables. In order to be able to add new variables to the upgradeable contract without causing storage collisions, a storage gap should be added to the upgradeable contract.
@@ -280,7 +326,6 @@ always adds up to the same number (in this case 50 storage slots).
 
 ## Recommended Mitigation Steps
 
-##
 Consider adding a storage gap at the end of the upgradeable abstract contract
 
 uint256[50] private __gap;
@@ -288,8 +333,6 @@ uint256[50] private __gap;
 ##
 
 ## [L-8] Prevent division by 0
-
-##
 
 On several locations in the code precautions are not being taken for not dividing by 0, this will revert the code.
 These functions can be called with 0 value in the input, this value is not checked for being bigger than 0, that means in some scenarios this can potentially trigger a division by zero
@@ -318,11 +361,13 @@ FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/Reth.sol
 ```
 [Reth.sol#L171](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L171)
 
+### Recommendations:
+
+Make sure the denominator value is not 0 
+
 ##
 
 ## [L-9] Consider using OpenZeppelin’s SafeCast library to prevent unexpected behavior when casting uint
-
-##
 
 FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/Reth.sol
 ```solidity
@@ -330,11 +375,13 @@ FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/Reth.sol
 ```
 [derivatives/Reth.sol#L241](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L241)
 
+### Recommendations: 
+
+Use OpenZeppelin’s SafeCast library
+
 ##
 
 ## [L-10] abi.encodePacked() should not be used with dynamic types when passing the result to a hash function such as keccak256()
-
-##
 
 Use abi.encode() instead which will pad items to 32 bytes, which will prevent hash collisions (e.g. abi.encodePacked(0x123,0x456) => 0x123456 => abi.encodePacked(0x1,0x23456), but abi.encode(0x123,0x456) => 0x0...1230...456). "Unless there is a compelling reason, abi.encode should be preferred". If there is only one argument to abi.encodePacked() it can often be cast to bytes() or bytes32() instead. If all arguments are strings and or bytes, bytes.concat() should be used instead
 
@@ -401,11 +448,13 @@ FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/Reth.sol
 ```
 [Reth.sol#L229-L235](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L229-L235)
 
+### Recommendations:
+
+abi.encode should be preferred
+
 ##
 
 ## [L-11] Missing Event for critical parameters init and change 
-
-##
 
 ## Description
 Events help non-contract tools to track changes, and events prevent users from being surprised by changes.
@@ -458,8 +507,6 @@ Add Event-Emit
 
 ## [L-12] Gas griefing/theft is possible on unsafe external call
 
-##
-
 return data (bool success,) has to be stored due to EVM architecture, if in a usage like below, ‘out’ and ‘outsize’ values are given (0,0) . Thus, this storage disappears and may come from external contracts a possible Gas griefing/theft problem is avoided
 
 <https://twitter.com/pashovkrum/status/1607024043718316032?t=xs30iD6ORWtE2bTTYsCFIQ&s=19>
@@ -510,10 +557,9 @@ function setMaxAmount(uint256 _maxAmount) external onlyOwner {
 ```
 [SafEth.sol#L214-L226](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L214-L226)
 
-## Recommended Mitigation:
-##
-Use a timelock to avoid instant changes of the parameters
+### Recommended Mitigation:
 
+Use a timelock to avoid instant changes of the parameters
 ##
 
 ### [L-14] Function Calls in Loop Could Lead to Denial of Service
@@ -527,13 +573,50 @@ Function calls made in unbounded loop are error-prone with potential resource ex
 
 ##
 
+## [L-15] Use safeTransferOwnership instead of transferOwnership function
+
+FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/WstEth.sol
+```solidity
+function initialize(address _owner) external initializer {
+        _transferOwnership(_owner);
+        maxSlippage = (1 * 10 ** 16); // 1%
+}
+```
+
+[WstEth.sol#L33-L36](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/WstEth.sol#L33-L36)
+
+FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/SfrxEth.sol
+```solidity
+function initialize(address _owner) external initializer {
+        _transferOwnership(_owner);
+        maxSlippage = (1 * 10 ** 16); // 1%
+}
+```
+[SfrxEth.sol#L36-L39](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/SfrxEth.sol#L36-L39)
+
+FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/Reth.sol
+```solidity
+function initialize(address _owner) external initializer {
+        _transferOwnership(_owner);
+        maxSlippage = (1 * 10 ** 16); // 1%
+}
+```
+[Reth.sol#L42-L45](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L42-L45)
+
+### Description:
+transferOwnership function is used to change Ownership
+
+Use a 2 structure transferOwnership which is safer.
+safeTransferOwnership, use it is more secure due to 2-stage ownership transfer
+
+### Recommendation:
+Use Ownable2Step.sol
+
+##
+
 # NON CRITICAL FINDINGS 
 
-##
-
 ## [NC-1]  For modern and more readable code; update import usages
-
-##
 
 FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/WstEth.sol
 ```solidity
@@ -587,14 +670,12 @@ import "../../interfaces/uniswap/IUniswapV3Pool.sol";
 [Reth.sol#L4-L15](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L4-L15)
 
 ### Recommendation
-##
+
 import {contract1 , contract2} from "filename.sol";
 
 ##
 
 ## [NC-2] Imports can be grouped together
-
-##
 
 Consider importing interfaces first, then OpenZeppelin imports 
 
@@ -649,15 +730,11 @@ import "../../interfaces/uniswap/IUniswapV3Pool.sol";
 ```
 [Reth.sol#L4-L15](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L4-L15)
 
-
- 
 ##
 
-## [NC-3] AVOID HARDCODED VALUES 
+## [NC-3] Hardcode the address causes no future updates
 
-##
-
-It is not good practice to hardcode values, but if you are dealing with addresses much less, these can change between implementations, networks or projects, so it is convenient to remove these values from the source code
+In case the addresses change due to reasons such as updating their versions in the future, addresses coded as constants cannot be updated 
 
 FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/WstEth.sol
 
@@ -686,11 +763,13 @@ address public constant UNI_V3_FACTORY = 0x1F98431c8aD98523631AE4a59f267346ea31F
 ```
 [Reth.sol#L20-L27](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L20-L27)
 
+### Recommendations:
+
+It is recommended to add the update option with the onlyOwner modifier
+
 ##
 
 ## [NC-4] Shorter the inheritance 
-
-##
 
 FILE : 2023-03-asymmetry/contracts/SafEth/SafEth.sol
 ```solidity
@@ -705,8 +784,6 @@ FILE : 2023-03-asymmetry/contracts/SafEth/SafEth.sol
 ##
 
 ## [NC-5] EMPTY BLOCKS SHOULD BE REMOVED OR EMIT SOMETHING
-
-##
 
 FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/WstEth.sol
 ```solidity
@@ -734,8 +811,6 @@ FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/Reth.sol
 
 ## [NC-6] ADD PARAMETER TO EVENT-EMIT
 
-##
-
 Some event-emit description hasn’t parameter. Add to parameter for front-end website or client app , they can has that something has happened on the blockchain
 
 FILE : 2023-03-asymmetry/contracts/SafEth/SafEth.sol
@@ -748,13 +823,9 @@ FILE : 2023-03-asymmetry/contracts/SafEth/SafEth.sol
 
 ## [NC-7] Pragma float
 
-##
-
 All the contracts in scope are floating the pragma version.
 
 ### Recommendation
-
-## 
 
 Locking the pragma helps to ensure that contracts do not accidentally get deployed using an outdated compiler version.
 
@@ -784,8 +855,6 @@ Note that pragma statements can be allowed to float when a contract is intended 
 
 ## [NC-9] TYPOS
 
-##
-
 FILE: 2023-03-asymmetry/contracts/SafEth/SafEth.sol
 ```
 /// @audit derivates => derivatives 
@@ -796,7 +865,6 @@ FILE: 2023-03-asymmetry/contracts/SafEth/SafEth.sol
 
 ## [NC-10] Include (@param and @return) parameters in NatSpec comments
 
-##
 Context
 All Contracts
 
@@ -806,7 +874,6 @@ It is recommended that Solidity contracts are fully annotated using NatSpec for 
 [natspec-format.html](https://docs.soliditylang.org/en/v0.8.15/natspec-format.html)
 
 ## Recommendation
-##
 Include return and function arguments(@param,@return) parameters in NatSpec comments
 
 Recommendation Code Style: (from Uniswap3)
@@ -836,8 +903,6 @@ Recommendation Code Style: (from Uniswap3)
 
 ## [NC-11] NatSpec comments should be increased in contracts
 
-##
-
 ### Context
 All Contracts
 
@@ -855,8 +920,6 @@ NatSpec comments should be increased in contracts
 ##
 
 ## [NC-12] Function writing that does not comply with the Solidity Style Guide
-
-##
 
 ### Context
 All Contracts
@@ -881,7 +944,6 @@ Functions should be grouped according to their visibility and ordered:
 
 ## [N-13] Add a timelock to critical functions
 
-##
 It is a good practice to give time for users to react and adjust to critical changes. A timelock provides more guarantees and reduces the level of trust required, thus decreasing risk for users. It also indicates that the project is legitimate (less risk of a malicious owner making a sandwich attack on a user). Consider adding a timelock to
 
 FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/WstEth.sol
@@ -932,8 +994,6 @@ function setMaxAmount(uint256 _maxAmount) external onlyOwner {
 
 ## [NC-14] For functions, follow Solidity standard naming conventions (private function style rule)
 
-##
-
 ## Description
 The above codes don’t follow Solidity’s standard naming convention,
 
@@ -964,8 +1024,6 @@ function swapExactInputSingleHop(
 ## [NC-15] Missing NatSpec
 
 Consider adding specification to the following code blocks
-
-##
 
 FILE : 2023-03-asymmetry/contracts/SafEth/SafEth.sol
 
@@ -1107,17 +1165,80 @@ function setMaxAmount(uint256 _maxAmount) external onlyOwner {
 
 <https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/SafEth.sol#L232-L244>
 
+### Recommended Mitigation Steps:
+Add code like this 
+
+```solidiity
+if (oracle == _oracle revert SAME VALUE);
+```
+##
+
+## [NC-20] NOT USING THE NAMED RETURN VARIABLES ANYWHERE IN THE FUNCTION IS CONFUSING
+
+Consider changing the variable to be an unnamed one
+
+[Reth.sol#L83-L89](https://github.com/code-423n4/2023-03-asymmetry/blob/44b5cd94ebedc187a08884a7f685e950e987261c/contracts/SafEth/derivatives/Reth.sol#L83-L89)
+
+##
+
+## [NC-21] Use a more recent version of Solidity
+
+FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/WstEth.sol
+```solidity
+2: pragma solidity ^0.8.13;
+```
+FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/SfrxEth.sol
+```solidity 
+2: pragma solidity ^0.8.13;
+```
+FILE : 2023-03-asymmetry/contracts/SafEth/SafEth.sol
+```solidity
+2: pragma solidity ^0.8.13;
+```
+FILE : 2023-03-asymmetry/contracts/SafEth/derivatives/Reth.sol
+```solidity
+2: pragma solidity ^0.8.13;
+```
+##
+
+## [NC-22] Use latest and same versions of openzeppelin contracts 
+
+The latest openzeppelin version is 4.8.2 
+
+FILE : Package.json
+
+   82: "@openzeppelin/contracts": "^4.8.0",
+   83: "@openzeppelin/contracts-upgradeable": "^4.8.1",
+
+##
+
+## [NC-23] Implement some type of version counter that will be incremented automatically for contract upgrades
+
+I suggest implementing some kind of version counter that will be incremented automatically when you upgrade the contract
+
+### Recommended Mitigation Steps
+```solidity
+uint256 public authorizeUpgradeCounter;
+ function upgradeTo(address _newImplementation) external onlyOwner {
+        _setPendingImplementation(_newImplementation);
+       authorizeUpgradeCounter+=1;
+    }
+```
+##
+
+### [NC-24] Generate perfect code headers every time
+
+Description:
+I recommend using header for Solidity code layout and readability
+
+<https://github.com/transmissions11/headers>
+
+/*//////////////////////////////////////////////////////////////
+                           TESTING 123
+//////////////////////////////////////////////////////////////*/
 
 
 
 
 
 
-
-NC-1	Return values of approve() not checked	3
-NC-2	Event is missing indexed fields	5
-NC-3	Constants should be defined rather than using magic numbers	1
-NC-4	Functions not used internally could be marked external	8
-L-1	Empty Function Body - Consider commenting why	4
-L-2	Initializers could be front-run	9
-L-3	Unsafe ERC20 operation(s)	3
