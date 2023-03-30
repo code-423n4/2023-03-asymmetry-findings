@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "0xfusion",
+  "risk": "2",
+  "title": "Wrong use of address(this).balance is used in SafEth.sol and withdraw() functions in Reth.sol, SfrxEth.sol and WstEth.sol",
+  "issueId": 795,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/795"
+}
