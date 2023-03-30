@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "AlexCzm",
+  "risk": "3",
+  "title": "Incorrectly calculated derivative price leads to a wrong safEth minted",
+  "issueId": 966,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/966"
+}
