@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "slippopz",
+  "risk": "2",
+  "title": "ethPerDerivative when minting reth and minting stake share will be different",
+  "issueId": 888,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/888"
+}
