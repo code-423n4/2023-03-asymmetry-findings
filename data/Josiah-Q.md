@@ -1,11 +1,18 @@
 ## USERS' ETH STUCK IN THE CONTRACT DUE TO UNINITIALIZED VARIABLES
 In SatEth.sol, `initialize()` does not have `derivatives` and `weights` setup. Because `stake()` is unpaused upon contract deployment, users could start staking with `derivativeCount` still equal to zero. As a result, all for loops are skipped while `preDepositPrice` is set to 10 ** 18.
 
-In the end, `mintAmount` is assigned 0 while the ETH sent in belongs to the contract that will irretrievable by anyone.
+In the end, `mintAmount` is assigned 0 while the ETH sent in belongs to the contract that will be irretrievable by anyone.
 
 Suggested fix:
 
 It is recommended initializing `derivatives` and `weights` in [`initialize()`](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L48-L56).   
+
+## IRRETRIEVABLE ETH IN SAFETH CONTRACT
+In conjunction to above finding, users` ETH stuck in SafEth.sol is irretrievable. Neither can the contract owner do anything about it. Additionally, there might be other reasons where ETH would be stuck in the contract, e.g. mistakenly sent into the contract or recipient contract non-existence leading to successful call() but zero ETH sent.   
+
+Suggested fix:
+
+It is recommended having a withdraw function implemented or have [`rebalanceToWeights()`](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L138) refactored such that `address(this).balance` instead of `ethAmountToRebalance = ethAmountAfter - ethAmountBefore` is used when repositing to the derivatives. At least, the unreachable ETH could be distributed to all existing stakers in the system.     
 
 ## MODERN MODULARITY ON IMPORT USAGES
 For cleaner Solidity code in conjunction with the rule of modularity and modular programming, it is recommended using named imports with curly braces (limiting to the needed instances if possible) instead of adopting the global import approach.
