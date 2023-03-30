@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "MiloTruck",
+  "risk": "3",
+  "title": "`poolPrice()` is vulnerable to price manipulation",
+  "issueId": 1138,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/1138"
+}
