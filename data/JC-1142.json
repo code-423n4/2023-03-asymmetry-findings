@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "JC",
+  "risk": "2",
+  "title": "WstEth.withdraw() improper implementation of slippage check",
+  "issueId": 1142,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/1142"
+}
