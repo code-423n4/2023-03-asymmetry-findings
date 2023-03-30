@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "Udsen",
+  "risk": "2",
+  "title": "`withdraw()` FUNCTION USES `{value: address(this).balance}` TO WITHDRAW ENTIRE `ETH` HOLDING OF THE CONTRACT",
+  "issueId": 1024,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/1024"
+}
