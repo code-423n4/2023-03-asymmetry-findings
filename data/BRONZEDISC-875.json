@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "BRONZEDISC",
+  "risk": "2",
+  "title": "The same derivative can be added more than once by mistake and mess with the `totalWeight` ",
+  "issueId": 875,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/875"
+}
