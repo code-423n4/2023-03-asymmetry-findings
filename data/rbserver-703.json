@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "rbserver",
+  "risk": "3",
+  "title": "Users can fail to unstake and lose their deserved ETH because malfunctioning or untrusted derivative cannot be removed",
+  "issueId": 703,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/703"
+}
