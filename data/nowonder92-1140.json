@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "nowonder92",
+  "risk": "3",
+  "title": "Reth deposit conditionally relies on unreliable price source.",
+  "issueId": 1140,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/1140"
+}
