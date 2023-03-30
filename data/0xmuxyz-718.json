@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "0xmuxyz",
+  "risk": "2",
+  "title": "The owner can accidentally set more than 100% as new slippage, which results in no slippage protection and therefore it lead to huge slippage loss of funds",
+  "issueId": 718,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/718"
+}
