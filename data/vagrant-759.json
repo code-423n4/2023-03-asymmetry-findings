@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "vagrant",
+  "risk": "2",
+  "title": "rebalanceToWeights() may be forced to run out of gas by an attacker ",
+  "issueId": 759,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/759"
+}
