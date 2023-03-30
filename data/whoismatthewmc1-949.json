@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "whoismatthewmc1",
+  "risk": "2",
+  "title": "upper bound on stake() may be low and result in DoS due to 1% min slippage if underlying pools have large amount of liquidity withdrawn",
+  "issueId": 949,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/949"
+}
