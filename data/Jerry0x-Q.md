@@ -37,3 +37,11 @@ Adding and removing functions can reduce gas costs and minimize unknown risks.
         weights[_derivativeIndex] = weights[derivativeCount];
     }
 ```
+Lower gas, reduced risk, easier to understand.
+```
+struct Derivative {
+    IDerivative derivative;
+    uint96 weight;
+}
+mapping(uint256 => Derivative) public derivatives;
+```
