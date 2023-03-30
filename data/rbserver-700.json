@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "rbserver",
+  "risk": "3",
+  "title": "`WstEth.ethPerDerivative` function returns how much stETH that 10 ** 18 wstETH are worth, which can cause SafEth token amount to be minted to user to be less than she or he is entitled to",
+  "issueId": 700,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/700"
+}
