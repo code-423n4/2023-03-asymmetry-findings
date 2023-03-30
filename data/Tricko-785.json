@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "Tricko",
+  "risk": "2",
+  "title": "ETH can get  permanently locked if rebalance is done with all weights set to zero",
+  "issueId": 785,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/785"
+}
