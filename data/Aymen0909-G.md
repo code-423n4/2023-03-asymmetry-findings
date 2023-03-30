@@ -6,10 +6,11 @@
 | :-------------: |:-------------|:-------------:|
 | 1  | Multiple address/IDs mappings can be combined into a single mapping of an address/id to a struct | 2 |
 | 2  | `storage` variable should be cached into `memory` variables instead of re-reading them  |  4 |
-| 3  | `derivatives[i].balance()` should be cached into memory  | 2 |
-| 4  | `derivativeCount` should not be read at each loop iteration | 7 |
-| 5  | `memory` values should be emitted in events instead of `storage` ones  | 4 |
-| 6  | `public` functions not called by the contract should be declared `external` instead | 8 |
+| 3  | Use `unchecked` blocks to save gas  | 1 |
+| 4  | `derivatives[i].balance()` should be cached into memory  | 2 |
+| 5  | `derivativeCount` should not be read at each loop iteration | 7 |
+| 6  | `memory` values should be emitted in events instead of `storage` ones  | 4 |
+| 7  | `public` functions not called by the contract should be declared `external` instead | 8 |
 
 
 ## Findings
@@ -60,8 +61,21 @@ File: SafEth.sol [Line 191-194](https://github.com/code-423n4/2023-03-asymmetry/
 
 In the code linked above the value of `derivativeCount` is read multiple times (2) from storage and it's value does not change so it should be cached into a memory variable in order to save gas by avoiding multiple reads from storage.
 
+### 3- Use `unchecked` blocks to save gas :
 
-### 3- `derivatives[i].balance()` should be cached into memory :
+Solidity version 0.8+ comes with implicit overflow and underflow checks on unsigned integers. When an overflow or an underflow isn’t possible (as an example, when a comparison is made before the arithmetic operation), some gas can be saved by using an unchecked block.
+
+There is 1 instance of this issue:
+
+File: SafEth.sol [Line 188](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L188)
+```
+derivativeCount++;
+```
+
+The increment of `derivativeCount` cannot realisticaly overflow as they represent the numbers of derivative contracts, so the operation should be marked as `unchecked` to save gas. 
+
+
+### 4- `derivatives[i].balance()` should be cached into memory :
 
 `derivatives[i].balance()` is a call to an external contract which cost a lot of gas, so when the actual derivative contract balance is not changing `derivatives[i].balance()` should only be called once and its value should be cached into a memory variable to save gas instead of making this call multiple times.
 
@@ -82,7 +96,7 @@ if (derivatives[i].balance() > 0)
 ```
 
 
-### 4- `derivativeCount` should not be read at each loop iteration :
+### 5- `derivativeCount` should not be read at each loop iteration :
 
 The value of `derivativeCount` is read directly from storage at each iteration of the for loops which will cost a lot of gas, its value should be cached into memory variable instead.
 
@@ -101,7 +115,7 @@ File: SafEth.sol
 ```
 
 
-### 5- `memory` values should be emitted in events instead of `storage` ones :
+### 6- `memory` values should be emitted in events instead of `storage` ones :
 
 The values emitted in events shouldn’t be read from storage but the existing memory values should be used instead, this will save **~100 GAS**.
 
@@ -127,7 +141,7 @@ File: SafEth.sol [Line 243](https://github.com/code-423n4/2023-03-asymmetry/blob
 emit UnstakingPaused(pauseUnstaking);
 ```
 
-### 6- `public` functions not called by the contract should be declared `external` instead :
+### 7- `public` functions not called by the contract should be declared `external` instead :
 
 The `public` functions that are not called inside the contract should be declared `external` instead to save gas.
 
