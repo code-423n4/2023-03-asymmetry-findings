@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "IceBear",
+  "risk": "2",
+  "title": "No use of an upgradeable IERC20 contract in WstEth.sol, SfrxEth.sol, SafEth.sol, and Reth.sol",
+  "issueId": 737,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/737"
+}
