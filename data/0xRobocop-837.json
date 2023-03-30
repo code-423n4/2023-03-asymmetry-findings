@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "0xRobocop",
+  "risk": "2",
+  "title": "ethPerDerivative of the Reth.sol contract can return an incorrect value",
+  "issueId": 837,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/837"
+}
