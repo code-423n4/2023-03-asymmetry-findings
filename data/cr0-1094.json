@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "cr0",
+  "risk": "2",
+  "title": "Incorrect parameter in `withdraw` function",
+  "issueId": 1094,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/1094"
+}
