@@ -350,4 +350,4 @@ There are 63 instances using ```uint256``` and 16 instances using ```uint```.
 - [```event Staked(address indexed recipient, uint ethIn, uint safEthOut);```](https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L26) 
 
 ##### Recommendation
-Stick to one style.
+Stick to one style. 
