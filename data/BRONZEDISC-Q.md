@@ -178,12 +178,31 @@ https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/deriv
 
 ---
 
-
 ### Observations [5]
+
+https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol
+
+```solidity
+// The @notice is incorrect as this does add a new derivative but adjusts the weight
+158:        @notice - Adds new derivative to the index fund
+```
 
 https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEthStorage.sol
 
 ```solidity
 // little typo here, should be "true if unstaking is paused"
 17:    bool public pauseUnstaking; // true if unstaking is pause
+```
+
+### Initialized variables with default value [6]
+
+- Variables are default initialized with 0 for `uint / int`, 0x0 for `address` and false for `bool`
+
+https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol
+
+```solidity
+// these are redundant and cost more gas
+68:        uint256 underlyingValue = 0;
+83:        uint256 totalStakeValueEth = 0; // total amount of derivatives worth of ETH in system
+190:        uint256 localTotalWeight = 0;
 ```
