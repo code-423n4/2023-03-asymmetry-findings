@@ -183,7 +183,7 @@ https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/deriv
 https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol
 
 ```solidity
-// The @notice is incorrect as this does add a new derivative but adjusts the weight
+// The @notice is incorrect as this does not add a new derivative but adjusts the weight
 158:        @notice - Adds new derivative to the index fund
 ```
 
