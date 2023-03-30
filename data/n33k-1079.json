@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "n33k",
+  "risk": "3",
+  "title": "Adding a new derivate will splits new user's underlying shares in the new derivate to older users",
+  "issueId": 1079,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/1079"
+}
