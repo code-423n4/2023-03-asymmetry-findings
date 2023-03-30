@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "emerald7017",
+  "risk": "2",
+  "title": "Use of totalSupply() instead of ERC20Upgradeable.totalSupply().",
+  "issueId": 572,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/572"
+}
