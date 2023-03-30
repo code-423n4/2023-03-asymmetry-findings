@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "JP_Courses",
+  "risk": "2",
+  "title": "No check in swapExactInputSingleHop() function in Reth contract to check that exchange swap was successful",
+  "issueId": 987,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/987"
+}
