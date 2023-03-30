@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "JP_Courses",
+  "risk": "2",
+  "title": "_amount parameter in function ethPerDerivative() not used in any of the 3 derivative contracts",
+  "issueId": 1039,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/1039"
+}
