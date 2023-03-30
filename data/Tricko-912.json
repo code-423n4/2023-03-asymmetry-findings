@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "Tricko",
+  "risk": "3",
+  "title": "First minter can manipulate `preDepositPrice`, allowing him to steal stakers small deposits.",
+  "issueId": 912,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/912"
+}
