@@ -45,6 +45,8 @@ struct Derivative {
 }
 mapping(uint256 => Derivative) public derivatives;
 ```
+
+totalEth and totalEthAmount are not always equal,  Whether returning or depositing, we should handle it.
 ```
 https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEth.sol#L83-L96
         uint256 totalEth = msg.value;
@@ -65,3 +67,5 @@ https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/SafEt
         uint256 remaining = totalEth - totalEthAmount; // They are not always equal,  Whether returning or depositing, we should handle it.
 
 ```
+
+Convert uint to uint256
