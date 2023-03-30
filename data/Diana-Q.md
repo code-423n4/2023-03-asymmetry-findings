@@ -1,16 +1,56 @@
+-------
 
 | S No. | Issue | Instances |
 |-----|-----|-----|
-| [01] | Upgradeable contract is missing a __gap[50] storage variable to allow for new storage variables in later versions | 4
-| [02] | Use scientific notation rather than exponentiation | 21
-| [03] | Missing events for functions that change critical parameters | 3
-| [04] | Non-library or interface files should use fixed compiler versions, not floating ones | 4
-| [05] | Use named imports instead of plain 'import file.sol' | 31
-| [06] | Use a more recent version of solidity | 4
+| [01] | Unused receive() function will lock ether in contract | 3
+| [02] | Upgradeable contract is missing a_\_gap[50] storage variable to allow for new storage variables in later versions | 4
+| [03] | Use scientific notation rather than exponentiation | 21
+| [04] | Missing events for functions that change critical parameters | 3
+| [05] | Non-library or interface files should use fixed compiler versions, not floating ones | 4
+| [06] | Use named imports instead of plain 'import file.sol' | 31
+| [07] | Use a more recent version of solidity | 4
 
 -------------
 
-## 01 Upgradeable contract is missing a __gap[50] storage variable to allow for new storage variables in later versions
+## 01 Unused receive() function will lock ether in contract
+
+Receive() function exists in this contract, so it is possible to send ETH. If someone sends ETH by mistake for instance `msg.value = 3`, then this will be stuck in the contract as there is no functionality to refund the ETH back.
+
+If the intention is for the Ether to be used, the function should call another function, otherwise it should revert
+
+_There are 3 instances of this issue:_
+
+https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/derivatives/Reth.sol
+
+```
+File: SafEth/derivatives/Reth.sol
+
+244: receive() external payable {}
+```
+
+https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/derivatives/SfrxEth.sol
+
+```
+File: SafEth/derivatives/SfrxEth.sol
+
+126: receive() external payable {}
+```
+
+https://github.com/code-423n4/2023-03-asymmetry/blob/main/contracts/SafEth/derivatives/WstEth.sol
+
+```
+File: SafEth/derivatives/WstEth.sol
+
+97: receive() external payable {}
+```
+
+### Recommended Mitigation Steps
+
+Remove these functions, or include a call to rescueETH in receive(), so that a user that mistakenly sends ETH, is able to retrieve it immediately.
+
+--------
+
+## 02 Upgradeable contract is missing a __gap[50] storage variable to allow for new storage variables in later versions
 
 See [this](https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps) link for a description of this storage variable. While some contracts may not currently be sub-classed, adding the variable now protects against forgetting to add it in the future.
 
@@ -51,7 +91,7 @@ File: SafEth/derivatives/WstEth.sol
 
 -------
 
-## 02 Use scientific notation rather than exponentiation
+## 03 Use scientific notation rather than exponentiation
 
 Use scientific notation (eg. `1e18`) rather than exponentiation (eg. `10**18`)
 
@@ -110,7 +150,7 @@ File: SafEth/derivatives/WstEth.sol
 
 -----
 
-## 03 Missing events for functions that change critical parameters
+## 04 Missing events for functions that change critical parameters
 
 The afunctions that change critical parameters should emit events. Events allow capturing the changed parameters so that off-chain tools/interfaces can register such changes with timelocks that allow users to evaluate them and consider if they would like to engage/exit based on how they perceive the changes as affecting the trustworthiness of the protocol or profitability of the implemented financial services. The alternative of directly querying on-chain contract state for such changes is not considered practical for most users/usages.
 
@@ -148,7 +188,7 @@ Add events to all functions that change critical parameters.
 
 ---------
 
-## 04 Non-library or interface files should use fixed compiler versions, not floating ones
+## 05 Non-library or interface files should use fixed compiler versions, not floating ones
 
 In the contracts, floating pragmas should not be used. Contracts should be deployed with the same compiler version and flags that they have been tested with thoroughly. Locking the pragma helps to ensure that contracts do not accidentally get deployed using, for example, an outdated compiler version that might introduce bugs that affect the contract system negatively.
 
@@ -188,7 +228,7 @@ File: SafEth/derivatives/WstEth.sol
 
 -----
 
-## 05 Use named imports instead of plain 'import file.sol'
+## 06 Use named imports instead of plain 'import file.sol'
 
 For instance, you use regular imports such as:
 
@@ -210,7 +250,7 @@ _This issue exists in all the In-scope contracts_. _There are 31 instances of th
 
 --------------
 
-## 06 Use a more recent version of solidity
+## 07 Use a more recent version of solidity
 
 _There are 4 instances of this issue_
 
@@ -247,4 +287,3 @@ File: SafEth/derivatives/WstEth.sol
 ```
 
 -----------
-
