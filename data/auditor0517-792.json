@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "auditor0517",
+  "risk": "2",
+  "title": "`WstEth.ethPerDerivative` returns stETH amount instead of ETH",
+  "issueId": 792,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/792"
+}
