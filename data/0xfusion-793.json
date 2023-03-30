@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "0xfusion",
+  "risk": "2",
+  "title": "Incorrect usage of msg.value inside the stake() function in SafEth.sol",
+  "issueId": 793,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/793"
+}
