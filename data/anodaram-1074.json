@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "anodaram",
+  "risk": "3",
+  "title": "User Controllable derivative.balance() - First staker can make preDepositPrice too huge, so next users' mintAmount can be affected",
+  "issueId": 1074,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/1074"
+}
