@@ -1,0 +1,8 @@
+{
+  "contest": 226,
+  "handle": "whoismatthewmc1",
+  "risk": "3",
+  "title": "Loss of user funds on stake() if there are 0 derivatives or if derivatives all have 0 weight",
+  "issueId": 644,
+  "issueUrl": "https://github.com/code-423n4/2023-03-asymmetry-findings/issues/644"
+}
